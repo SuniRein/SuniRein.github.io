@@ -183,7 +183,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-09-01 23:36:05" itemprop="dateModified" datetime="2024-09-01T23:36:05+08:00">2024-09-01</time>
+      <time title="Modified: 2024-09-03 17:50:42" itemprop="dateModified" datetime="2024-09-03T17:50:42+08:00">2024-09-03</time>
     </span>
 
   
@@ -403,6 +403,11 @@ http &#123;
 
 <p>执行<code>hexo deploy</code>将网站推送到服务器。
 之后就可以直接在浏览器输入服务器的ip来查看该网站了。</p>
+<div class="note info"><p>使用阿里云服务器，还需要在服务器控制台开放80端口，才能访问。</p>
+<p>进入阿里云的控制台，点击<code>安全组</code>&gt;<code>管理规则</code>&gt;<code>入方向</code>&gt;<code>快速添加</code>，勾选HTTP后添加即可。</p>
+<p>如果后续想要访问其他端口，如HTTPS的443端口，也需要在安全组这边添加。</p>
+</div>
+
 <h1 id="可能的问题"><a href="#可能的问题" class="headerlink" title="可能的问题"></a>可能的问题</h1><p>如果你访问网站失败，可以按照下面的步骤来检查：</p>
 <ol>
 <li>检查git仓库是否推送成功：查看<code>/var/repo/hexo</code>文件夹下是否有网站的相关文件。</li>
