@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>SuniRein 的个人小站</title>
+  <icon>https://sunirein.github.io/logo.svg</icon>
+  <subtitle>个人学习笔记兼博客</subtitle>
+  <link href="https://sunirein.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://sunirein.github.io/"/>
+  <updated>2024-09-21T02:16:39.509Z</updated>
+  <id>https://sunirein.github.io/</id>
+  
+  <author>
+    <name>SuniRein</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>七日创站记 第四日 站点装修与美化</title>
+    <link href="https://sunirein.github.io/website-genesis_day-four/"/>
+    <id>https://sunirein.github.io/website-genesis_day-four/</id>
+    <published>2024-09-20T06:44:52.000Z</published>
+    <updated>2024-09-21T02:16:39.509Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;神说：「在天上穹苍中，要有光体来分昼夜；这些光体要作为记号，定节令、日子和年岁；
+它们要在天上穹苍中发光，照耀地上！」事就这样成了。
+於是，神造了两个大光体，大的管昼，小的管夜；又造了星星。
+神把这些光体安放在天上穹苍中，照耀地上，管昼夜，分光暗。
+神看这是好的。有晚上，有早晨；这是第四日。&lt;/p&gt;
+&lt;p align=&quot;right&quot;&gt;
+—— 《圣经·创世记·创造天地万物》
+&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
+&lt;p&gt;在之前的文章中，我们完成了博客框架的搭建及网站的部署。
+现在，我们已经有了一个属于自己的个人博客网站，但这还不够。
+正如买了房子需要装修，我们的这个博客网站还太简陋，需要我们好好装修一下，
+才能更好适应我们日常的需求。&lt;/p&gt;
+&lt;p&gt;本文将讲述如何使用NexT主题及各种插件来对我们的网站进行“精修”。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="七日创站记" scheme="https://sunirein.github.io/categories/%E4%B8%83%E6%97%A5%E5%88%9B%E7%AB%99%E8%AE%B0/"/>
+    
+    
+    <category term="网站搭建" scheme="https://sunirein.github.io/tags/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Splay树</title>
+    <link href="https://sunirein.github.io/splay-tree/"/>
+    <id>https://sunirein.github.io/splay-tree/</id>
+    <published>2024-09-15T11:22:39.000Z</published>
+    <updated>2024-09-21T01:39:40.324Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;splay树&quot;&gt;Splay树&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;Splay树&lt;/strong&gt;，又名&lt;strong&gt;伸展树&lt;/strong&gt;，是一种自平衡二叉搜索树。
+它通过splay操作不断将某个节点旋转到根节点的位置，维持整体的平衡，
+能在均摊时间&lt;span class=&quot;math inline&quot;&gt;&#92;(O(&#92;log
+N)&#92;)&lt;/span&gt;内完成插入、删除、查找操作。&lt;/p&gt;
+&lt;p&gt;Splay树由Daniel Sleator和Robert Tarjan于1985年发明。
+&lt;del&gt;&lt;em&gt;没错，就是你知道的那个Tarjan&lt;/em&gt;&lt;/del&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="高级数据结构与算法" scheme="https://sunirein.github.io/categories/%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="数据结构与算法" scheme="https://sunirein.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="平衡树" scheme="https://sunirein.github.io/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AVL树</title>
+    <link href="https://sunirein.github.io/AVL-tree/"/>
+    <id>https://sunirein.github.io/AVL-tree/</id>
+    <published>2024-09-09T15:22:25.000Z</published>
+    <updated>2024-09-20T14:00:55.365Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;avl树&quot;&gt;AVL树&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;AVL树&lt;/strong&gt;是一种平衡二叉树，它通过&lt;strong&gt;平衡因子（Balance
+Factor）&lt;/strong&gt;来衡量树的平衡程度，
+并通过&lt;strong&gt;树旋转&lt;/strong&gt;来维护平衡。&lt;/p&gt;
+&lt;div class=&quot;note info&quot;&gt;&lt;p&gt;AVL是苏联教授G.M. Adelson-Velsky和E.M. Landis名称的缩写。
+他们最早提出了最早的平衡二叉树，为了纪念他们，将这种平衡二叉树成为AVL树。&lt;/p&gt;
+&lt;/div&gt;</summary>
+    
+    
+    
+    <category term="高级数据结构与算法" scheme="https://sunirein.github.io/categories/%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="数据结构与算法" scheme="https://sunirein.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="平衡树" scheme="https://sunirein.github.io/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>七日创站记 第三日 阿里云服务器</title>
+    <link href="https://sunirein.github.io/website-genesis_day-three/"/>
+    <id>https://sunirein.github.io/website-genesis_day-three/</id>
+    <published>2024-08-30T08:57:37.000Z</published>
+    <updated>2024-09-20T14:01:28.321Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;神说：「天下的水要聚在一处，使旱地露出来！」事就这样成了。
+神称旱地为地，称水的聚处为海。神看这是好的。
+神说：「地上要长出青草、结种子的蔬菜和结果子的树木，各从其类，在地上的果子都包着核！」事就这样成了。
+於是，地上长出了青草和结种子的蔬菜，各从其类；又长出结果子的树木，各从其类，果子都包着核。
+神看这是好的。 有晚上，有早晨；这是第三日。&lt;/p&gt;
+&lt;p align=&quot;right&quot;&gt;
+—— 《圣经·创世记·创造天地万物》
+&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;阅前提示&quot;&gt;阅前提示&lt;/h1&gt;
+&lt;p&gt;本文主要讲述如何在阿里云服务器上部署网站。
+云服务器并不是搭建网站的必需品，且需要一定的金钱成本。
+一般来说，简单的网站使用Github Page已经能够满足需求。
+如果你没有这个需要，可以跳过这篇文章。&lt;/p&gt;
+&lt;p&gt;使用其他云服务器或自己搭建服务器的也可以参考这篇文章。
+基本的搭建步骤是相似的。&lt;/p&gt;
+&lt;div class=&quot;note info&quot;&gt;&lt;p&gt;截止本文发出，阿里云服务器提供三个月的免费试用期。 你可以点击这个&lt;a
+href=&quot;https://www.aliyun.com/product/ecs&quot;&gt;链接&lt;/a&gt;
+进行试用，后续再根据实际需求调整。&lt;/p&gt;
+&lt;/div&gt;</summary>
+    
+    
+    
+    <category term="七日创站记" scheme="https://sunirein.github.io/categories/%E4%B8%83%E6%97%A5%E5%88%9B%E7%AB%99%E8%AE%B0/"/>
+    
+    
+    <category term="网站搭建" scheme="https://sunirein.github.io/tags/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>七日创站记 第二日 Github Pages</title>
+    <link href="https://sunirein.github.io/website-genesis_day-two/"/>
+    <id>https://sunirein.github.io/website-genesis_day-two/</id>
+    <published>2024-08-25T09:55:37.000Z</published>
+    <updated>2024-09-20T14:01:36.617Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;神说：「众水之间要有穹苍，把水和水分开！」事就这样成了。
+神造了穹苍，把穹苍以下的水和穹苍以上的水分开了。
+神称穹苍为天。有晚上，有早晨；这是第二日。&lt;/p&gt;
+&lt;p align=&quot;right&quot;&gt;
+—— 《圣经·创世记·创造天地万物》
+&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;github-pages介绍&quot;&gt;Github Pages介绍&lt;/h1&gt;
+&lt;p&gt;&lt;a
+href=&quot;https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages&quot;&gt;Github
+Pages&lt;/a&gt;
+是Github提供的一项静态站点托管服务，它从Github上的仓库获取HTML、CSS和JavaScript文件，
+通过构造过程运行文件，然后发布网站。&lt;/p&gt;
+&lt;p&gt;一共有三种类型的Github Pages：项目、个人和组织。
+项目站点链接到Github上托管的特定项目，用户和组织站点则链接到Github上已有的账户。
+每个用户只能创建一个个人或组织站点，项目站点则没有限制。&lt;/p&gt;
+&lt;p&gt;默认的用户站点域名为&lt;code&gt;&amp;lt;username&amp;gt;.github.io&lt;/code&gt;。Github
+Pages支持用户提供自己的域名。&lt;/p&gt;
+&lt;p&gt;Github Pages有一些使用限制，详见&lt;a
+href=&quot;https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages#usage-limits&quot;&gt;文档&lt;/a&gt;。
+不过对于一个简单的个人博客来说，这已经远远够用了。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="七日创站记" scheme="https://sunirein.github.io/categories/%E4%B8%83%E6%97%A5%E5%88%9B%E7%AB%99%E8%AE%B0/"/>
+    
+    
+    <category term="网站搭建" scheme="https://sunirein.github.io/tags/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>七日创站记 第一日 Hexo博客框架</title>
+    <link href="https://sunirein.github.io/website-genesis_day-one/"/>
+    <id>https://sunirein.github.io/website-genesis_day-one/</id>
+    <published>2024-08-23T03:14:50.000Z</published>
+    <updated>2024-09-20T14:01:08.645Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;起初，神创造天地。地是空虚混沌；深渊上一片黑暗；神的灵运行在水面上。&lt;/p&gt;
+&lt;p&gt;神说：「要有光！」就有了光。神看光是好的，他就把光暗分开了。
+神称光为昼，称暗为夜。有晚上，有早晨；这是第一日。&lt;/p&gt;
+&lt;p align=&quot;right&quot;&gt;
+—— 《圣经·创世记·创造天地万物》
+&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;阅读须知&quot;&gt;阅读须知&lt;/h1&gt;
+&lt;p&gt;本系列将从零开始，介绍如何利用Hexo搭建一个个人博客，并部署到Github
+Pages和阿里云服务器上。&lt;/p&gt;
+&lt;p&gt;本系列面向对象为使用Linux操作系统，且有一定Linux基础的用户,
+描述了我在建站过程中遇到的一些相关问题以及相应的解决方法，
+希望能对别人有所帮助。&lt;/p&gt;
+&lt;p&gt;如果你是Windows用户且有相应的命令行基础，或者使用WSL，也可以参考本系列文章。&lt;/p&gt;
+&lt;p&gt;建议先通读全文，对细节有所了解后再按照步骤来部署Hexo。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="七日创站记" scheme="https://sunirein.github.io/categories/%E4%B8%83%E6%97%A5%E5%88%9B%E7%AB%99%E8%AE%B0/"/>
+    
+    
+    <category term="网站搭建" scheme="https://sunirein.github.io/tags/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/"/>
+    
+  </entry>
+  
+</feed>

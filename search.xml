@@ -1,0 +1,1874 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>七日创站记 第一日 Hexo博客框架</title>
+    <url>/website-genesis_day-one/</url>
+    <content><![CDATA[<blockquote>
+<p>起初，神创造天地。地是空虚混沌；深渊上一片黑暗；神的灵运行在水面上。</p>
+<p>神说：「要有光！」就有了光。神看光是好的，他就把光暗分开了。
+神称光为昼，称暗为夜。有晚上，有早晨；这是第一日。</p>
+<p align="right">
+—— 《圣经·创世记·创造天地万物》
+</p>
+</blockquote>
+<h1 id="阅读须知">阅读须知</h1>
+<p>本系列将从零开始，介绍如何利用Hexo搭建一个个人博客，并部署到Github
+Pages和阿里云服务器上。</p>
+<p>本系列面向对象为使用Linux操作系统，且有一定Linux基础的用户,
+描述了我在建站过程中遇到的一些相关问题以及相应的解决方法，
+希望能对别人有所帮助。</p>
+<p>如果你是Windows用户且有相应的命令行基础，或者使用WSL，也可以参考本系列文章。</p>
+<p>建议先通读全文，对细节有所了解后再按照步骤来部署Hexo。</p>
+<span id="more"></span>
+<h1 id="为什么要选择hexo">为什么要选择Hexo</h1>
+<blockquote>
+<p><a
+href="https://hexo.io/zh-cn/">Hexo</a>是一个由Node.js驱动的、简单且强大的博客框架。
+Hexo使用Markdown（或其他标记语言）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+<p align="right">
+——Hexo官网
+</p>
+</blockquote>
+<p>主流的博客框架有Hexo、WordPress、Hugo、VuePress等。
+其中Hexo、Hugo、Vurpress生成静态网站，WordPress生成动态网站。</p>
+<p>如果你不知道什么是静态网站和动态网站，可以参考这篇文章： <a
+href="https://zhuanlan.zhihu.com/p/664208114">静态博客和动态博客的区别</a>。</p>
+<h2 id="hexo的优点">Hexo的优点</h2>
+<ul>
+<li>轻量简洁，占用资源少，不像WordPress那样臃肿</li>
+<li>无需支付服务器成本，可以直接部署在Github Pages上</li>
+<li>原生支持Markdown</li>
+<li>在国内使用人数多，可以很方便地找到相应的教程，主题也丰富</li>
+<li>自由度高，有能力的情况下可以高度DIY</li>
+<li>开发者是台湾人，中文文档友好</li>
+</ul>
+<h2 id="hexo的缺点">Hexo的缺点</h2>
+<ul>
+<li>搭建相对而言比较复杂，需要一定的技术基础</li>
+<li>没有后端，写博客需要搭建本地环境</li>
+<li>评论等功能的实现相对较麻烦</li>
+</ul>
+<p>考虑到我的需求只是一个简单的个人博客，不需要那些太复杂的功能，
+加上后续的服务器成本，最终我选择了Hexo作为博客框架。</p>
+<h1 id="hexo本地环境部署">Hexo本地环境部署</h1>
+<p>由于Hexo是基于Nodejs的，所以我们需要先安装Nodejs框架。</p>
+<h2 id="安装nvm">安装nvm</h2>
+<p><a href="https://github.com/nvm-sh/nvm">nvm</a>，即Node Version
+Manager，是一个Node.js的版本管理器。
+我们使用nvm来帮助我们管理本地的Node.js环境。</p>
+<p>如果你有别的需求，也可以使用其它方式来安装和管理Node.js，这对后续的部署没有影响。</p>
+<p>nvm的安装非常简单，只需要运行下面的安装脚本即可一键安装。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">curl -o- https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;nvm-sh&#x2F;nvm&#x2F;v0.40.0&#x2F;install.sh | bash</code></pre>
+<p>具体的安装细节，可以查看<a
+href="https://github.com/nvm-sh/nvm#install--update-script">官方文档</a>。
+注意，由于时间因素，在你阅读此博客时，上述脚本可能已经不是最新的了，建议查询官网后自行安装。</p>
+<h2 id="安装node.js">安装Node.js</h2>
+<p>使用nvm安装Node.js非常简单，只需要运行下面的命令。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"># 安装最新版本的node
+nvm install node
+
+# 安装特定版本的node
+nvm install 14.7.0
+
+# 切换最新版的node
+nvm use node</code></pre>
+<p>安装后可以使用<code>node --version</code>来检查下自己的安装是否正确。</p>
+<h2 id="安装hexo">安装Hexo</h2>
+<p>使用npm直接安装Hexo即可。
+<strong>注意，安装Hexo前需要保证你的电脑安装了git。</strong></p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">npm install hexo-cli -g</code></pre>
+<p>如果你是熟悉npm的用户，可以仅局部安装Hexo包，然后使用npx来执行。
+详见<a
+href="https://hexo.io/zh-cn/docs/#%E5%AE%89%E8%A3%85-Hexo">官方文档</a>。</p>
+<h1 id="hexo的使用">Hexo的使用</h1>
+<h2 id="创建hexo仓库">创建Hexo仓库</h2>
+<p>在安装完Hexo后，执行下面命令，在你的指定文件夹下初始化Hexo仓库。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"># 运行完这条命令后可能会有警告：
+# Failed to install dependencies.
+# 这是正常的，无须在意。
+hexo init &lt;folder&gt;
+
+cd &lt;folder&gt;
+
+npm install </code></pre>
+<p>初始化后，Hexo的项目文件夹如下：</p>
+<pre class="language-treeview" data-language="treeview"><code class="language-treeview">&lt;folder&gt;
+├── _config.landscape.yml
+├── _config.yml
+├── package.json
+├── scaffolds&#x2F;
+│   ├── draft.md
+│   ├── page.md
+│   └── post.md
+├── source&#x2F;
+│   └── _posts&#x2F;
+│       └── hello-world.md
+└── themes&#x2F;</code></pre>
+<p>不同版本的Hexo项目文件夹可能有所差异，但主体功能是一致的。</p>
+<h3 id="config.yml">_config.yml</h3>
+<p>这个是你的网站的配置文件，可以在这里面配置大部分的参数。 <a
+href="https://hexo.io/zh-cn/docs/configuration">具体配置参数</a>在这查看。</p>
+<h3 id="package.json">package.json</h3>
+<p>Node.js项目的配置文件，存放着本地Node仓库的信息。一般情况下不要手动修改。</p>
+<h3 id="scaffolds">scaffolds</h3>
+<p>Hexo模板文件夹。Hexo默认提供了三种格式的模板：post、draft和page。
+可根据需要自行修改或增删。</p>
+<h3 id="source">source</h3>
+<p>这下面存放着你的所有博客文章，使用Markdown格式保存。</p>
+<h3 id="themes">themes</h3>
+<p>Hexo主题文件夹。Hexo有许多<a
+href="https://hexo.io/themes/">主题</a>，可以自行下载和定制。</p>
+<p>比较流行的主题有<a
+href="https://github.com/next-theme/hexo-theme-next">NexT</a>、 <a
+href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a>。</p>
+<h3 id="config.landscape.yml">_config.landscape.yml</h3>
+<p>自Hexo
+5.0开始，在根目录下提供了独立的主题配置文件，命名为<code>_config.[theme].yml</code>。
+建议在此处进行自定义的主题配置，而不是修改themes下相应的<code>_config.yml</code>文件。</p>
+<p>这个是Hexo默认主题<a
+href="https://github.com/hexojs/hexo-theme-landscape">landscape</a>的配置文件。</p>
+<h2 id="创建博客文章">创建博客文章</h2>
+<pre class="language-bash" data-language="bash"><code class="language-bash"># 注意文章标题有空格需要使用引号括起来，或者用&#39;\&#39;转义空格。
+hexo new [layout] &lt;title&gt;</code></pre>
+<p>使用这行命令即可创建对应布局的文章。如果不提供layout，使用默认布局post。
+可以通过编辑<code>_config.yml</code>中的<code>default_layout</code>来修改默认布局。</p>
+<p>Hexo有三种默认布局：post、page和draft，对应的文章保存路径为
+<code>source/_posts</code>、<code>source</code>、<code>source/_drafts</code>。</p>
+<p>draft是一个特殊布局，用来存放草稿文件。
+使用此布局的文章可以使用以下命令来发布为其他格式的布局。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">hexo publish [layout] &lt;title&gt;</code></pre>
+<p>Hexo默认情况下不会展示草稿。可以在运行Hexo的时候加入<code>--draft</code>参数或
+修改<code>_config.yml</code>中的<code>render_drafts</code>项来渲染草稿。</p>
+<p>通过编辑<code>source</code>文件夹下的文件即可修改你的文章。</p>
+<p>更多的细节可以阅读<a
+href="https://hexo.io/zh-cn/docs/writing">官方文档</a>。</p>
+<h2 id="静态网站渲染">静态网站渲染</h2>
+<pre class="language-none"><code class="language-none">hexo server</code></pre>
+<p>使用上述命令在本地启用一个Hexo网站服务器。可以通过<localhost:4000>来访问该网址。</p>
+<p>Hexo默认使用4000端口，如果端口被占用，可以通过<code>--port &lt;port&gt;</code>来切换端口。</p>
+<p>建议在本地渲染时使用<code>--debug</code>参数，会输出调试信息并记录到<code>debug.log</code>中。</p>
+<p>使用<code>--safe</code>参数启用安全模式，在该模式下不会加载插件和脚本。</p>
+<h1 id="总结">总结</h1>
+<p>本文讲述了如何在本地搭建Hexo环境，并在本地渲染网站。</p>
+<p>在下一篇文章中，我将讲述如何通过Github
+Pages发布你的文章，使博客可以被别人访问。</p>
+]]></content>
+      <categories>
+        <category>七日创站记</category>
+      </categories>
+      <tags>
+        <tag>网站搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>七日创站记 第三日 阿里云服务器</title>
+    <url>/website-genesis_day-three/</url>
+    <content><![CDATA[<blockquote>
+<p>神说：「天下的水要聚在一处，使旱地露出来！」事就这样成了。
+神称旱地为地，称水的聚处为海。神看这是好的。
+神说：「地上要长出青草、结种子的蔬菜和结果子的树木，各从其类，在地上的果子都包着核！」事就这样成了。
+於是，地上长出了青草和结种子的蔬菜，各从其类；又长出结果子的树木，各从其类，果子都包着核。
+神看这是好的。 有晚上，有早晨；这是第三日。</p>
+<p align="right">
+—— 《圣经·创世记·创造天地万物》
+</p>
+</blockquote>
+<h1 id="阅前提示">阅前提示</h1>
+<p>本文主要讲述如何在阿里云服务器上部署网站。
+云服务器并不是搭建网站的必需品，且需要一定的金钱成本。
+一般来说，简单的网站使用Github Page已经能够满足需求。
+如果你没有这个需要，可以跳过这篇文章。</p>
+<p>使用其他云服务器或自己搭建服务器的也可以参考这篇文章。
+基本的搭建步骤是相似的。</p>
+<div class="note info"><p>截止本文发出，阿里云服务器提供三个月的免费试用期。 你可以点击这个<a
+href="https://www.aliyun.com/product/ecs">链接</a>
+进行试用，后续再根据实际需求调整。</p>
+</div>
+<span id="more"></span>
+<h1 id="购买云服务器">购买云服务器</h1>
+<p>我选用的服务器是阿里云的<a
+href="https://www.aliyun.com/product/ecs">ECS服务器</a>， 2核2G，40G
+Entry云盘，轻量实惠，可以满足个人博客的大多数需求；
+且前三年每年仅需99元，成本相对低廉。</p>
+<p>之后选择云服务器的配置。这里我选择了CentOS系统，作为服务器运行相比Ubuntu会更加稳定。
+阿里云也提供了Window Server和Alibaba Clound Linux两种系统，
+不过我更熟悉CentOS和Ubuntu这两种常见的Linux发行版。</p>
+<p>阿里云还可以方便地帮你部署各种应用，不过我需求不是很大，且更喜欢自己部署，就没有选择。</p>
+<p>在购买了服务器后，进入<a
+href="https://ecs.console.aliyun.com/home">控制台</a>即可看到这台云服务器实例的各种信息。
+在这里可以更改默认的<strong>实例名称</strong>和<strong>主机名</strong>。
+阿里云还给这台服务器分配了一个<strong>公网IP</strong>,也可以在这里查看。</p>
+<p>CentOS的默认用户为root，没有默认密码。
+为了后面的远程连接，我们需要给它分配一个密码。
+点击服务器管理界面右上角的全部操作，找到重置实例密码，即可创建初始密码。</p>
+<h1 id="ssh远程连接">SSH远程连接</h1>
+<p>我们在主机上通过SSH来远程访问该服务器。</p>
+<p>首先，我们需要在本地生成一个SSH秘钥。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">cd ~&#x2F;.ssh
+
+# 指定秘钥名称为aliyun，避免与原有的秘钥冲突
+# 你也可以直接使用已生成的秘钥，不过我更喜欢分开存储不同的秘钥，便于管理
+ssh-keygen -t ed25519 -f aliyun</code></pre>
+<p>之后在<code>~/.ssh</code>下会生成<code>aliyun</code>、<code>aliyun.pub</code>两个文件，即私钥与公钥。</p>
+<p>我们将秘钥发送到服务器，建立ssh连接。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"># -i后面指定要发送的文件，注意要发送公钥
+# 将&lt;ip&gt;换成阿里云服务器对应的的公网ip
+ssh-copy-id -i ~&#x2F;.ssh&#x2F;aliyun.pub root@&lt;ip&gt;
+
+# 这里需要你输入刚才创建的初始密码
+
+# 现在你已经成功和服务器建立连接了，可以通过下列命令访问服务器
+ssh -i ~&#x2F;.ssh&#x2F;aliyun root@&lt;ip&gt;</code></pre>
+<p>每次都需要手动输入ip太麻烦了，我们可以通过ssh配置文件来简化这一步骤。</p>
+<p>在<code>~/.ssh</code>文件夹下创建名为<code>config</code>的文本文件，在里面输入下列信息：
+（注意要<strong>删除注释行</strong>）</p>
+<pre class="language-conf" data-language="conf"><code class="language-conf"># 匹配的名称，可以任意指定，支持通配符
+Host aliyun 
+    # 填写服务器的ip地址
+    HostName &lt;ip&gt;
+    # 要登录的用户
+    User root
+    # 使用的私钥
+    IdentityFile ~&#x2F;.ssh&#x2F;aliyun
+    IdentitiesOnly yes</code></pre>
+<p>之后通过<code>ssh aliyun</code>即可连接到远程服务器。</p>
+<div class="note info"><p>第一次ssh登录时会有一段验证信息，问你是否信任该地址；
+按照提示输入yes即可。</p>
+</div>
+<h1 id="创建git用户">创建git用户</h1>
+<p>由于默认用户root具有最高权限，实际操作中很容易出问题导致服务器异常，
+一般我们会创建各种普通用户，通过良好的权限控制来防范。</p>
+<p>这里我们使用git用户来管理博客仓库。你也可以指定其他你喜欢的名称。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">ssh aliyun
+
+# 创建git用户
+useradd git
+
+# 分配密码
+passwd git
+
+# 登录git用户
+# 验证git用户是否创建成功
+# 按Ctrl-D退出
+su git
+
+# 通过将git加入wheel用户组，赋予git用户sudo权限
+# 有些教程这里会通过修改&#x2F;etc&#x2F;sudoers来实现，这种操作风险较大，不推荐
+# CentOS下wheel用户组里的用户具有sudo权限，Ubuntu下用户组应改为sudo
+usermod -aG wheel git
+
+# 之后可以登录git用户，验证是否具有sudo权限
+# 注意sudo需输入git的密码，而不是root的密码</code></pre>
+<p>然后我们建立与git的远程连接，方法跟前面类似。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">cd ~&#x2F;.ssh
+ssh-keygen -t ed25519 -f aliyun.git
+ssh-copy-id -i ~&#x2F;.ssh&#x2F;aliyun.git git@&lt;ip&gt; # 此处需输入git的密码</code></pre>
+<p>相应的在sshconfig文件下添加下列配置： <pre class="language-none"><code class="language-none">Host aliyun.git
+    HostName &lt;ip&gt;
+    User git
+    IdentityFile ~&#x2F;.ssh&#x2F;aliyun.git
+    IdentitiesOnly yes</code></pre></p>
+<p>然后便可以通过<code>ssh aliyun.git</code>远程登录git。</p>
+<div class="note info"><p>在服务器的日常管理上， 建议让git用户专注于与git仓库相关的事项，
+并额外创建一个普通用户来管理其他事项。
+这样有利于服务器的长期稳定运行。</p>
+</div>
+<h1 id="搭建git环境">搭建git环境</h1>
+<p>远程登录服务器，搭建git环境。 <pre class="language-bash" data-language="bash"><code class="language-bash">ssh aliyun.git</code></pre></p>
+<p>首先保证服务器上安装了git。
+输入<code>git --version</code>进行验证，如果没有可以使用<code>sudo yum install git</code>安装。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"># 创建&#x2F;var&#x2F;repo来管理git仓库
+sudo mkdir &#x2F;var&#x2F;repo
+
+# 权限设置
+sudo chown git:git &#x2F;var&#x2F;repo
+chmod 755 &#x2F;var&#x2F;repo # 使其他人可以读取该仓库</code></pre>
+<div class="note info"><p>你也可以在git的家目录下创建仓库，但正常情况下其他用户没有读取<code>$HOME</code>的权限，需要额外修改权限。
+<pre class="language-bash" data-language="bash"><code class="language-bash">chmod 755 &#x2F;home&#x2F;git</code></pre> 否则后续的操作会有影响。</p>
+</div>
+<p>然后创建用来存储博客的仓库。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"># 创建空白git仓库
+cd &#x2F;var&#x2F;repo
+git init --bare hexo.git
+
+# 创建用于存放hexo博客的文件夹
+mkdir hexo
+
+# 添加hook，用于自动部署网站
+vim hexo.git&#x2F;hooks&#x2F;post-receive</code></pre>
+<p><code>post-receive</code>文件的内容如下：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">#!&#x2F;bin&#x2F;bash
+# 在每次提交时更新hexo文件夹
+git --work-tree&#x3D;&#x2F;var&#x2F;repo&#x2F;hexo --git-dir&#x3D;&#x2F;var&#x2F;repo&#x2F;hexo.git checkout -r</code></pre>
+<p>同时添加执行权限： <pre class="language-bash" data-language="bash"><code class="language-bash">chmod +x &#x2F;var&#x2F;repo&#x2F;hexo.git&#x2F;hooks&#x2F;post-receive</code></pre></p>
+<h1 id="搭建nginx环境">搭建nginx环境</h1>
+<p>Nginx是一个高性能的HTTP和反向代理web服务器。我们用它来实现网站的反向代理。</p>
+<h2 id="安装nginx">安装nginx</h2>
+<p>我们直接用包管理器安装Nginx即可：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"># CentOS
+sudo yum install nginx
+
+# Ubuntu
+sudo apt install nginx</code></pre>
+<p>之后使用<code>nginx --version</code>检查安装是否正确。</p>
+<h2 id="配置nginx">配置nginx</h2>
+<p>Nginx的配置文件存放于<code>/etc/nginx</code>下，其中<code>nginx.conf</code>为核心配置文件，
+而具体网站的配置一般存放于<code>site-available</code>和<code>site-enabled</code>两个文件夹下。
+前者存放所有网站配置，如果要部署某个网站则在后者下创建一个软链接。</p>
+<div class="note info"><p>在CentOS下默认安装的nginx没有这两个文件夹，需要手动创建：
+<pre class="language-bash" data-language="bash"><code class="language-bash">sudo mkdir &#x2F;etc&#x2F;nginx&#x2F;site-available &#x2F;etc&#x2F;nginx&#x2F;site-enabled</code></pre></p>
+<p>并编辑<code>/etc/nginx/nginx.conf</code>，添加下列配置：
+<pre class="language-bash" data-language="bash"><code class="language-bash"># 在已存在的http下添加下面一行，以自动加载site-enabled下的文件
+http &#123;
+    # 注意后面的分号
+    include &#x2F;etc&#x2F;nginx&#x2F;site-enabled&#x2F;*.conf;
+&#125;</code></pre></p>
+</div>
+<p>之后在<code>site-available</code>中创建博客的配置文件，内容如下：
+<pre class="language-bash" data-language="bash"><code class="language-bash">sudo vim &#x2F;etc&#x2F;nginx&#x2F;site-available&#x2F;hexo.conf</code></pre> <pre class="language-bash" data-language="bash"><code class="language-bash">server &#123;
+    listen 80;
+    server_name &lt;ip&gt;; # 填入服务器的ip地址
+
+    root &#x2F;var&#x2F;repo&#x2F;hexo; # 注意文件夹的访问权限
+    index index.html index.htm index.nginx-centos.html;
+
+    location &#x2F; &#123;
+        # First attempte to server request as a file,
+        # the as a directory, then fall back to display 404.
+        try_files $uri $uri&#x2F; &#x3D;404;
+    &#125;
+
+    location &#x3D; &#x2F; &#123;
+        try_files &#x2F;index.html &#x3D;404;
+    &#125;
+&#125;</code></pre></p>
+<p>并创建指向该文件的软链接： <pre class="language-bash" data-language="bash"><code class="language-bash">sudo ln -s &#x2F;etc&#x2F;nginx&#x2F;site-available&#x2F;hexo.conf &#x2F;etc&#x2F;nginx&#x2F;site-enabled</code></pre></p>
+<p>重启nginx服务后配置即可生效： <pre class="language-bash" data-language="bash"><code class="language-bash">sudo systemctl restart nginx.service</code></pre></p>
+<h1 id="hexo设置deploy">Hexo设置deploy</h1>
+<p>在Hexo的<code>_config.yml</code>下加入以下配置： <pre class="language-yaml" data-language="yaml"><code class="language-yaml">deploy:
+  # ...
+- type: git
+  repo: git@&lt;ip&gt;:&#x2F;var&#x2F;repo&#x2F;hexo.git # 填入服务器ip
+                                    # 如果使用的用户名不是git需修改这里的用户名
+  branch: master</code></pre></p>
+<p>执行<code>hexo deploy</code>将网站推送到服务器。
+之后就可以直接在浏览器输入服务器的ip来查看该网站了。</p>
+<div class="note info"><p>使用阿里云服务器，还需要在服务器控制台开放80端口，才能访问。</p>
+<p>进入阿里云的控制台，点击<code>安全组</code>&gt;<code>管理规则</code>&gt;<code>入方向</code>&gt;<code>快速添加</code>，勾选HTTP后添加即可。</p>
+<p>如果后续想要访问其他端口，如HTTPS的443端口，也需要在安全组这边添加。</p>
+</div>
+<h1 id="可能的问题">可能的问题</h1>
+<p>如果你访问网站失败，可以按照下面的步骤来检查：</p>
+<ol type="1">
+<li>检查git仓库是否推送成功：查看<code>/var/repo/hexo</code>文件夹下是否有网站的相关文件。</li>
+<li>检查nginx状态：使用<code>systemctl status nginx.service</code>查看服务是否正常启动。</li>
+<li>检查nginx日志：位于<code>/var/log/nginx</code>下，访问该日志需要root权限；其中<code>access.log</code>是访问记录，<code>error.log</code>则包含一些错误报告。</li>
+</ol>
+<p>下面是一些可能的问题：</p>
+<h2 id="远程仓库为空">远程仓库为空</h2>
+<p>可以手动执行<code>post-receive</code>下的命令查看是否正常。</p>
+<p>如果你在<code>deploy</code>的时候有报错提示，检查相关配置。
+注意<code>branch</code>要与远程仓库一致，默认为master，如果使用main可能会有问题。</p>
+<h2
+id="access.log下能找到访问记录但显示没有权限">access.log下能找到访问记录，但显示没有权限</h2>
+<p>确保网站目录所在文件夹及其父文件夹至少都是可被其他用户读取的<code>755</code>权限。</p>
+<p>特别提醒，git用户的<code>$HOME</code>目录只有git自己可以读取，需要修改相关权限。</p>
+<h1 id="总结">总结</h1>
+<p>今天讲述了在阿里云服务器上配置git和nginx来部署个人网站的方法。
+至此，个人网站的部署工作全部完成了。</p>
+<p>在后续的文章中，我将讲述包括博客的美化、域名购买与备案、CDN分流等功能，感谢你的阅读。</p>
+]]></content>
+      <categories>
+        <category>七日创站记</category>
+      </categories>
+      <tags>
+        <tag>网站搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>七日创站记 第二日 Github Pages</title>
+    <url>/website-genesis_day-two/</url>
+    <content><![CDATA[<blockquote>
+<p>神说：「众水之间要有穹苍，把水和水分开！」事就这样成了。
+神造了穹苍，把穹苍以下的水和穹苍以上的水分开了。
+神称穹苍为天。有晚上，有早晨；这是第二日。</p>
+<p align="right">
+—— 《圣经·创世记·创造天地万物》
+</p>
+</blockquote>
+<h1 id="github-pages介绍">Github Pages介绍</h1>
+<p><a
+href="https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages">Github
+Pages</a>
+是Github提供的一项静态站点托管服务，它从Github上的仓库获取HTML、CSS和JavaScript文件，
+通过构造过程运行文件，然后发布网站。</p>
+<p>一共有三种类型的Github Pages：项目、个人和组织。
+项目站点链接到Github上托管的特定项目，用户和组织站点则链接到Github上已有的账户。
+每个用户只能创建一个个人或组织站点，项目站点则没有限制。</p>
+<p>默认的用户站点域名为<code>&lt;username&gt;.github.io</code>。Github
+Pages支持用户提供自己的域名。</p>
+<p>Github Pages有一些使用限制，详见<a
+href="https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages#usage-limits">文档</a>。
+不过对于一个简单的个人博客来说，这已经远远够用了。</p>
+<span id="more"></span>
+<h1 id="创建github-pages个人站点">创建Github Pages个人站点</h1>
+<p>首先，你需要有一个Github账户。 如果你还没有Github账户，可以点击<a
+href="https://github.com/signup">这里</a>创建。
+注意，Github在国内的访问受限，有时候可能连接不上，建议使用科学上网。</p>
+<p>登录你的Github账户后，点击右上角的加号，点击<code>New repository</code>新建一个仓库。
+仓库的名称为<code>&lt;username&gt;.github.io</code>，其他选项保持默认即可。
+最下方的<code>Disable Projects and Wikis</code>可以选择勾选。
+之后点击<code>Create repository</code>，完成仓库的创建。</p>
+<p>这样，你的Github Pages个人站点就创建好了。
+点击个人头像，<code>Your repositories</code>，可以看到你新建的这个仓库。
+仓库的名称后面还会有一个链接图标，表明这是你的个人站点。
+不过现在里面只是一个空仓库，需要我们上传相应的文件使其可以访问。</p>
+<h1 id="建立ssh连接">建立ssh连接</h1>
+<p>我们需要在本地建立与Github之间的ssh连接，才能访问和更改Github上的个人仓库。</p>
+<div class="note info"><p>这一步也可以跳过，直接使用http连接，但每次更新Github仓库就需要你手动输入用户名和密码。</p>
+<p>建议使用ssh连接，安全性更高，且更加方便。</p>
+</div>
+<p>首先，需要在本地生成ssh秘钥。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"># 一般将ssh秘钥保存至个人目录下的.ssh文件夹
+# 如果不存在可以手动创建一个
+cd ~&#x2F;.ssh
+
+# 生成ssh密钥
+# -t: 制定秘钥类型，如果不指定，默认为rsa；建议使用ed25519
+# 可以使用-f &lt;file&gt;指定生成文件的名字，并配置ssh config文件来访问
+ssh-keygen -t ed25519</code></pre>
+<p>上述命令会在当前目录下生成两个文件：<code>id_ed25519</code>和<code>id_ed25519.pub</code>，分别为私钥和公钥。</p>
+<p>打开<a href="https://github.com">Github</a> &gt;
+<code>settings</code> &gt; <code>SSH and GPG keys</code>，
+右上角点击<code>Add new SSH key</code>，将生成的公钥复制到这里面。
+<code>Keys</code>类型选择<code>Authentication Key</code>，并输入一个标题。
+点击<code>Add SSH key</code>，完成添加秘钥。
+之后你就可以在本机通过ssh连接访问github。</p>
+<p>之后运行<code>ssh git@github.com</code>测试是否能够正常连接。</p>
+<p>如果连接正常，你会看到类似这样的输出信息。</p>
+<pre class="language-none"><code class="language-none">PTY allocation request failed on channel 0
+Hi &lt;username&gt;! You&#39;ve successfully authenticated, but GitHub does not provide shell access.
+Connection to github.com closed.</code></pre>
+<h1 id="hexo设置deploy">Hexo设置deploy</h1>
+<p>进入你博客所在的文件夹，编辑<code>_config.yml</code>里面的<code>deploy</code>项（如果没有则自行添加），设置如下：</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">deploy:
+- type: git # 最前面的&#96;-&#96;也可以不加，但后续如果需要添加其他仓库，则必须添加
+  repo: git@github.com:&lt;用户名&gt;&#x2F;&lt;仓库名&gt;.git # 这一项的链接可以在你的仓库里的Code按钮下的ssh找到
+                                             # 如果你想使用http连接，这里需要切换成相应的http链接
+  branch: main</code></pre>
+<p>然后运行下面的命令：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"># 清除缓存已生成的文件
+hexo clean
+
+# 重新生成相关文件
+hexo generate
+
+# 部署到相应的位置
+hexo deploy
+
+# 后面两条命令也可以合成一条
+# hexo deploy -g</code></pre>
+<p>此时你就可以访问对应的域名来查看你的个人博客。</p>
+<div class="note info"><p>Github
+Pages的刷新可能会有几分钟的延迟，如果没看到更新可以等待一会。</p>
+<p>如果你想最快确认部署是否有效，可直接在相应的Github仓库里查看提交信息。</p>
+</div>
+<h1 id="总结">总结</h1>
+<p>在完成Github
+Pages的部署后，个人博客已经基本成型，可以投入使用了。</p>
+<p>但是，Github Pages有一些功能上的限制，且在国内的访问速度不太理想。
+如果对于博客有更高的需求，可以自己搭建服务器来部署博客。
+在下一节里，我将演示如何通过阿里云服务器来部署自己的博客。</p>
+]]></content>
+      <categories>
+        <category>七日创站记</category>
+      </categories>
+      <tags>
+        <tag>网站搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>七日创站记 第四日 站点装修与美化</title>
+    <url>/website-genesis_day-four/</url>
+    <content><![CDATA[<blockquote>
+<p>神说：「在天上穹苍中，要有光体来分昼夜；这些光体要作为记号，定节令、日子和年岁；
+它们要在天上穹苍中发光，照耀地上！」事就这样成了。
+於是，神造了两个大光体，大的管昼，小的管夜；又造了星星。
+神把这些光体安放在天上穹苍中，照耀地上，管昼夜，分光暗。
+神看这是好的。有晚上，有早晨；这是第四日。</p>
+<p align="right">
+—— 《圣经·创世记·创造天地万物》
+</p>
+</blockquote>
+<h1 id="前言">前言</h1>
+<p>在之前的文章中，我们完成了博客框架的搭建及网站的部署。
+现在，我们已经有了一个属于自己的个人博客网站，但这还不够。
+正如买了房子需要装修，我们的这个博客网站还太简陋，需要我们好好装修一下，
+才能更好适应我们日常的需求。</p>
+<p>本文将讲述如何使用NexT主题及各种插件来对我们的网站进行“精修”。</p>
+<span id="more"></span>
+<h1 id="hexo本体配置">Hexo本体配置</h1>
+<p>Hexo本身可以进行的配置有很多，本文仅讲述一些我个人使用到的配置。
+想要进一步了解的可以查阅<a
+href="https://hexo.io/zh-cn/docs/configuration">Hexo官方文档</a>。</p>
+<h2 id="网站元信息">网站元信息</h2>
+<p>在<code>_config.yml</code>中找到下列选项，设置网站的相关元信息。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"># 以下为我的个人配置，仅供参考
+title: SuniRein 的个人小站
+subtitle: 个人学习笔记兼博客
+description: 一名普通技术宅的博客
+keywords:
+author: SuniRein
+language: zh-CN
+timezone: Asia&#x2F;Shanghai</code></pre>
+<h2 id="站点链接">站点链接</h2>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"># 以下为我的个人配置，仅供参考
+url: https:&#x2F;&#x2F;SuniRein.github.io
+permalink: :urlname&#x2F;</code></pre>
+<p>Hexo默认的链接格式为<code>:year/:month/:day/:title/</code>，冗长且对中文不友好。
+可以在<code>_config.yml</code>文件中修改该链接格式。</p>
+<p>在我的个人配置里，我设置链接格式为<code>:urlname/</code>，并在每篇博客的元信息中指定<code>urlname</code>。
+例如，在博客文件<code>test.md</code>中，元信息如下：</p>
+<pre class="language-markdown" data-language="markdown"><code class="language-markdown">---
+title: 测试网站
+date: 1970-01-01 12:00:00
+urlname: test-site
+---</code></pre>
+<p>则对应的博客链接为<code>http://example.com/test-site/</code>。</p>
+<p>更多自定义配置可查阅<a
+href="https://hexo.io/zh-cn/docs/permalinks">官方文档</a>。</p>
+<h2 id="front-matter">Front-matter</h2>
+<p>Front-matter是文件开头的<code>YAML</code>或<code>JSON</code>代码块，用于配置写作设置。
+以<code>YAML</code>格式书写时，Front-matter
+以三个破折号结束；以<code>JSON</code>格式书写时，Front-matter
+以三个分号结束。</p>
+<p><strong>YAML</strong></p>
+<pre class="language-markdown" data-language="markdown"><code class="language-markdown">---
+title: Hello World
+date: 1970-01-01 12:00:00
+---</code></pre>
+<p><strong>JSON</strong></p>
+<pre class="language-markdown" data-language="markdown"><code class="language-markdown">&quot;title&quot;: Hello World,
+&quot;date&quot;: &quot;1970-01-01 12:00:00&quot;,
+;;;</code></pre>
+<p>在Front-matter中常用到的配置有下面这些。 <pre class="language-markdown" data-language="markdown"><code class="language-markdown">---
+title: 文章标题
+date: 1970-01-01 12:00:00
+tags:
+  - 标签1
+  - 标签2
+categories:
+  - 分类1
+  - 分类2
+excerpt: 文章摘要
+published: true|false 
+  # 是否发布文章，_post下默认为true，_draft下默认为false
+---</code></pre></p>
+<p>更多配置详见<a
+href="https://hexo.io/zh-cn/docs/front-matter">官方文档</a>。</p>
+<h2 id="pandoc渲染器">Pandoc渲染器</h2>
+<p>Hexo默认使用的Markdown渲染器为<code>marked</code>，功能较弱，且可扩展性不足，
+对数学公式等高级语法支持不好，不建议使用。</p>
+<p>其他常用的Markdown渲染器有<code>markdown-it</code>、<code>markdown-it-plus</code>等，
+综合兼容性与性能考虑，最终我选择了<code>pandoc</code>。</p>
+<div class="tabs" id="hexo-renderer-pandoc"><ul class="nav-tabs"><li class="tab active"><a href="#hexo-renderer-pandoc-1">npm</a></li><li class="tab"><a href="#hexo-renderer-pandoc-2">_config.yml</a></li></ul><div class="tab-content"><div class="tab-pane active" id="hexo-renderer-pandoc-1"><p>使用<code>npm</code>安装pandoc渲染器，注意需要先卸载原有的marked。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">npm uninstall hexo-renderer-marked
+npm install hexo-renderer-pandoc</code></pre>
+<p>注意<a
+href="https://pandoc.org">pandoc</a>需要自行安装，之后才能正常使用。
+如果你的系统自带pandoc，其版本可能较低，请安装最新版的pandoc，否则可能遇到一些使用问题。</p></div><div class="tab-pane" id="hexo-renderer-pandoc-2"><p>可以在<code>_config.yml</code>中对pandoc进行一些配置。
+更详细的介绍请查看<a
+href="https://github.com/hexojs/hexo-renderer-pandoc">hexo-renderer-pandoc</a>。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">pandoc:
+  pandoc_path: # 指定pandoc的路径，不指定的话默认在系统环境变量中查找
+  args:        # 传递给pandoc的参数，格式为数组</code></pre></div></div></div>
+<h2 id="next主题安装">NexT主题安装</h2>
+<p>将NexT主题安装到<code>themes</code>文件夹下，命名为<code>next</code>。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"># NexT的仓库换过几次，请注意要下载最新版对应的仓库
+# 可以检查下仓库的更新时间来确认
+git clone https:&#x2F;&#x2F;github.com&#x2F;next-theme&#x2F;hexo-theme-next themes&#x2F;next</code></pre>
+<p>然后修改<code>_config.yml</code>，配置使用NexT主题。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"># Extensions
+## Plugins: https:&#x2F;&#x2F;hexo.io&#x2F;plugins&#x2F;
+## Themes: https:&#x2F;&#x2F;hexo.io&#x2F;themes&#x2F;
+# theme: landscape
+theme: next</code></pre>
+<p>将<code>next</code>文件夹中的<code>_config.yml</code>复制到Hexo主文件夹，命名为<code>_config.next.yml</code>。
+所有对NexT的修改都在这个文件下进行，不要修改<code>next</code>文件夹下的内容，
+这样可以有效区分自己的配置与默认配置，并在更新NexT时保留自己的配置。</p>
+<p>下面对配置文件的修改中，如无特殊说明，默认为<code>_config.next.yml</code>文件。</p>
+<h1 id="next页面设置">NexT页面设置</h1>
+<p>这部分主要设计NexT中与页面展示有关的设置。</p>
+<h2 id="页面布局">页面布局</h2>
+<p>NexT主题提供了4种页面布局，可以根据自己的需求自行选择。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"># Schemes
+# scheme: Muse
+# scheme: Mist
+# scheme: Pisces
+scheme: Gemini # 本文使用的页面布局
+</code></pre>
+<h2 id="黑夜模式">黑夜模式</h2>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">darkmode: auto # true | false | auto</code></pre>
+<h2 id="网站图标">网站图标</h2>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"># 网页图标
+favicon:
+  small: &#x2F;images&#x2F;favicon-16x16.png
+  medium: &#x2F;images&#x2F;favicon-32x32.png
+  apple_touch_icon: &#x2F;images&#x2F;apple-touch-icon.png
+  safari_pinned_tab: &#x2F;images&#x2F;logo.svg
+  #android_manifest: &#x2F;manifest.json
+
+# 在页面上显示自定义logo (不支持Mist布局)
+custom_logo: #&#x2F;uploads&#x2F;custom-logo.png</code></pre>
+<p>可以用<a
+href="https://www.logo.surf/">Logo.surf</a>为你的网站设计一个图标。</p>
+<h2 id="首页预览">首页预览</h2>
+<p>默认情况下Hexo会在首页显示整篇文章而不是摘要，这不利于我们阅览博客。</p>
+<p>Hexo提供了两种方式来解决这一问题。
+一种方法是在文章中加入<code>&lt;!-- more --&gt;</code>标记，在这一标记前的内容将作为文章的预览。
+另一种方法是在<a
+href="#front-matter">Front-matter</a>中使用<code>excerpt</code>字段，手动指定文章摘要。</p>
+<p>推荐使用第一种方法，除非你的文章前面的内容不适合作为摘要。</p>
+<p>开启摘要后，可以在<code>_config.next.yml</code>中启用<code>read_more_btn</code>，
+这会在你的文章摘要下面显示一个<code>阅读全文</code>的按钮。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"># 该选项默认启用
+read_more_btn: true</code></pre>
+<p>如果你对Hexo提供的摘要功能不满意，也可以尝试下 <a
+href="https://github.com/chekun/hexo-excerpt">hexo-excerpt</a>插件。
+它可以帮助你自动生成文章的摘要。</p>
+<h2 id="菜单栏">菜单栏</h2>
+<p>NexT中菜单栏的相关配置位于<code>Menu Settings</code>下方，
+可根据自己的需要启用相关的选项。
+其中除<code>archives</code>外的页面都需要自行创建。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">menu:
+  home: &#x2F; || fa fa-home
+  #about: &#x2F;about&#x2F; || fa fa-user
+  #tags: &#x2F;tags&#x2F; || fa fa-tags
+  #categories: &#x2F;categories&#x2F; || fa fa-th
+  #archives: &#x2F;archives&#x2F; || fa fa-archive
+  #schedule: &#x2F;schedule&#x2F; || fa fa-calendar
+  #sitemap: &#x2F;sitemap.xml || fa fa-sitemap
+  #commonweal: &#x2F;404&#x2F; || fa fa-heartbeat
+
+menu_settings:
+  icons: true     # 显示图标
+  badges: false   # 显示对应数目</code></pre>
+<p>下面我将演示启用<code>tags</code>、<code>categories</code>和<code>archives</code>。</p>
+<div class="tabs" id="menu-settings"><ul class="nav-tabs"><li class="tab active"><a href="#menu-settings-1">_config.next.yml</a></li><li class="tab"><a href="#menu-settings-2">source/tags/index.md</a></li><li class="tab"><a href="#menu-settings-3">source/categories/index.md</a></li></ul><div class="tab-content"><div class="tab-pane active" id="menu-settings-1"><pre class="language-yaml" data-language="yaml"><code class="language-yaml">menu:
+  home: &#x2F; || fa fa-home
+  #about: &#x2F;about&#x2F; || fa fa-user
+  tags: &#x2F;tags&#x2F; || fa fa-tags
+  categories: &#x2F;categories&#x2F; || fa fa-th
+  archives: &#x2F;archives&#x2F; || fa fa-archive
+  #schedule: &#x2F;schedule&#x2F; || fa fa-calendar
+  #sitemap: &#x2F;sitemap.xml || fa fa-sitemap
+  #commonweal: &#x2F;404&#x2F; || fa fa-heartbeat</code></pre>
+<p>注意需要自行创建<code>tags</code>和<code>categorise</code>。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">hexo new page tags
+hexo new page categories</code></pre></div><div class="tab-pane" id="menu-settings-2"><pre class="language-markdown" data-language="markdown"><code class="language-markdown">---
+title: 标签
+date: 1970-01-01 12:00:00
+type: tags
+---</code></pre></div><div class="tab-pane" id="menu-settings-3"><pre class="language-markdown" data-language="markdown"><code class="language-markdown">---
+title: 分类
+date: 1970-01-01 12:00:00
+type: categories
+---</code></pre></div></div></div>
+<h2 id="侧边栏">侧边栏</h2>
+<p>NexT的侧边栏可高度定制。相关选项位于<code>Sidebar Settings</code>下方。</p>
+<h3 id="位置">位置</h3>
+<p>默认侧边栏位于左侧，可调整到右侧。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">sidebar:
+  position: left
+  # position: right</code></pre>
+<h3 id="站点状态">站点状态</h3>
+<p>即在头像下方的位置显示当前站点的文章数、标签数和分类数。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">site_state: true</code></pre>
+<h3 id="头像">头像</h3>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">avatar:
+  # 头像图片位置，位于&#96;source&#x2F;images&#x2F;&#96;下面
+  url: &#x2F;images&#x2F;avatar.avif
+  # 是否切割成圆形
+  rounded: true
+  # 鼠标移动到上边时是否旋转
+  rotated: false</code></pre>
+<h3 id="社交链接">社交链接</h3>
+<p>NexT内置了多个网站的链接，取消注释并修改相应的选项即可。
+你也可以添加自己想要的网站。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">social:
+  #GitHub: https:&#x2F;&#x2F;github.com&#x2F;yourname || fab fa-github
+  #E-Mail: mailto:yourname@gmail.com || fa fa-envelope
+  #Weibo: https:&#x2F;&#x2F;weibo.com&#x2F;yourname || fab fa-weibo
+  #Twitter: https:&#x2F;&#x2F;twitter.com&#x2F;yourname || fab fa-twitter
+  #FB Page: https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname || fab fa-facebook
+  #StackOverflow: https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname || fab fa-stack-overflow
+  #YouTube: https:&#x2F;&#x2F;youtube.com&#x2F;yourname || fab fa-youtube
+  #Instagram: https:&#x2F;&#x2F;instagram.com&#x2F;yourname || fab fa-instagram
+  #Skype: skype:yourname?call|chat || fab fa-skype</code></pre>
+<p>社交链接格式为<code>key: link || icon</code>。 icon可以通过<a
+href="https://fontawesome.com/icons">Font Awesomes库</a>自定义。</p>
+<h3 id="友情链接">友情链接</h3>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">links_settings:
+  icon: fa fa-link
+  layout: block # 可选值: block | inline
+
+links:
+  #Title: https:&#x2F;&#x2F;example.com</code></pre>
+<h3 id="文章目录">文章目录</h3>
+<p>NexT会根据Markdown中的标题层次，在侧边栏显示相应的目录。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">toc:
+  enable: true       # 开启目录
+  number: true       # 标题前加数字
+  wrap: false        # 标题过长时自动换行
+  expand_all: false  # 自动展开所有层次的标题
+                     # 为false时仅展开当前所在位置
+  max_depth: 6       # 最大深度</code></pre>
+<h2 id="页脚">页脚</h2>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">footer:
+  # 指定站点建立时间，如不指定默认使用当前年份
+  since: 2024
+
+  # 站点建立时间与作者之间的图标
+  icon:
+    name: fa fa-heart # 可参考 https:&#x2F;&#x2F;fontawesome.com&#x2F;icons
+    animated: false
+    color: &quot;#ff0000&quot;
+
+  # 如果不指定，将使用&#96;config_.yml&#96;中指定的作者
+  # 设置为 false 以禁用
+  copyright:
+
+  # 开启会关闭“由...强力驱动”
+  powered: false
+
+  # 网站备案信息（中文用户专用）
+  beian:
+    enable: false
+    icp:
+    gongan_id:
+    gongan_num:
+    gongan_icon_url:</code></pre>
+<h2 id="返回顶部">返回顶部</h2>
+<p>在文章的左下角显示一个返回顶部按钮。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">back2top:
+  enable: true          # 启用
+  sidebar: false        # 在侧边栏显示
+  scrollpercent: false  # 显示进度</code></pre>
+<h2 id="加载进度条">加载进度条</h2>
+<p>在网页加载阶段添加加载进度条，提高用户体验。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"># Progress bar in the top during page loading.
+# For more information: https:&#x2F;&#x2F;github.com&#x2F;CodeByZach&#x2F;pace
+pace:
+  enable: true
+  # All available colors:
+  # black | blue | green | orange | pink | purple | red | silver | white | yellow
+  color: orange
+  # All available themes:
+  # big-counter | bounce | barber-shop | center-atom | center-circle | center-radar | center-simple
+  # corner-indicator | fill-left | flat-top | flash | loading-bar | mac-osx | material | minimal
+  theme: material</code></pre>
+<h2 id="github图标">Github图标</h2>
+<p>在页面右上角显示Github图标，点击即可跳转至Github主页。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">github_banner:
+  enable: true
+  permalink: https:&#x2F;&#x2F;github.com&#x2F;yourname</code></pre>
+<h2 id="阅读进度条">阅读进度条</h2>
+<p>在页面上方显示阅读进度条。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">reading_progress:
+  enable: true
+  # Available values: left | right
+  start_at: left
+  # Available values: top | bottom
+  position: top
+  reversed: false
+  color: &quot;#37c6c0&quot;
+  height: 3px</code></pre>
+<h2 id="版权声明">版权声明</h2>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"># Creative Commons 4.0 International License.
+# See: https:&#x2F;&#x2F;creativecommons.org&#x2F;about&#x2F;cclicenses&#x2F;
+creative_commons:
+  license: by-nc-sa # 可选值：by | by-nc | by-nc-nd | by-nc-sa | by-nd | by-sa | cc-zero
+  size: small       # 可选值：big | small
+  sidebar: true     # 在侧边栏显示
+  post: true       # 在文章底部显示
+  # 可以指定想要的特定语言版本的版权声明，例如deed.zh
+  # 详见https:&#x2F;&#x2F;creativecommons.org
+  language:</code></pre>
+<h2 id="打赏模块">打赏模块</h2>
+<p>可添加微信支付和支付宝支付等支付方式。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">reward_settings:
+  enable: true
+  animation: true
+
+# 图片应位于 source&#x2F;images&#x2F; 文件夹下
+reward:
+  #wechatpay: &#x2F;images&#x2F;wechatpay.png
+  #alipay: &#x2F;images&#x2F;alipay.png
+  #paypal: &#x2F;images&#x2F;paypal.png
+  #bitcoin: &#x2F;images&#x2F;bitcoin.png</code></pre>
+<h2 id="高级自定义">高级自定义</h2>
+<p>如果你对NexT提供的自定义选项不满意，NexT还提供了注入文件的方式，
+可以用css、js来实现更高阶的功能。</p>
+<p>首先要在<code>_config.next.yml</code>文件中启用对应的选项。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">custom_file_path:
+  #head: source&#x2F;_data&#x2F;head.njk
+  #header: source&#x2F;_data&#x2F;header.njk
+  #sidebar: source&#x2F;_data&#x2F;sidebar.njk
+  #postMeta: source&#x2F;_data&#x2F;post-meta.njk
+  #postBodyStart: source&#x2F;_data&#x2F;post-body-start.njk
+  #postBodyEnd: source&#x2F;_data&#x2F;post-body-end.njk
+  #footer: source&#x2F;_data&#x2F;footer.njk
+  #bodyEnd: source&#x2F;_data&#x2F;body-end.njk
+  #variable: source&#x2F;_data&#x2F;variables.styl
+  #mixin: source&#x2F;_data&#x2F;mixins.styl
+  #style: source&#x2F;_data&#x2F;styles.styl</code></pre>
+<p>然后在<code>source/_data/</code>文件夹下创建对应的文件即可。
+注意，如果你启用了相关选项但没有对应的文件会导致NexT加载失败。</p>
+<h1 id="next渲染加强">NexT渲染加强</h1>
+<p>这部分主要设计NexT中与博客渲染有关的设置。</p>
+<h2 id="盘古之白">盘古之白</h2>
+<p>汉学家将网页上中文字符与英文、数字、符号等半角字符之间的
+空白称为<strong>盘古之白</strong>，因为它劈开了全角字符与半角字符间的混沌。</p>
+<p>NexT内置了<a href="https://github.com/vinta/pangu.js">pangu.js</a>，
+可以直接在配置文件中启用盘古之白。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">pangu: true</code></pre>
+<h2 id="代码块">代码块</h2>
+<p>Hexo默认使用<a
+href="https://highlightjs.org/">highlight.js</a>来渲染代码块，
+建议切换成更加高效轻量的<a href="https://prismjs.com/">prismjs</a>。</p>
+<div class="tabs" id="codeblock"><ul class="nav-tabs"><li class="tab active"><a href="#codeblock-1">_config.yml</a></li><li class="tab"><a href="#codeblock-2">_config.next.yml</a></li></ul><div class="tab-content"><div class="tab-pane active" id="codeblock-1"><pre class="language-yaml" data-language="yaml"><code class="language-yaml">syntax_highlighter: prismjs</code></pre></div><div class="tab-pane" id="codeblock-2"><pre class="language-yaml" data-language="yaml"><code class="language-yaml">codeblock:
+  # 主题选择
+  # 详见 https:&#x2F;&#x2F;theme-next.js.org&#x2F;highlight&#x2F;
+  theme:
+    light: default
+    dark: stackoverflow-dark
+  prism:
+    light: prism-okaidia
+    dark: prism-okaidia
+
+  # 启用复制按钮
+  copy_button:
+    enable: true      # 启用
+    show_result: true # 复制成功时显示反馈
+    style: mac        # 可选值: default | flat | mac</code></pre>
+<details class="note info">
+<summary>
+<p>
+prism.js代码块主题问题
+</p>
+</summary>
+<p>
+NexT在使用扩展的prism.js主题时，而非原生主题时，会出现无法加载的问题。
+目前我的解决方法是在<a
+href="https://github.com/PrismJS/prism-themes">prism-themes</a>上
+下载对应主题的css文件，将其放到<code>node_modules/prismjs/themes/</code>下。
+</p>
+<p>
+这个方法的缺点是在更新prismjs包时文件会丢失，但我目前没有找到更优雅的解决方法。
+</p>
+<p>
+另外，light模式下启用<code>prism</code>主题会导致dark模式下的其他主题加载时符号有问题，原因未知。
+可以通过不加载<code>prism</code>主题或手动注入css文件来解决。
+</p>
+</details></div></div></div>
+<h2 id="数学公式渲染">数学公式渲染</h2>
+<p>NexT支持MathJax和Katex两种数学公式渲染引擎。
+这里我选用了MathJax。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">math:
+  every_page: false
+  mathjax:
+    enable: true
+    tags: none
+  katex:
+    enable: false
+    copy_tex: false</code></pre>
+<p>注意，当<code>every_page</code>设置为<code>false</code>时，如果要为页面启用MathJax，
+则需要在<a
+href="#front-matter">Front-matter</a>中加入<code>mathjax: true</code>。</p>
+<h2 id="tabs选项卡">Tabs选项卡</h2>
+<p>NexT自带了很多<a
+href="https://theme-next.js.org/docs/tag-plugins/">标签</a>，
+扩展了Markdown语法，提供了更多的高级功能。 <a
+href="https://theme-next.js.org/docs/tag-plugins/tabs">Tabs选项卡</a>就是其中一个。</p>
+<p>Tabs选项卡的基本语法为：</p>
+<pre class="language-markdown" data-language="markdown"><code class="language-markdown">&#123;% tabs UniqueName, [index] %&#125;
+&lt;!-- tab [Tab Caption] [@icon] --&gt;
+任意内容，支持所有Makrdown语法与扩展语法。
+&lt;!-- endtab --&gt;
+
+&lt;!-- tab [Tab Caption] [@icon] --&gt;
+任意内容，支持所有Makrdown语法与扩展语法。
+&lt;!-- endtab --&gt;
+&#123;% endtabs %&#125;</code></pre>
+<p>在NexT中可以对Tabs选项卡进行样式的配置。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">tabs:
+  sticky: true    # 在浏览时使Tabs项固定在页面顶部
+  transition:
+    tabs: true
+    labels: true</code></pre>
+<h2 id="bootstrap-callout">Bootstrap Callout</h2>
+<p>Hexo支持<a
+href="https://theme-next.js.org/docs/tag-plugins/note">Bootstrap
+Callout</a>标签， 可以在NexT设置相关的样式。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">note:
+  style: flat  # Callout 样式，可选值：simple, modern, flat, disabled
+  icons: true  # 显示图标
+  # Offset lighter of background in % for modern and flat styles (modern: -12 | 12; flat: -18 | 6).
+  # Offset also applied to label tag variables. This option can work with disabled note tag.
+  light_bg_offset: 0 # 背景高亮条</code></pre>
+<h2 id="mermaid">Mermaid</h2>
+<p>NexT原生支持<a href="">Mermaid</a>， 可以在配置文件中开启。</p>
+<div class="tabs" id="name"><ul class="nav-tabs"><li class="tab active"><a href="#name-1">_config.next.yml</a></li><li class="tab"><a href="#name-2">_config.yml</a></li></ul><div class="tab-content"><div class="tab-pane active" id="name-1"><pre class="language-yaml" data-language="yaml"><code class="language-yaml">mermaid:
+  enable: true # 启用
+  theme:       # 主题设置，可选值：default | dark | forest | neutral
+    light: default
+    dark: dark</code></pre></div><div class="tab-pane" id="name-2"><p>禁用对<code>mermaid</code>的高亮显示。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">prismjs:
+  exclude-languages:
+    - mermaid</code></pre></div></div></div>
+<p>Mermaid支持两种语法：</p>
+<pre class="language-markdown" data-language="markdown"><code class="language-markdown">&lt;!-- 语法1 --&gt;
+&#123;% mermaid type %&#125;
+&#123;% endmermaid %&#125;
+
+&lt;!-- 语法2 --&gt;
+&#96;&#96;&#96;mermaid
+type
+&#96;&#96;&#96;</code></pre>
+<h2 id="图片显示">图片显示</h2>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"># NexT提供了 fancybox 和 mediumzoom 两个图片效果引擎
+# 注意只能启用其中一个！！！
+fancybox: false
+mediumzoom: true</code></pre>
+<h1 id="插件扩展">插件扩展</h1>
+<p>这部分讲述一些中需要使用插件扩展来实现的功能。</p>
+<h2 id="阅读时长与字数">阅读时长与字数</h2>
+<p>使用插件<a
+href="https://github.com/next-theme/hexo-word-counter">hexo-word-counter</a>，
+可以自动统计每篇博客的字数和计算估计阅读时间。</p>
+<div class="tabs" id="hexo-word-counter"><ul class="nav-tabs"><li class="tab active"><a href="#hexo-word-counter-1">npm</a></li><li class="tab"><a href="#hexo-word-counter-2">_config.yml</a></li><li class="tab"><a href="#hexo-word-counter-3">_config.next.yml</a></li></ul><div class="tab-content"><div class="tab-pane active" id="hexo-word-counter-1"><pre class="language-bash" data-language="bash"><code class="language-bash">npm install hexo-word-counter --save
+hexo clean # 启动博客前需要清楚以前的构建数据</code></pre></div><div class="tab-pane" id="hexo-word-counter-2"><p>在<code>_config.yml</code>文件中添加下列字段以启用该插件。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"># https:&#x2F;&#x2F;github.com&#x2F;next-theme&#x2F;hexo-word-counter
+# 统计文章长度
+symbols_count_time:
+  symbols: true # 文章字数
+  time: true    # 文章阅读时间
+  total_symbols: false # 站点总字数
+  total_time: false    # 站点总阅读时间
+  exclude_codeblock: true # 排除代码块
+  awl: 2   # 平均单词长度，中文推荐设置为2
+  wpm: 300 # 平均每分钟阅读单词数，中文推荐设置为300
+  suffix: &quot;mins.&quot;</code></pre></div><div class="tab-pane" id="hexo-word-counter-3"><p>在<code>_config.next.yml</code>文件中可以进行一些针对NexT主题的定制。
+注意，这些配置已经存在于NexT的配置文件中了，只需修改即可，无需自行添加。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"># Post wordcount display settings
+# Dependencies: https:&#x2F;&#x2F;github.com&#x2F;next-theme&#x2F;hexo-word-counter
+symbols_count_time:
+  separated_meta: true
+  item_text_total: false</code></pre></div></div></div>
+<h2 id="rss">RSS</h2>
+<p>启用插件<a
+href="https://github.com/hexojs/hexo-generator-feed">hexo-generator-feed</a>，
+可以为博客自动生成RSS。</p>
+<div class="tabs" id="rss"><ul class="nav-tabs"><li class="tab active"><a href="#rss-1">npm</a></li><li class="tab"><a href="#rss-2">_config.yml</a></li><li class="tab"><a href="#rss-3">_config.next.yaml</a></li></ul><div class="tab-content"><div class="tab-pane active" id="rss-1"><p>启用RSS需要安装<a
+href="https://github.com/hexojs/hexo-generator-feed">hexo-generator-feed</a>插件。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">npm install hexo-generator-feed</code></pre></div><div class="tab-pane" id="rss-2"><p>在主配置文件中启用该插件。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">feed:
+  enable: true
+  type: atom     # RSS类型
+  path: atom.xml # 生成路径
+  limit: 20      # 文章数量；0或false表示所有文章
+  hub:
+  content:
+  content_limit: 140 # 文章内容限制
+  content_limit_delim: &#39; &#39;
+  order_by: -date # 排序
+  icon: logo.svg  # 图标
+  autodiscovery: true
+  template:</code></pre></div><div class="tab-pane" id="rss-3"><p>NexT提供了两个地方进行RSS展示。</p>
+<ol type="1">
+<li><p>在菜单栏显示。 <pre class="language-yaml" data-language="yaml"><code class="language-yaml">menu:
+  RSS: &#x2F;atom.xml || fa fa-rss</code></pre></p></li>
+<li><p>在文章底部显示。 <pre class="language-yaml" data-language="yaml"><code class="language-yaml">follow_me:
+  RSS: &#x2F;atom.xml || fa fa-rss</code></pre></p></li>
+</ol></div></div></div>
+<h2 id="搜索服务">搜索服务</h2>
+<p>使用插件<a
+href="https://github.com/next-theme/hexo-generator-searchdb">hexo-generator-searchdb</a>，
+可以为博客添加搜索服务。</p>
+<div class="tabs" id="searchdb"><ul class="nav-tabs"><li class="tab active"><a href="#searchdb-1">npm</a></li><li class="tab"><a href="#searchdb-2">_config.next.yml</a></li></ul><div class="tab-content"><div class="tab-pane active" id="searchdb-1"><pre class="language-bash" data-language="bash"><code class="language-bash">npm install hexo-generator-searchdb</code></pre></div><div class="tab-pane" id="searchdb-2"><p>安装插件后可以在NexT中直接启用搜索服务。</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">local_search:
+  enable: true
+  top_n_per_article: 3  # 每篇文章显示前 n 条结果；设置为 -1 时表示无限制
+  unescape: true        # 将 HTML 转义字符串转换回可阅读的字符串
+  preload: false        # 预加载搜索数据</code></pre></div></div></div>
+<h2 id="首页置顶">首页置顶</h2>
+<p>使用插件<a
+href="https://github.com/hexojs/hexo-generator-index">hexo-generator-index</a>，
+可以为博客首页添加指定功能。</p>
+<div class="tabs" id="hexo-generator-index"><ul class="nav-tabs"><li class="tab active"><a href="#hexo-generator-index-1">npm</a></li><li class="tab"><a href="#hexo-generator-index-2">_config.yml</a></li></ul><div class="tab-content"><div class="tab-pane active" id="hexo-generator-index-1"><pre class="language-bash" data-language="bash"><code class="language-bash">npm install hexo-generator-index</code></pre></div><div class="tab-pane" id="hexo-generator-index-2"><p>在<code>_config.yml</code>中可以设置首页排序方式和每页文章数量等。
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">index_generator:
+  path: &#39;&#39;        # 首页路径
+  per_page: 10    # 每页文章数量
+  order_by: -date # 排序方式
+                  # -date 表示按写作日期降序排序</code></pre></p></div></div></div>
+<p>然后可以在文章的<a
+href="#front-matter">Front-matter</a>处添加<code>sticky</code>参数实现首页置顶，
+数字越大优先级越高。</p>
+<h1 id="总结">总结</h1>
+<p>本文讲述了如何使用NexT主题及各种插件来装修个人博客。
+此外，还有一些博客需要的高级功能，如评论、图床等，本文中并未提及。
+理论上它们也属于个人博客装修的范畴，但由于这些功能需要涉及到第三方网站，
+因此我决定将把它们放在下一部分单独讲解。</p>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a href="https://hexo.io">Hexo官方文档</a></li>
+<li><a href="https://theme-next.js.org/">NexT官方文档</a></li>
+<li><a
+href="https://hexo-next.readthedocs.io/zh-cn/latest/">Hexo-NexT</a></li>
+<li><a href="https://iitii.github.io/2021/05/28/1/">Hexo Next
+主题安装、配置及美化</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>七日创站记</category>
+      </categories>
+      <tags>
+        <tag>网站搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AVL树</title>
+    <url>/AVL-tree/</url>
+    <content><![CDATA[<h1 id="avl树">AVL树</h1>
+<p><strong>AVL树</strong>是一种平衡二叉树，它通过<strong>平衡因子（Balance
+Factor）</strong>来衡量树的平衡程度，
+并通过<strong>树旋转</strong>来维护平衡。</p>
+<div class="note info"><p>AVL是苏联教授G.M. Adelson-Velsky和E.M. Landis名称的缩写。
+他们最早提出了最早的平衡二叉树，为了纪念他们，将这种平衡二叉树成为AVL树。</p>
+</div>
+<span id="more"></span>
+<p>AVL树的平衡因子定义为左右子树的高度差，且空节点的平衡因子为<span
+class="math inline">\(0\)</span>。 当节点的平衡因子绝对值小于等于<span
+class="math inline">\(1\)</span>时，称该节点为<strong>平衡节点</strong>，否则为<strong>失衡节点</strong>。</p>
+<p>AVL树的树高不会超过<span class="math inline">\(O(\log
+n)\)</span>。</p>
+<details class="note primary no-icon"><summary><p>证明</p>
+</summary>
+<p>设<span class="math inline">\(f_n\)</span>为高度<span
+class="math inline">\(n\)</span>的AVL树所包含的最少节点数，则有</p>
+<p><span class="math display">\[
+f_n = \begin{cases}
+1, &amp; x = 1 \\\\
+2, &amp; x = 2 \\\\
+f_{n-1} + f_{n-2} + 1, &amp; x \ge 3
+\end{cases}
+\]</span></p>
+<p>则<span class="math inline">\({f_n +
+1}\)</span>是一个斐波那契数列。不难算出其通项为</p>
+<p><span class="math display">\[
+f_n = \frac{5+2\sqrt{5}}{5} (\frac{1+\sqrt{5}}{2})^n +
+\frac{5-2\sqrt{5}}{5} (\frac{1-\sqrt{5}}{2})^n - 1
+\]</span></p>
+<p>当<span class="math inline">\(n\)</span>足够大时，有<span
+class="math inline">\(f_n \sim \frac{5+2\sqrt{5}}{5}
+(\frac{1+\sqrt{5}}{2})^n\)</span>。</p>
+<p>对于树高<span class="math inline">\(n\)</span>，则有</p>
+<p><span class="math display">\[
+n \lt \log_{\frac{1+\sqrt{5}}{2}} (f_n + 1) \sim \log (f_n + 1)
+\]</span></p>
+<p>因此AVL树的高度为<span class="math inline">\(O(\log
+f_n)\)</span>，这里<span
+class="math inline">\(f_n\)</span>为节点数。</p>
+
+</details>
+<h1 id="原理">原理</h1>
+<h2 id="节点">节点</h2>
+<p>由于AVL树的操作需要涉及到树的高度，我们需要在节点中设置<code>height</code>。</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">struct TreeNode
+&#123;
+  int value&#123;&#125;;
+  int height&#123;&#125;;
+  TreeNode* left&#123;&#125;;
+  TreeNode* right&#123;&#125;;
+
+  TreeNode() &#x3D; default;
+  explict TreeNode(int x): value(x) &#123;&#125;
+&#125;;</code></pre>
+<h2 id="节点高度">节点高度</h2>
+<p>节点高度定义为从该节点到距离最远的子节点经过的边数。
+叶子节点的高度为<span
+class="math inline">\(0\)</span>，空节点的高度为<span
+class="math inline">\(-1\)</span>。</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;&#x2F; 获取节点高度
+int AVLTree::height(const TreeNode* node)
+&#123;
+  return node ? node-&gt;height : -1;
+&#125;
+
+&#x2F;&#x2F;&#x2F; 更新节点高度
+void AVLTree::update_height(TreeNode* node)
+&#123;
+  if (node)
+  &#123;
+    node-&gt;height &#x3D; std::max(height(node-&gt;left), height(right)) + 1;
+  &#125;
+&#125;
+</code></pre>
+<h2 id="节点平衡因子">节点平衡因子</h2>
+<p>节点平衡因子定义为左子树的高度减去右子树的高度，并规定空节点平衡因子为<span
+class="math inline">\(0\)</span>。
+AVL树要求平衡因子的绝对值小于等于<span
+class="math inline">\(1\)</span>。</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">int AVLTree::balance_factor(const TreeNode* node)
+&#123;
+  return node ? height(node-&gt;left) - height(node-&gt;right) : 0;
+&#125;</code></pre>
+<h2 id="树旋转">树旋转</h2>
+<p>AVL树通过树旋转来维护平衡。 树旋转包括左旋和右旋。</p>
+<p>在尝试修改树的节点时，可能会破坏AVL树的性质，产生失衡节点。
+由于修改前AVL的节点平衡因子大小不超过1，如果平衡被破坏，
+则失衡节点的平衡因子只可能是<span class="math inline">\(\pm
+2\)</span>。</p>
+<p>我们从底向上研究改变后的AVL树，找到第一个失衡节点，记该节点为node。
+该节点必有子节点，记其高度较大的子节点为child。</p>
+<h3 id="右旋">右旋</h3>
+<p>在下图中，node为3，child为1。</p>
+<p>node所在子树左边偏大，child所在子树也是左边偏大，这种情况称为LL。
+此时应做一次右旋。</p>
+<pre class="language-pic" data-language="pic"><code class="language-pic">      4                          4
+     &#x2F; \                        &#x2F; \
+    3   5                      1   5
+   &#x2F;               &#x3D;&#x3D;&#x3D;&gt;       &#x2F; \
+  1                          0   3
+ &#x2F;
+0</code></pre>
+<p>我们对以node为根节点的子树作一次右旋操作。
+在旋转后的子树中，child变成根节点，node变成child的右儿子，其余保持不变。</p>
+<p>如果child已经有右儿子（称其为grant_child），则需将grant_child作为node的左儿子。
+如下图所示。</p>
+<pre class="language-pic" data-language="pic"><code class="language-pic">      5                          3
+     &#x2F; \                        &#x2F; \
+    3   6                      1   5
+   &#x2F; \             &#x3D;&#x3D;&#x3D;&gt;       &#x2F;   &#x2F; \
+  1   4                      0   4   6
+ &#x2F;
+0</code></pre>
+<p>代码实现如下： <pre class="language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::right_rotate(TreeNode* node)
+&#123;
+  TreeNode* child &#x3D; node-&gt;left;
+  TreeNode* grant_child &#x3D; child-&gt;right;
+
+  child-&gt;right &#x3D; node;
+  node-&gt;left &#x3D; grant_child;
+
+  &#x2F;&#x2F; 注意需要更新节点的高度
+  update_height(node);
+  update_height(child);
+
+  &#x2F;&#x2F; 返回新子树的根节点
+  return child;
+&#125;</code></pre></p>
+<h3 id="左旋">左旋</h3>
+<p>RR为LL的镜像，此时应做一次左旋。</p>
+<p>代码实现与右旋基本相同，只是将左右互换了。</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::left_rotate(TreeNode* node)
+&#123;
+  TreeNode* child &#x3D; node-&gt;right;
+  TreeNode* grant_child &#x3D; child-&gt;left;
+
+  child-&gt;left &#x3D; node;
+  node-&gt;right &#x3D; grant_child;
+
+  update_height(node);
+  update_height(child);
+
+  return child;
+&#125;</code></pre>
+<h3 id="左旋后右旋">左旋后右旋</h3>
+<p>当node所在子树左边偏大，但child所在子树右边偏大，即LR时，仅做一次旋转不够，
+需要先对child左旋，再对node右旋。</p>
+<p>如下图所示：</p>
+<pre class="language-pic" data-language="pic"><code class="language-pic">    4                          4                        4
+   &#x2F; \                        &#x2F; \                      &#x2F; \
+  3   5                      3   5                    2   5
+ &#x2F;               &#x3D;&#x3D;&#x3D;&gt;       &#x2F;              &#x3D;&#x3D;&gt;       &#x2F; \
+1                          2                        1   3
+ \                        &#x2F;
+  2                      1</code></pre>
+<h3 id="右旋后左旋">右旋后左旋</h3>
+<p>RL为LR的镜像，此时应先对child右旋，后对node左旋。</p>
+<h3 id="完整实现">完整实现</h3>
+<p>根据失衡节点node及较大侧子节点child的平衡因子，可以分四种情况，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">失衡节点的平衡因子</th>
+<th style="text-align: center;">子节点的平衡因子</th>
+<th style="text-align: center;">所属情况</th>
+<th style="text-align: center;">应采取的旋转方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(\gt
+1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ge
+0\)</span></td>
+<td style="text-align: center;">LL</td>
+<td style="text-align: center;">右旋</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(\gt
+1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\lt
+0\)</span></td>
+<td style="text-align: center;">LR</td>
+<td style="text-align: center;">先左旋后右旋</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(\lt
+-1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\le
+0\)</span></td>
+<td style="text-align: center;">RR</td>
+<td style="text-align: center;">左旋</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(\lt
+-1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\gt
+0\)</span></td>
+<td style="text-align: center;">RL</td>
+<td style="text-align: center;">先右旋后左旋</td>
+</tr>
+</tbody>
+</table>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::rotate(TreeNode* node)
+&#123;
+  int factor &#x3D; balance_factor(node);
+
+  &#x2F;&#x2F; L
+  if (factor &gt; 1)
+  &#123;
+    &#x2F;&#x2F; LL
+    if (balance_factor(node-&gt;left) &gt;&#x3D; 0)
+    &#123;
+      return right_rotate(node);
+    &#125;
+
+    &#x2F;&#x2F; LR
+    node-&gt;left &#x3D; left_rotate(node-&gt;left);
+    return right_rotate(node);
+  &#125;
+
+  &#x2F;&#x2F; R
+  if (factor &lt; -1)
+  &#123;
+    &#x2F;&#x2F; RR
+    if (balance_factor(node-&gt;right) &lt;&#x3D; 0)
+    &#123;
+      return left_rotate(node);
+    &#125;
+
+    &#x2F;&#x2F; RL
+    node-&gt;right &#x3D; right_rotate(node-&gt;right);
+    return left_rotate(node);
+  &#125;
+
+  &#x2F;&#x2F; 无需旋转，直接返回
+  return node;
+&#125;</code></pre>
+<h1 id="avl树基本操作">AVL树基本操作</h1>
+<h2 id="插入节点">插入节点</h2>
+<p>AVL树的插入操作与二叉搜索树的插入类似。
+唯一的区别在于插入后AVL树可能会出现失衡节点，我们需要沿着
+插入后的节点到根节点的路径进行搜索，找到失衡节点，并进行树旋转，
+以维护其平衡。</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::insert(TreeNode* node, int value)
+&#123;
+  if (!node)
+  &#123;
+    return new TreeNode(value);
+  &#125;
+
+  if (node-&gt;value &lt; value)
+  &#123;
+    node-&gt;right &#x3D; insert(node-&gt;right, value);
+  &#125;
+  else
+  &#123;
+    node-&gt;left &#x3D; insert(node-&gt;left, value);
+  &#125;
+
+  &#x2F;&#x2F; 注意更新节点高度
+  update_height(node);
+
+  &#x2F;&#x2F; 维护平衡
+  node &#x3D; rotate(node);
+
+  return node;
+&#125;</code></pre>
+<h2 id="删除节点">删除节点</h2>
+<p>删除节点的操作与插入节点类似。</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::remove(TreeNode* node, int value)
+&#123;
+  if (!node)
+  &#123;
+    return nullptr;
+  &#125;
+
+  if (node-&gt;value &lt; value)
+  &#123;
+    node-&gt;right &#x3D; remove(node-&gt;right, value);
+  &#125;
+  else if (node-&gt;value &gt; value)
+  &#123;
+    node-&gt;left &#x3D; remove(node-&gt;left, value);
+  &#125;
+  else &#x2F;&#x2F; 删除自身
+  &#123;
+    &#x2F;&#x2F; 0或1个子节点
+    if (!node-&gt;left || !node-&gt;right)
+    &#123;
+      TreeNode* child &#x3D; node-&gt;left ? node-&gt;left : node-&gt;right;
+      delete node;
+      node &#x3D; child;
+    &#125;
+    else &#x2F;&#x2F; 2个子节点
+    &#123;
+      &#x2F;&#x2F; 找到中序遍历的后一个节点（右子树的最左边元素）
+      TreeNode next &#x3D; node-&gt;right;
+      while (next-&gt;left)
+      &#123;
+        next &#x3D; next-&gt;left;
+      &#125;
+
+      node-&gt;value &#x3D; next_value;
+      node-&gt;right &#x3D; remove(node-&gt;right, next-&gt;value);
+    &#125;
+  &#125;
+
+  &#x2F;&#x2F; 注意更新节点高度
+  update_height(node);
+
+  &#x2F;&#x2F; 维护平衡
+  node &#x3D; rotate(node);
+
+  return node;
+&#125;</code></pre>
+<h2 id="查找节点">查找节点</h2>
+<p>AVL树的查找操作与二叉平衡树一样，这里就不再详细列出。</p>
+<h1 id="与红黑树的比较">与红黑树的比较</h1>
+<p>AVL树经常被与红黑树作比较，
+它们都是计算机科学中常见的自平衡二叉查找树。</p>
+<p>事实上，每一颗AVL树都可以被染色成红黑树，但红黑树不一定是AVL树。</p>
+<p>与红黑树相比，AVL树的平衡性更强，平衡要求更高，故其查找性能相对会更好，
+但插入和删除效率则会更低。</p>
+<p>AVL树更适合插入删除次数少、查找次数多的场景，红黑树则更胜任于频繁查删的场景。
+Windows
+NT内核中就广泛使用了AVL树，而C++标准库里的<code>std::map</code>和<code>std::set</code>
+都是用红黑树实现的。</p>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a
+href="https://www.cnblogs.com/1873cy/p/18395797">算法与数据结构——AVL树（平衡二叉搜索树）|
+博客园</a></li>
+<li><a href="https://oi-wiki.org/ds/avl/">AVL 树 | OI Wiki</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>高级数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>数据结构与算法</tag>
+        <tag>平衡树</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Splay树</title>
+    <url>/splay-tree/</url>
+    <content><![CDATA[<h1 id="splay树">Splay树</h1>
+<p><strong>Splay树</strong>，又名<strong>伸展树</strong>，是一种自平衡二叉搜索树。
+它通过splay操作不断将某个节点旋转到根节点的位置，维持整体的平衡，
+能在均摊时间<span class="math inline">\(O(\log
+N)\)</span>内完成插入、删除、查找操作。</p>
+<p>Splay树由Daniel Sleator和Robert Tarjan于1985年发明。
+<del><em>没错，就是你知道的那个Tarjan</em></del></p>
+<span id="more"></span>
+<h1 id="原理">原理</h1>
+<h2 id="节点信息与基本操作">节点信息与基本操作</h2>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">struct TreeNode
+&#123;
+  ValueT value&#123;&#125;;
+  SizeT size&#123;&#125;; &#x2F;&#x2F; 这里存储size是为了实现获取第k大数等功能，如不需要可略去
+  TreeNode* child[2]&#123;&#125;;
+  TreeNode* parent; &#x2F;&#x2F; Splay需要存储父节点，方便某些操作
+                    &#x2F;&#x2F; 不过这也加大了树旋转的难度
+
+  TreeNode() &#x3D; default;
+  explicit TreeNode(ValueT value_): value(value_) &#123;&#125;
+&#125;;
+
+&#x2F;&#x2F;&#x2F; 维护节点信息
+void SplayTree::maintain(TreeNode* node)
+&#123;
+  if (node)
+  &#123;
+    node-&gt;size &#x3D; (node-&gt;child[0] ? node-&gt;child[0]-&gt;size : 0) + 
+                 (node-&gt;child[1] ? node-&gt;child[1]-&gt;size : 0) + 1;
+  &#125;
+&#125;
+
+&#x2F;&#x2F;&#x2F; 获取相对于父节点的方向
+int SplayTree::get_dir(const TreeNode* node)
+&#123;
+  if (!node || !node-&gt;parent)
+  &#123;
+    return -1;
+  &#125;
+  return node-&gt;parent-&gt;child[1] &#x3D;&#x3D; node ? 1 : 0;
+&#125;</code></pre>
+<h2 id="单旋左旋和右旋">单旋（左旋和右旋）</h2>
+<p>左旋和右旋是树旋转的两大基本操作，这部分的内容已经在<a
+href="/AVL-tree/#树旋转">AVL树</a>中讲过了，
+这里就不再重复描述，仅给出代码实现。</p>
+<pre class="language-pic" data-language="pic"><code class="language-pic">      G                    G
+     &#x2F;                    &#x2F;
+    P                    X
+   &#x2F; \        右旋      &#x2F; \
+  X   C       &lt;--&gt;     A   P
+ &#x2F; \          左旋        &#x2F; \
+A   B                    B   C</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; 由于左旋与右旋的操作类似，这里将其统一为一个操作，用数组下标来区分方向。
+&#x2F;&#x2F; 与AVL树中的实现不同，节点本身有调整父节点的能力，
+&#x2F;&#x2F; 故这里不再需要再返回旋转后的根节点。
+&#x2F;&#x2F; 单旋需保证node, parent非空。
+void SplayTree::rotate(TreeNode* node)
+&#123;
+  TreeNode* parent &#x3D; node-&gt;parent;
+  TreeNode* grand_parent &#x3D; parent-&gt;parent;
+
+  int dir &#x3D; get_dir(node);
+  int gdir &#x3D; get_dir(parent);
+
+  node-&gt;parent &#x3D; grand_parent;
+  if (grand_parent) &#x2F;&#x2F; 不保证grand_parent非空
+  &#123;
+    grand_parent-&gt;child[gdir] &#x3D; node;
+  &#125;
+
+  TreeNode* child &#x3D; node-&gt;child[dir^1];
+  node-&gt;child[dir^1] &#x3D; parent;
+  parent-&gt;parent &#x3D; node;
+
+  parent-&gt;child[dir] &#x3D; child;
+  if (child) &#x2F;&#x2F; 不保证child非空
+  &#123;
+    child-&gt;parent &#x3D; parent;
+  &#125;
+
+  &#x2F;&#x2F; 先parent再node
+  &#x2F;&#x2F; 因为此时parent是node的孩子
+  maintain(parent);
+  maintain(node);
+&#125;</code></pre>
+<h2 id="双旋">双旋</h2>
+<p>每次操作我们需要将给定节点直接旋转到根节点的位置。
+显然，我们可以通过连续的单旋来轻松实现。 但是，单旋操作有一个缺点：
+<strong><em>对于一条链上的数据，连续单旋后依旧是一条链。</em></strong>
+这样并不能优化原树的层数，很容易被卡掉。</p>
+<p>因此，我们需要引入<strong>双旋</strong>操作。</p>
+<p>双旋操作的实现如下：</p>
+<ol type="1">
+<li>若X本身就是根节点，则不动。</li>
+<li>若X是根节点的直接子节点，直接单旋X。</li>
+<li>否则判断X的方向与父节点P的方向的关系：
+<ul>
+<li>若相同，先旋转P，再旋转X。</li>
+<li>若不同，连续旋转两次X。</li>
+</ul></li>
+</ol>
+<details class="note info"><summary><p>什么是zig和zag？</p>
+</summary>
+<p>这是一种约定俗称的叫法，我们将单旋中的左旋称为zag，右旋称为zig。</p>
+<p>由于左右旋是完全对称的，事实上我们可以把splay操作分为三种情况：</p>
+<ol type="1">
+<li><p>zig</p>
+<p>即普通的左旋和右旋。</p></li>
+<li><p>zig-zig</p>
+<p>要求P不是根节点，且P与X同向。如下图所示。</p>
+<pre class="language-pic" data-language="pic"><code class="language-pic">      G            X
+     &#x2F; \          &#x2F; \
+    P   D        A   P
+   &#x2F; \      &#x3D;&#x3D;&gt;     &#x2F; \
+  X   C            B   G
+ &#x2F; \                  &#x2F; \
+A   B                C   D</code></pre></li>
+<li><p>zig-zag</p>
+<p>要求P不是根节点，且P与X不同向。如下图所示。</p>
+<pre class="language-pic" data-language="pic"><code class="language-pic">    G                 X
+   &#x2F; \              &#x2F;   \
+  P   D            P     G
+ &#x2F; \      &#x3D;&#x3D;&gt;     &#x2F; \   &#x2F; \
+A   X            A   B C   D
+   &#x2F; \
+  B   C</code></pre></li>
+</ol>
+
+</details>
+<p>结合双旋操作的splay代码实现如下：</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; 将node节点旋转到根节点root
+void SplayTree::splay(TreeNode* node)
+&#123;
+  while (node-&gt;parent)
+  &#123;
+    TreeNode* parent &#x3D; node-&gt;parent;
+    if (parent-&gt;parent)
+    &#123;
+      rotate(get_dir(parent) &#x3D;&#x3D; get_dir(node) ? parent : node);
+    &#125;
+    rotate(node);
+  &#125;
+  root_ &#x3D; node;
+&#125;</code></pre>
+<h1 id="基本操作">基本操作</h1>
+<h2 id="插入">插入</h2>
+<p>这里我们假定每个值最多存在一个节点，类似于<code>std::map</code>的模式。
+根据需要，也可以通过给<code>TreeNode</code>添加<code>count</code>字段
+或使用多个节点的方式来实现有重复节点的平衡树。</p>
+<p>插入操作的实现逻辑大致如下： 1. 如果树为空，直接插入根节点。 2.
+如果发现一个节点与插入值相同，对该节点进行splay操作。 3.
+否则继续往下查找，找到空节点则直接插入并进行splay。</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">void SplayTree::insert(ValueT value)
+&#123;
+  if (!root_)
+  &#123;
+    root_ &#x3D; new TreeNode(value);
+    return;
+  &#125;
+
+  TreeNode* current &#x3D; root_;
+  TreeNode* parent&#123;&#125;;
+  while (current)
+  &#123;
+    if (current-&gt;value &#x3D;&#x3D; value)
+    &#123;
+      &#x2F;&#x2F; 注意这里如果要修改count字段则需要在修改后更新size
+      splay(current);
+      return;
+    &#125;
+
+    parent &#x3D; current;
+    current &#x3D; current-&gt;child[current-&gt;value &lt; value];
+  &#125;
+
+  &#x2F;&#x2F; current为空节点
+  current &#x3D; new TreeNode(value);
+  current-&gt;parent &#x3D; parent;
+  parent-&gt;child[parent-&gt;value &lt; value] &#x3D; current;
+  maintain(parent);
+  splay(current);
+&#125;</code></pre>
+<h2 id="查找数x的排名">查找数x的排名</h2>
+<p>Splay的查找操作与正常的二叉搜索树没有太大区别，
+只是在查找到对应节点后需要做一次Splay。</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">SizeT SplayTree::find_rank(ValueT value)
+&#123;
+  TreeNode* current &#x3D; root_;
+  SizeT rank &#x3D; 0;
+
+  while (current)
+  &#123;
+    if (value &lt; current-&gt;value)
+    &#123;
+      current &#x3D; current-&gt;child[0];
+      continue;
+    &#125;
+    rank +&#x3D; (current-&gt;left ? current-&gt;left-&gt;size : 0);
+
+    if (value &#x3D;&#x3D; current-&gt;value)
+    &#123;
+      splay(current);
+      return rank;
+    &#125;
+    ++rank;
+
+    current &#x3D; current-&gt;child[1];
+  &#125;
+
+  return -1; &#x2F;&#x2F; No Found.
+&#125;</code></pre>
+<h2 id="查找排名为x的数">查找排名为x的数</h2>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">ValueT SplayTree::find_value(SizeT rank)
+&#123;
+  if (rank &gt; root_-&gt;size)
+  &#123;
+    return ValueT::NO_FOUND; &#x2F;&#x2F; 自行考虑怎么实现
+  &#125;
+
+  TreeNode* current &#x3D; root_;
+  while (current)
+  &#123;
+    if (current-&gt;child[0] &amp;&amp; current-&gt;child[0]-&gt;size &gt;&#x3D; rank)
+    &#123;
+      current &#x3D; current-&gt;child[0];
+      continue;
+    &#125;
+    rank -&#x3D; (current-&gt;child[0] ? current-&gt;child[0]-&gt;size : 0) + 1;
+
+    &#x2F;&#x2F; 恰好为当前数
+    if (rank &#x3D;&#x3D; 0)
+    &#123;
+      splay(current);
+      return current-&gt;value;
+    &#125;
+
+    current &#x3D; current-&gt;child[1];
+  &#125;
+&#125;</code></pre>
+<h2 id="前驱后继">前驱、后继</h2>
+<ol type="1">
+<li>先插入节点x，使x位于根节点的位置（这里需要确认x是否存在树中）；</li>
+<li>前驱即左子树最右边的节点，后驱即右子树最左边的节点。</li>
+</ol>
+<p>这里列出前驱的代码实现。 后驱的实现与此基本相同，就不再给出。</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* SplayTree::find_rightest(TreeNode* node)
+&#123;
+  if(!node)
+  &#123;
+    return nullptr;
+  &#125;
+
+  while (node-&gt;child[1]);
+  &#123;
+    node &#x3D; node-&gt;child[1];
+  &#125;
+  return node;
+&#125;
+
+ValueT SplayTree::get_pre(ValueT value)
+&#123;
+  TreeNode* current&#123;&#125;;
+  if (find_rank(value) !&#x3D; -1)
+  &#123;
+    current &#x3D; find_rightest(root-&gt;child[0]);
+  &#125;
+  else
+  &#123;
+    insert(value);
+    current &#x3D; find_rightest(root-&gt;child[0]);
+    remove(value);
+  &#125;
+
+  if (current)
+  &#123;
+    splay(current);
+    return current-&gt;value;
+  &#125;
+  return ValueT::NO_FOUND;
+&#125;</code></pre>
+<h2 id="删除">删除</h2>
+<ol type="1">
+<li>将要删除的节点移动到根节点。</li>
+<li>删除根节点，切割左右子树。</li>
+<li>对左子树的最右节点做一次splay。</li>
+<li>将右子树合并过去。</li>
+</ol>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">void SplayTree::remove(ValueT value)
+&#123;
+  if (find_rank(value) !&#x3D; -1)
+  &#123;
+    TreeNode* left &#x3D; root_-&gt;child[0];
+    TreeNode* right &#x3D; root_-&gt;child[1];
+    if (left) left-&gt;parent &#x3D; nullptr;
+    if (right) right-&gt;parent &#x3D; nullptr;
+    delete root_;
+
+    &#x2F;&#x2F; 左子树为空，直接使用右子树
+    if (!left)
+    &#123;
+      root_ &#x3D; right;
+      return;
+    &#125;
+
+    root_ &#x3D; left;
+    TreeNode* rightest &#x3D; find_rightest(root_);
+    splay(rightest);
+
+    rightest-&gt;child[1] &#x3D; right;
+    right-&gt;parent &#x3D; rightest;
+    maintain(rightest);
+  &#125;
+&#125;</code></pre>
+<h1 id="均摊复杂度">均摊复杂度</h1>
+<p>我们用势能法来证明Splay树拥有<span class="math inline">\(O(\log
+N)\)</span>的均摊时间复杂度。</p>
+<h2 id="势能函数">势能函数</h2>
+<p>我们使用<span
+class="math inline">\(T\)</span>来描述完整的一棵树，用小写字母<span
+class="math inline">\(x\)</span>、<span
+class="math inline">\(y\)</span>、<span
+class="math inline">\(z\)</span>等表示树上的节点。 定义<span
+class="math inline">\(|T|\)</span>为Splay树上的节点数目，<span
+class="math inline">\(|x|\)</span>为以<span
+class="math inline">\(x\)</span>为根的子树的节点数目（包括<span
+class="math inline">\(x\)</span>）。</p>
+<p>定义势能函数如下：</p>
+<p><span class="math display">\[
+\phi (x) = \log |x|
+\]</span></p>
+<p><span class="math display">\[
+\Phi (T) = \sum_{x \in T} \phi (x)
+\]</span></p>
+<p>其中<span
+class="math inline">\(\Phi(T)\)</span>为整棵树的势能函数，<span
+class="math inline">\(\phi(x)\)</span>为节点<span
+class="math inline">\(x\)</span>对势能的贡献。</p>
+<p>对于任意时刻，都有<span class="math inline">\(\Phi (T) \ge
+0\)</span>，因此势能函数合法。</p>
+<h2 id="zig操作的摊还代价">zig操作的摊还代价</h2>
+<p>zig操作中发生势能变化的只有操作节点<span
+class="math inline">\(x\)</span>及其父节点<span
+class="math inline">\(y\)</span>，因此</p>
+<p><span class="math display">\[
+\Delta \Phi (T) = \phi (x&#39;) + \phi (y&#39;) - \phi (x) - \phi(y)
+\]</span></p>
+<p>由zig操作的性质可知，<span class="math inline">\(\phi (x&#39;) = \phi
+(y)\)</span>，<span class="math inline">\(\phi (x&#39;) \ge \phi
+(y&#39;)\)</span>， 因此</p>
+<p><span class="math display">\[
+\Delta \Phi (T) \le \phi (x&#39;) - \phi (x) = O(\phi (x&#39;) - \phi
+(x))
+\]</span></p>
+<p>因此zig操作的摊还代价为<span class="math inline">\(O(1 + \phi
+(x&#39;) - \phi (x))\)</span>，其中<span
+class="math inline">\(O(1)\)</span>表示旋转本身的复杂度。
+由于一次splay中只有至多一次zig，这<span
+class="math inline">\(O(1)\)</span>不会对分析产生影响，我们可以只关心其中的
+<span class="math inline">\(O(\phi (x&#39;) - \phi (x))\)</span>。</p>
+<h2 id="zig-zig操作的摊还代价">zig-zig操作的摊还代价</h2>
+<p>zig-zig操作中发生势能变化的有操作节点<span
+class="math inline">\(x\)</span>，父节点<span
+class="math inline">\(y\)</span>，及其祖父节点<span
+class="math inline">\(z\)</span>，因此</p>
+<p><span class="math display">\[
+\Delta \Phi (T) = \phi (x&#39;) + \phi (y&#39;) + \phi (z&#39;) - \phi
+(x) - \phi (y) - \phi (z)
+\]</span></p>
+<p>同样地，有<span class="math inline">\(\phi (x&#39;) = \phi
+(z)\)</span>，<span class="math inline">\(\phi (x&#39;) \ge \phi
+(y&#39;)\)</span>，<span class="math inline">\(\phi (x) \le \phi
+(y)\)</span>，因此</p>
+<p><span class="math display">\[
+\Delta \Phi (T) \le \phi (x&#39;) + \phi (z&#39;) - 2 \phi (x)
+\]</span></p>
+<p>这里我们需要用到一个小结论：<span class="math inline">\(\phi (x) +
+\phi (z&#39;) - 2 \phi(x&#39;) \le - 1\)</span>。</p>
+<details class="note info"><summary><p>证明</p>
+</summary>
+<p>设<span class="math inline">\(|x| = a\)</span>，<span
+class="math inline">\(|z&#39;| = b\)</span>，则<span
+class="math inline">\(|x&#39;| \ge a + b\)</span>。</p>
+<p><span class="math display">\[
+\begin{aligned}
+\phi (x) + \phi (z&#39;) - 2 \phi(x&#39;)
+&amp;= \log |x| + \log |z&#39;| - 2\log |x&#39;| \\
+&amp;= \log \left(\frac{|x||z&#39;|}{|x&#39;|^2}\right) \\
+&amp;\le \log \left(\frac{a b}{(a+b)^2}\right) \\
+&amp;\le \log \left(\frac{a b}{2 a b}\right) \\
+&amp;= -1
+\end{aligned}
+\]</span></p>
+
+</details>
+<p>因此，<span class="math inline">\(-(\phi (x) + \phi (z&#39;) - 2
+\phi(x&#39;) + 1)\)</span>是一个非负数。
+将上面的式子加上这个非负数，可得</p>
+<p><span class="math display">\[
+\begin{aligned}
+\Delta \Phi (T)
+&amp;\le \phi (x&#39;) + \phi (z&#39;) - 2 \phi (x) \\
+&amp;\le \phi (x&#39;) + \phi (z&#39;) - 2 \phi (x) - (\phi (x) + \phi
+(z&#39;) - 2 \phi(x&#39;) + 1) \\
+&amp;= 3 \phi (x&#39;) - 3 \phi (x) - 1
+\end{aligned}
+\]</span></p>
+<p>则zig-zag的摊还代价为<span class="math inline">\(O(1) + O(\phi
+(x&#39;) - \phi (x) - 1)\)</span>。
+通过增大我们所加的非负数以及势的单位，可以抵消<span
+class="math inline">\(O(1)\)</span>中的常数。 故摊还代价为<span
+class="math inline">\(O(\phi (x&#39;) - \phi (x))\)</span>。</p>
+<h2 id="zig-zag的摊还代价">zig-zag的摊还代价</h2>
+<p>其分析过程与zig-zig一样，前面使用到的性质依旧适用，因此结论不变。</p>
+<h2 id="splay操作的摊还代价">splay操作的摊还代价</h2>
+<p>除了最后一次旋转可能增加<span
+class="math inline">\(O(1)\)</span>的代价外，其他旋转操作的摊还代价均为<span
+class="math inline">\(O(\phi (x&#39;) - \phi (x))\)</span>。</p>
+<p>假设一共执行了<span class="math inline">\(n\)</span>次旋转操作，<span
+class="math inline">\(x_i\)</span>表示第<span
+class="math inline">\(i\)</span>次旋转后<span
+class="math inline">\(x\)</span>的状态，则splay的总摊还代价为</p>
+<p><span class="math display">\[
+O(1 + \sum_{i = 1}^{n} (\phi(x_{i}) - \phi (x_{i-1}))) = O(1 + \phi
+(x_n) - \phi (x_0))
+\]</span></p>
+<p>此时<span class="math inline">\(x_n\)</span>是树根，故<span
+class="math inline">\(\phi (x_n) = \log |T|\)</span>。
+因此一次splay的摊还代价为<span class="math inline">\(O(\log
+|T|)\)</span>。</p>
+<h1 id="扩展进阶">扩展进阶</h1>
+<h2 id="空节点">空节点</h2>
+<p>可以用一个全局静态节点<code>NullNode</code>来替代<code>nullptr</code>作为空节点。
+这样做的好处通过合理设置<code>NullNode</code>的各项数值，可以减少大量空指针的检查，
+减少代码量，且增强鲁棒性。</p>
+<p>例如，通过设置<code>NullNode-&gt;size = 0</code>，下列的代码可以简化为
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; 简化前
+node-&gt;size &#x3D; (node-&gt;child[0] ? node-&gt;child[0]-&gt;size : 0) + 
+             (node-&gt;child[1] ? node-&gt;child[1]-&gt;size : 0) + 1;
+
+&#x2F;&#x2F;简化后
+node-&gt;size &#x3D; node-&gt;child[0]-&gt;size + node-&gt;child[1]-&gt;size + 1;</code></pre></p>
+<h2 id="自顶向下的操作">自顶向下的操作</h2>
+<p><a
+href="https://peteryuhang.github.io/posts/Splay-树-均摊时间下的平衡二叉搜索树/">Splay树：均摊时间下的平衡二叉搜索树</a>
+中给出了一种自顶向下的Splay树实现。
+与本文中所给出的实现方法——先找到节点，然后进行splay——不同，
+这种自顶向下的实现在向下查找的过程中，一边查找，一边调整树的结构，不需要进行回溯。</p>
+<p>这种实现方法有两个好处：</p>
+<ul>
+<li>我们不需要在节点中维护额外的信息（父节点），代码实现起来更简洁。</li>
+<li>在实际应用中，这种方法的运行效率会更好。</li>
+</ul>
+<h1 id="splay树的不足">Splay树的不足</h1>
+<p>Splay树最显著的缺点就是它有可能会退化成一条链。
+例如，以非递减顺序访问全部<span
+class="math inline">\(n\)</span>个节点就会出现这种情况。
+不过，均摊后的最坏时间复杂度依旧是对数级的<span
+class="math inline">\(O(\log N)\)</span>。</p>
+<p>另外，由于Splay树每个操作，哪怕是“只读”的访问，也会改变树的结构，
+在多线程环境下，使用Splay树会变得异常复杂，需要额外的维护操作。</p>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a
+href="https://www.cnblogs.com/baijian0212/p/splay.html">伸展树（Splay）详解
+| 博客园</a></li>
+<li><a href="https://oi-wiki.org/ds/splay/">Splay树 | OI Wiki</a></li>
+<li><a href="https://www.cnblogs.com/Elaina-0/p/18275500">关于Spaly树 |
+博客园 伊蕾娜的小窝</a></li>
+<li><a
+href="https://zh.wikipedia.org/wiki/%E4%BC%B8%E5%B1%95%E6%A0%91">伸展树
+| 维基百科</a></li>
+<li><a
+href="https://mr-spade.github.io/study/OI/伸展树-splay-复杂度证明/">伸展树（Splay）复杂度证明
+| Mr_Spade</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>高级数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>数据结构与算法</tag>
+        <tag>平衡树</tag>
+      </tags>
+  </entry>
+</search>
