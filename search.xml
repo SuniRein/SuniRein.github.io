@@ -1,6 +1,339 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>C/C++中的检测宏</title>
+    <url>/cpp-platform-check-macro/</url>
+    <content><![CDATA[<h1 id="简介">简介</h1>
+<p>C/C++中提供了一系列宏，能够被用于检测芯片架构、操作系统、编译器等信息。
+我们可以用这些宏来实现条件编译，即针对不同的平台提供不同的实现代码，
+以充分利用不同平台的特性与优势。</p>
+<span id="more"></span>
+<h1 id="芯片架构">芯片架构</h1>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">宏</th>
+<th style="text-align: center;">架构</th>
+<th style="text-align: center;">编译器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">__x86_64__</td>
+<td style="text-align: center;">AMD64</td>
+<td style="text-align: center;">GNU C, Clang/LLVM</td>
+</tr>
+<tr>
+<td style="text-align: center;">_M_X64</td>
+<td style="text-align: center;">AMD64</td>
+<td style="text-align: center;">Visual Studio</td>
+</tr>
+<tr>
+<td style="text-align: center;">__arm__ *</td>
+<td style="text-align: center;">ARM</td>
+<td style="text-align: center;">GNU C, Clang/LLVM</td>
+</tr>
+<tr>
+<td style="text-align: center;">_M_ARM = Version</td>
+<td style="text-align: center;">ARM</td>
+<td style="text-align: center;">Visual Studio</td>
+</tr>
+<tr>
+<td style="text-align: center;">__aarch64__</td>
+<td style="text-align: center;">ARM64</td>
+<td style="text-align: center;">GNU C, Clang/LLVM</td>
+</tr>
+<tr>
+<td style="text-align: center;">_M_ARM64</td>
+<td style="text-align: center;">ARM64</td>
+<td style="text-align: center;">Visual Studio</td>
+</tr>
+<tr>
+<td style="text-align: center;">__i386__</td>
+<td style="text-align: center;">Intel x86</td>
+<td style="text-align: center;">GNU C, Clang/LLVM</td>
+</tr>
+<tr>
+<td style="text-align: center;">_M_IX86 *</td>
+<td style="text-align: center;">Intel x86</td>
+<td style="text-align: center;">Visual Studio</td>
+</tr>
+<tr>
+<td style="text-align: center;">__ia64__</td>
+<td style="text-align: center;">Intel Itanum</td>
+<td style="text-align: center;">GNU C, Clang/LLVM</td>
+</tr>
+<tr>
+<td style="text-align: center;">_M_IA64</td>
+<td style="text-align: center;">Intel Itanum</td>
+<td style="text-align: center;">Visual Studio</td>
+</tr>
+<tr>
+<td style="text-align: center;">__ppc__ <br> __PPC__ <br> __ppc64__ <br>
+__PPC64__</td>
+<td style="text-align: center;">PowerPC</td>
+<td style="text-align: center;">GNU C, Clang/LLVM</td>
+</tr>
+<tr>
+<td style="text-align: center;">_M_PPC</td>
+<td style="text-align: center;">PowerPC</td>
+<td style="text-align: center;">Visual Studio</td>
+</tr>
+<tr>
+<td style="text-align: center;">__riscv</td>
+<td style="text-align: center;">RISC-V</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">__riscv_xlen = (32, 64)</td>
+<td style="text-align: center;">RISC-V</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">__loongrch__ <br> __loongrch_arch =
+Version</td>
+<td style="text-align: center;">LoongArch</td>
+<td style="text-align: center;">GNU C, Clang/LLVM, official
+toolchains</td>
+</tr>
+</tbody>
+</table>
+<p><code>*</code>表示仅适用于32位架构。</p>
+<p>更详细的资料可以<a
+href="https://github.com/cpredef/predef/blob/master/Architectures.md">在这查看</a>。</p>
+<h1 id="端序">端序</h1>
+<p>目前没有统一的可以检测端序的宏定义。
+许多操作系统在<code>&lt;sys/param.h&gt;</code>中会包含下面这些宏。
+使用<code>GNU C</code>的操作系统通常会提供一个包含下面这些宏的<code>&lt;endian.h&gt;</code>文件。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">宏</th>
+<th style="text-align: center;">值</th>
+<th style="text-align: center;">端序</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">__BYTE_ORDER</td>
+<td style="text-align: center;">__BIG_ENDIAN</td>
+<td style="text-align: center;">大端序</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">__LITTLE_ENDIAN</td>
+<td style="text-align: center;">小端序</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">__POP_ENDIAN</td>
+<td style="text-align: center;">小端序（字交换）</td>
+</tr>
+</tbody>
+</table>
+<p>更详细的资料可以<a
+href="https://github.com/cpredef/predef/blob/master/Endianness.md">在这查看</a>。</p>
+<h1 id="操作系统">操作系统</h1>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">宏</th>
+<th style="text-align: center;">操作系统</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">__ANDROID__</td>
+<td style="text-align: center;">Android</td>
+</tr>
+<tr>
+<td style="text-align: center;">__APPLE__</td>
+<td style="text-align: center;">macOS, iOS</td>
+</tr>
+<tr>
+<td style="text-align: center;">_WIN32</td>
+<td style="text-align: center;">Windows</td>
+</tr>
+<tr>
+<td style="text-align: center;">_WIN64</td>
+<td style="text-align: center;">Windows 64位</td>
+</tr>
+<tr>
+<td style="text-align: center;">__linux__</td>
+<td style="text-align: center;">Liunx 内核</td>
+</tr>
+<tr>
+<td style="text-align: center;">__gnu_liunx__</td>
+<td style="text-align: center;">GNU/Linux</td>
+</tr>
+<tr>
+<td style="text-align: center;">__gnu_hurd__</td>
+<td style="text-align: center;">GNU/Hurd</td>
+</tr>
+<tr>
+<td style="text-align: center;">__FreeBSD__</td>
+<td style="text-align: center;">FreeBSD</td>
+</tr>
+<tr>
+<td style="text-align: center;">__OPENBSD__</td>
+<td style="text-align: center;">OpenBSD</td>
+</tr>
+</tbody>
+</table>
+<p>更详细的资料可以<a
+href="https://github.com/cpredef/predef/blob/master/OperatingSystems.md">在这查看</a>。</p>
+<h1 id="编译器">编译器</h1>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">宏</th>
+<th style="text-align: center;">编译器</th>
+<th style="text-align: center;">版本宏</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">__GNUC__</td>
+<td style="text-align: center;">GCC, Clang/LLVM</td>
+<td style="text-align: center;">__GNUC__ <br> __GNUC_MINOR__ <br>
+__GNUC_PATCHLEVEL__</td>
+</tr>
+<tr>
+<td style="text-align: center;">__clang__</td>
+<td style="text-align: center;">Clang/LLVM</td>
+<td style="text-align: center;">__clang_major__ <br> __clang_minor__
+<br> __clang_patchlevel__ <br> __clang_version__ = V.R.P</td>
+</tr>
+<tr>
+<td style="text-align: center;">_MSC_VER</td>
+<td style="text-align: center;">MSVC</td>
+<td style="text-align: center;">_MSC_VER = VVRR <br> _MSC_FULL_VER =
+VVRRPPPP[P]</td>
+</tr>
+<tr>
+<td style="text-align: center;">__MINGW32__</td>
+<td style="text-align: center;">MinGW</td>
+<td style="text-align: center;">__MINGW32_MAJOR_VERSION <br>
+__MINGW32_MINOR_VERSION</td>
+</tr>
+<tr>
+<td style="text-align: center;">__MINGW64__</td>
+<td style="text-align: center;">MinGW-w64</td>
+<td style="text-align: center;">__MINGW64_MAJOR_VERSION <br>
+__MINGW64_MINOR_VERSION</td>
+</tr>
+</tbody>
+</table>
+<p>更详细的资料可以<a
+href="https://github.com/cpredef/predef/blob/master/Compilers.md">在这查看</a>。</p>
+<div class="note info"><p>Clang处于对GCC的兼容性，也定义了<code>__GNUC__</code>宏。
+如果你只想要针对GCC，而不针对Clang，应该使用<code>defined(__GNUC__) &amp;&amp; !defined(__clang__)</code>。</p>
+</div>
+<h1 id="库">库</h1>
+<p>这些宏定义在头文件<code>&lt;cstddef&gt;</code>（或<code>&lt;stddef.h&gt;</code>）中。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">宏</th>
+<th style="text-align: center;">库</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">__GLIBCPP__ （GCC 3.0 - GCC 3.3） <br>
+__GBLICXX__ （GCC 3.4+）</td>
+<td style="text-align: center;">libstdc++</td>
+</tr>
+<tr>
+<td style="text-align: center;">_LIBCPP_VERSION</td>
+<td style="text-align: center;">libc++</td>
+</tr>
+<tr>
+<td style="text-align: center;">_MSC_VER</td>
+<td style="text-align: center;">MSVC</td>
+</tr>
+<tr>
+<td style="text-align: center;">_GNU_LIBRARY_ （glibc 5-） <br>
+__GLIBC__ （glibc 6+）</td>
+<td style="text-align: center;">GNU glibc</td>
+</tr>
+<tr>
+<td style="text-align: center;">__BIONIC__</td>
+<td style="text-align: center;">Bionic libc</td>
+</tr>
+</tbody>
+</table>
+<p>更详细的资料可以<a
+href="https://github.com/cpredef/predef/blob/master/Libraries.md">在这查看</a>。</p>
+<h1 id="c功能特性检测宏">C++功能特性检测宏</h1>
+<p>C++为C++11后引入的C++语言和库功能特性定义了一组预处理器宏，
+用于检测这些功能是否存在。
+这些宏都会被展开成<code>YYYYMML</code>的形式，表示其<strong>被首次提出</strong>或<strong>功能发生显著变更</strong>时的具体年月份（<code>L</code>代表<code>long</code>型变量）。</p>
+<p>关于这些宏的详细资料，可<a
+href="https://zh.cppreference.com/w/cpp/feature_test">在此查阅</a>。</p>
+<h2 id="attribute">Attribute</h2>
+<p><code>__has_cpp_attribute(attribute)</code>用于检测编译器是否实现了对应的<code>attribute</code>。
+例如可以用<code>__has_cpp_attribute(assume)</code>来检测是否支持<code>[[assume]]</code>属性。</p>
+<p>编译器产商的特定属性也能被检测，会被展开成某个非零值。</p>
+<p>该宏只能用于<code>#if</code>、<code>#elif</code>、<code>#ifdef</code>、<code>#ifndef</code>、<code>#elifdef</code>、<code>#elifndef</code>和<code>defined</code>中，
+不能在别处使用它。</p>
+<div class="note info"><p>无论<code>attribute</code>是否被支持，<code>__has_cpp_attribute(attribute)</code>都将被视为<code>defined</code>。
+因此，你应该只在<code>#if</code>、<code>#elif</code>中使用它。</p>
+</div>
+<h2 id="头文件">头文件</h2>
+<p><code>__has_include(header)</code>在C++17中引入，用于检测是否可以包含头文件<code>header</code>，
+其中<code>header</code>的格式可以是<code>"header"</code>、<code>&lt;header&gt;</code>或字符串字面量。</p>
+<p>该功能的使用事项与<code>__has_cpp_attribute(attribute)</code>类相似。</p>
+<h2 id="语言功能特性">语言功能特性</h2>
+<p>语言功能特性的检测宏形式为<code>__cpp_&lt;feature&gt;</code>。
+例如，<code>__cpp_concepts</code>用于检测编译器是否支持<strong>概念与约束</strong>。</p>
+<h2 id="库功能特性">库功能特性</h2>
+<p>库功能特性的检测宏形式为<code>__cpp_lib_&lt;feature&gt;</code>。
+这些宏在C++20引入，起初位于头文件<code>&lt;version&gt;</code>中，后独立至各个具体头文件中。</p>
+<p>详细信息可<a
+href="https://zh.cppreference.com/w/cpp/utility/feature_test">在此查阅</a>。</p>
+<h1 id="后话">后话</h1>
+<p>诸如<a href="https://cmake.org">CMake</a>、<a
+href="https://xmake.io">XMake</a>等构造工具均
+提供了更为方便的平台检测方式。
+如果你使用这些工具来管理你的项目，推荐优先使用它们提供的高级语法。
+相比用预定义宏来实现条件编译，这些高级语法使用更为便捷，更易维护，
+且提供了更强的灵活度。</p>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a
+href="https://abseil.io/docs/cpp/platforms/macros">abseil/Platform Check
+Macros</a></li>
+<li><a href="https://github.com/cpredef/predef">cpredef/predef |
+Github</a></li>
+<li><a
+href="https://zh.cppreference.com/w/cpp/feature_test">功能特性测试 |
+CppReference-zh</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Quick Reference</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+        <tag>编程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>七日创站记 第一日 Hexo博客框架</title>
     <url>/website-genesis_day-one/</url>
     <content><![CDATA[<blockquote>

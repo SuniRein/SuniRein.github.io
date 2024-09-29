@@ -6,7 +6,7 @@
   <link href="https://sunirein.github.io/atom.xml" rel="self"/>
   
   <link href="https://sunirein.github.io/"/>
-  <updated>2024-09-21T02:16:39.509Z</updated>
+  <updated>2024-09-29T05:48:02.392Z</updated>
   <id>https://sunirein.github.io/</id>
   
   <author>
@@ -17,11 +17,35 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>C/C++中的检测宏</title>
+    <link href="https://sunirein.github.io/cpp-platform-check-macro/"/>
+    <id>https://sunirein.github.io/cpp-platform-check-macro/</id>
+    <published>2024-09-29T05:41:53.000Z</published>
+    <updated>2024-09-29T05:48:02.392Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;简介&quot;&gt;简介&lt;/h1&gt;
+&lt;p&gt;C/C++中提供了一系列宏，能够被用于检测芯片架构、操作系统、编译器等信息。
+我们可以用这些宏来实现条件编译，即针对不同的平台提供不同的实现代码，
+以充分利用不同平台的特性与优势。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Quick Reference" scheme="https://sunirein.github.io/categories/Quick-Reference/"/>
+    
+    
+    <category term="C/C++" scheme="https://sunirein.github.io/tags/C-C/"/>
+    
+    <category term="编程" scheme="https://sunirein.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
     <title>七日创站记 第四日 站点装修与美化</title>
     <link href="https://sunirein.github.io/website-genesis_day-four/"/>
     <id>https://sunirein.github.io/website-genesis_day-four/</id>
     <published>2024-09-20T06:44:52.000Z</published>
-    <updated>2024-09-21T02:16:39.509Z</updated>
+    <updated>2024-09-21T15:48:06.156Z</updated>
     
     
     <summary type="html">&lt;blockquote&gt;
