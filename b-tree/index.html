@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/orange/pace-theme-material.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sunirein.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":"auto","version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac","show_result":true},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":3,"unescape":true,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="概述 B树（B-tree），是一种在计算机科学自平衡的树，能够保持数据有序。 与传统的自平衡二叉查找树不同，B树是一种多叉树，允许一个节点拥有多于两个孩子。 B树能够减少定位记录时所经历的中间过程，从而加快访问速度， 常被用于读写相对大的数据块的存储系统，例如磁盘。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="B树">
+<meta property="og:url" content="https://sunirein.github.io/b-tree/">
+<meta property="og:site_name" content="SuniRein 的个人小站">
+<meta property="og:description" content="概述 B树（B-tree），是一种在计算机科学自平衡的树，能够保持数据有序。 与传统的自平衡二叉查找树不同，B树是一种多叉树，允许一个节点拥有多于两个孩子。 B树能够减少定位记录时所经历的中间过程，从而加快访问速度， 常被用于读写相对大的数据块的存储系统，例如磁盘。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-05T10:51:04.000Z">
+<meta property="article:modified_time" content="2024-10-05T10:51:04.233Z">
+<meta property="article:author" content="SuniRein">
+<meta property="article:tag" content="数据结构与算法">
+<meta property="article:tag" content="平衡树">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sunirein.github.io/b-tree/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://sunirein.github.io/b-tree/","path":"b-tree/","title":"B树"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>B树 | SuniRein 的个人小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="SuniRein 的个人小站" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">SuniRein 的个人小站</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">个人学习笔记兼博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">3</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">8</span></a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%A7%E8%B4%A8"><span class="nav-number">2.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE"><span class="nav-number">3.1.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%85%A5"><span class="nav-number">3.2.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4"><span class="nav-number">3.3.</span> <span class="nav-text">删除</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#b%E6%A0%91%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">4.</span> <span class="nav-text">B树的优势</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E4%B8%8E%E7%A3%81%E7%9B%98%E6%A3%80%E7%B4%A2"><span class="nav-number">4.1.</span> <span class="nav-text">大数据与磁盘检索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%B1%80%E9%83%A8%E6%80%A7%E4%B8%8E%E7%BC%93%E5%AD%98%E5%8F%8B%E5%A5%BD"><span class="nav-number">4.2.</span> <span class="nav-text">数据局部性与缓存友好</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SuniRein"
+      src="/images/avatar.avif">
+  <p class="site-author-name" itemprop="name">SuniRein</p>
+  <div class="site-description" itemprop="description">一名普通技术宅的博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/SuniRein" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;SuniRein" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunireincn@gmail.com" title="E-Mail → mailto:sunireincn@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sunirein.github.io/b-tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.avif">
+      <meta itemprop="name" content="SuniRein">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SuniRein 的个人小站">
+      <meta itemprop="description" content="一名普通技术宅的博客">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="B树 | SuniRein 的个人小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          B树
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-10-05 18:51:04" itemprop="dateCreated datePublished" datetime="2024-10-05T18:51:04+08:00">2024-10-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">高级数据结构与算法</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="概述">概述</h1>
+<p>B树（B-tree），是一种在计算机科学自平衡的树，能够保持数据有序。
+与传统的自平衡二叉查找树不同，B树是一种多叉树，允许一个节点拥有多于两个孩子。
+B树能够减少定位记录时所经历的中间过程，从而加快访问速度，
+常被用于读写相对大的数据块的存储系统，例如磁盘。</p>
+<span id="more"></span>
+<div class="note info"><p>有些地方把B树写作B-树，我个人认为这种写法很不好，很容易被误解为是“B减树”。
+其实这里的'-'只是表示连接的意义，而不是减号。</p>
+</div>
+<h1 id="性质">性质</h1>
+<p>在B树中，节点可以分为两种：</p>
+<ul>
+<li><dl>
+<dt>内部节点（internal node）</dt>
+<dd>
+存储了数据和指向子节点的指针。
+</dd>
+</dl></li>
+<li><dl>
+<dt>叶子节点（leaf node）</dt>
+<dd>
+不同于内部节点，只存储数据，不存储指针。
+</dd>
+</dl></li>
+</ul>
+<p>一棵<span class="math inline">\(m\)</span>阶的B树具有以下性质：</p>
+<ol type="1">
+<li>每个节点最多有<span class="math inline">\(m\)</span>个子节点。</li>
+<li>每一个非叶子节点（除根节点）最少有<span
+class="math inline">\(\lfloor \frac{m}{2}
+\rfloor\)</span>个子节点。</li>
+<li>如果根节点不是叶子节点，那么它至少有两个子节点。</li>
+<li>有<span class="math inline">\(k\)</span>个子节点的非叶子节点有<span
+class="math inline">\(k-1\)</span>个键值，且升序排列。</li>
+<li>所有的叶子节点位于同一层。</li>
+</ol>
+<p>以下为一颗<span class="math inline">\(5\)</span>阶B树的示例：</p>
+<div>
+<div class="graphviz">
+<p>digraph G { graph [nodesep=0.1, pad=0.02, ranksep=0.5, splines=false]
+node [shape=record, style=bold, fontsize=22, fontname=Consolas,
+width=0.8, height=0.8] edge [style=bold]</p>
+<pre><code>Root [label=&quot;&#123;&#123;7|16&#125; | &#123;<f0>|<f1>|<f2>&#125;&#125;&quot;]
+Leave0 [label=&quot;&#123;&#123;1|2|5|6&#125; | &#123;<f0>|<f1>|<f2>|<f3>|<f4>&#125;&#125;&quot;]
+Leave1 [label=&quot;&#123;&#123;9|12&#125; | &#123;<f0>|<f1>|<f2>&#125;&#125;&quot;]
+Leave2 [label=&quot;&#123;&#123;18|21&#125; | &#123;<f0>|<f1>|<f2>&#125;&#125;&quot;]
+
+Root: f0 -&gt; Leave0
+Root: f1 -&gt; Leave1
+Root: f2 -&gt; Leave2</code></pre>
+}
+</div>
+</div>
+<h1 id="实现">实现</h1>
+<h2 id="查找">查找</h2>
+<p>B树的查找与二叉搜索树的查找思路类似，不同之处在于，
+B树的每个节点拥有多个节点，因此需要遍历这些节点来确定要查找的子树的范围。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">std::pair&lt;BTreeNode*, SizeT&gt; BTree::search(ValueT value)
+&#123;
+    &#x2F;&#x2F; 找到第一个大于等于所找值的键
+    BTreeNode* node &#x3D; root_;
+
+    &#x2F;&#x2F; 这里我们用一个栈来记录搜索路线上的父节点，便于删除操作的实现
+    &#x2F;&#x2F; 你也可以采用别的方式来实现这一功能，例如在BTreeNode中添加一个parent字段
+    &#x2F;&#x2F; 如果处于性能考虑，可以将删除操作所用到的search单独称一个新函数
+    stack_.clear();
+
+    while (node)
+    &#123;
+        SizeT index &#x3D; 0;
+        &#x2F;&#x2F; size为B树节点的键值的个数
+        while (index &lt; node-&gt;size &amp;&amp; node-&gt;value[index] &lt; value)
+        &#123;
+            ++index;
+        &#125;
+
+        &#x2F;&#x2F; 找到的键值位于该节点上，返回该节点
+        if (node-&gt;value[index] &#x3D;&#x3D; value)
+        &#123;
+            return &#123;node, index&#125;;
+        &#125;
+
+        &#x2F;&#x2F; 找不到该键值，且该节点为叶子节点，则不存在
+        if (node-&gt;is_leaf)
+        &#123;
+            return &#123;nullptr, 0&#125;;
+        &#125;
+
+        &#x2F;&#x2F; 继续搜索
+        stack_.push(&#123;node, index&#125;);
+        node &#x3D; node-&gt;child[index];
+    &#125;
+    return &#123;nullptr, 0&#125;;
+&#125;</code></pre>
+<h2 id="插入">插入</h2>
+<p>针对一棵B树，在插入一个元素时，首先要验证该元素在B树中是否存在，
+如果不存在，那么就要在叶子节点中插入该新的元素，此时分两种情况：</p>
+<ol type="1">
+<li>如果叶子节点空间足够，直接插入该键值。</li>
+<li>如果叶子节点不足，则需要对该节点进行“分裂”操作：
+<ol type="a">
+<li>从该节点的原有元素和要插入的元素中选出中位数。</li>
+<li>以该中位数为基准，拆分出左右节点。</li>
+<li>将该中位数插入父节点中，如果父节点空间也不足，则需要重复上述过程，
+继续分裂父节点。
+如果“分裂”一直持续到根节点，那么则需要创建一个新的根节点，此时树的高度增加。</li>
+</ol></li>
+</ol>
+<p>以上描述为理论情况，为了实现上的方便，在这里我采取了一种更简便的方法：
+自顶向下考虑，如果插入要涉及的节点已满，对其进行分裂，然后继续插入。
+这样就可以将节点的分裂与插入独立开来，实现起来更方便。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void BTree::insert(ValueT value)
+&#123;
+    if (search(value).first)
+    &#123;
+        return;
+    &#125;
+
+    if (!root_)
+    &#123;
+        root_ &#x3D; new BTreeNode&#123;.is_leaf &#x3D; true, .size &#x3D; 1&#125;;
+        root_-&gt;value[0] &#x3D; value;
+        return;
+    &#125;
+
+    &#x2F;&#x2F; 根节点已满，进行生长
+    if (root-&gt;size &#x3D;&#x3D; M-1)
+    &#123;
+        BTreeNode* new_root &#x3D; new BTreeNode&#123;.is_leaf &#x3D; false, .size &#x3D; 0&#125;;
+        new_root-&gt;child[0] &#x3D; root_;
+        root_ &#x3D; new_root;
+        split_child(new_root, 0);
+
+        insert_nonfull(value &lt; root_-&gt;value[0] ? root-&gt;child[0] : root-&gt;child[1], value);
+    &#125;
+
+    insert_nonfull(root_, value);
+&#125;
+
+&#x2F;&#x2F; 分裂parent的第pos个子节点
+void split_child(BTreeNode* parent, SizeT pos)
+&#123;
+    BTreeNode* node &#x3D; parent-&gt;child[pos];
+    BTreeNode* split_node &#x3D; new BTreeNode&#123;.is_leaf &#x3D; origin.is_leaf, .size &#x3D; (M-1)&#x2F;2&#125;;
+
+    constexpr SizeT size_l &#x3D; M-1 - (M-1)&#x2F;2 - 1;
+    constexpr SizeT size_r &#x3D; (M-1)&#x2F;2;
+    node-&gt;size &#x3D; size_l;
+    split_node-&gt;size &#x3D; size_r;
+
+    &#x2F;&#x2F; 将node的后 (M-1)&#x2F;2 个元素拷贝到 split_node 中
+    for (SizeT i &#x3D; 0; i !&#x3D; size_r; ++i)
+    &#123;
+        split_node-&gt;value[i] &#x3D; node-&gt;value[i + size_l + 1];
+    &#125;
+    if (!node-&gt;is_leaf)
+    &#123;
+        for (SizeT i &#x3D; 0; i !&#x3D; size_r+1; ++i)
+        &#123;
+            split_node-&gt;child[i] &#x3D; node-&gt;value[i + size_l + 1];
+        &#125;
+    &#125;
+
+    &#x2F;&#x2F; 挪出位置，放置分裂后的节点
+    for (SizeT i &#x3D; pos+1; i !&#x3D; parent-&gt;size+1; --i)
+    &#123;
+        parent-&gt;child[i+1] &#x3D; parent-&gt;child[i];
+    &#125;
+    parent-&gt;child[pos+1] &#x3D; split_node;
+
+    for (SizeT i &#x3D; pos; i !&#x3D; parent-&gt;size; ++i)
+    &#123;
+        parent-&gt;value[i+1] &#x3D; parent-&gt;value[i];
+    &#125;
+    parent-&gt;value[pos] &#x3D; node-&gt;value[node-&gt;size];
+
+    ++parent-&gt;size;
+&#125;
+
+&#x2F;&#x2F; 将value插入到一个未满的节点中
+void insert_nonfull(BTreeNode* node, ValueT value)
+&#123;
+    while (!node.is_leaf)
+    &#123;
+        SizeT i &#x3D; node-&gt;size;
+        &#x2F;&#x2F; 找到第一个大于value的孩子节点
+        while (i &gt; 0 &amp;&amp; node-&gt;value[i-1] &gt; value)
+        &#123;
+            --i;
+        &#125;
+
+        &#x2F;&#x2F; 检查孩子节点是否已满
+        if (node-&gt;child[i].size &#x3D;&#x3D; M-1)
+        &#123;
+            split_child(node, i);
+
+            &#x2F;&#x2F; 分裂后，child[i] &#x3D;&gt; child[i], child[i+1]
+            if (node-&gt;value[i] &lt; value)
+            &#123;
+                ++i;
+            &#125;
+        &#125;
+
+        node &#x3D; node-&gt;child[i];
+    &#125;
+
+    &#x2F;&#x2F; 如果当前节点是叶子节点
+    &#x2F;&#x2F; 找到要插入的位置，并将后面的键值挪开
+    while (i &gt; 0 &amp;&amp; node-&gt;value[i-1] &gt; value)
+    &#123;
+        node-&gt;value[i] &#x3D; node-&gt;value[i-1];
+        --i;
+    &#125;
+
+    node-&gt;value[i] &#x3D; value;
+    ++node-&gt;size;
+&#125;</code></pre>
+<h2 id="删除">删除</h2>
+<p>相比插入操作，B树的删除操作实现起来较为复杂。</p>
+<p>与插入类似，我们可以把删除操作分为删除元素和处理删除后的节点的下溢现象两个步骤。
+另外，由于非叶子节点中元素的删除比较复杂，如果要删除的元素位于非叶子节点上，
+我们可以将其与它的前驱交换（它的前驱必然位于叶子节点），改为删除前驱节点上元素。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void BTree::remove(ValueT value)
+&#123;
+    &#x2F;&#x2F; 查找其所在节点
+    auto [node, pos] &#x3D; search(value);
+    if (!node)
+    &#123;
+        return; &#x2F;&#x2F; 键值不存在
+    &#125;
+
+    &#x2F;&#x2F; 如果不为叶子节点，用前驱来补充，改为删除前驱节点的对应元素
+    if (!node-&gt;is_leaf)
+    &#123;
+        node &#x3D; predecessor(node, pos);
+        pos &#x3D; node-&gt;size - 1;
+    &#125;
+
+    &#x2F;&#x2F; 移除叶子节点的元素
+    for (SizeT i &#x3D; pos + 1; i !&#x3D; node-&gt;size; ++i)
+    &#123;
+        node-&gt;value[i-1] &#x3D; node-&gt;value[i];
+    &#125;
+    --node-&gt;size;
+
+    &#x2F;&#x2F; 解决下溢问题
+    solve_underflow(node);
+&#125;
+
+&#x2F;&#x2F; 移动前驱到node的pos位置，返回前驱节点
+BTreeNode* predecessor(BTreeNode* node, SizeT pos)
+&#123;
+    BTreeNode* pre &#x3D; node-&gt;child[pos];
+    while (!pre.is_leaf)
+    &#123;
+        pre &#x3D; pre-&gt;child[pre.size];
+    &#125;
+
+    node-&gt;value[pos] &#x3D; pre-&gt;value[pre.size - 1];
+
+    return pre;
+&#125;</code></pre>
+<p>节点下溢，是指删除后节点元素个数不足<span
+class="math inline">\(\lfloor \frac{m}{2} \rfloor\)</span>，
+不满足B树的性质，此时可分为两种情况来处理：</p>
+<ol type="1">
+<li>如果节点的相邻兄弟有富余元素，可以将父元素补充到当前节点，
+然后将兄弟的富余元素上移到父节点。这个操作本质上其实是一次<strong>旋转</strong>操作。</li>
+<li>如果节点的相邻兄弟没有富余元素，直接将节点与其相邻兄弟节点<strong>合并</strong>。
+合并操作有可能导致父节点出现下溢，需要进一步处理父节点。</li>
+</ol>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void BTree::solve_underflow(BTreeNode* node)
+&#123;
+    constexpr SizeT MEDIAN &#x3D; (M - 1) &#x2F; 2;
+    while (node.size &lt; MEDIAN)
+    &#123;
+        auto [parent, pos] &#x3D; stack_.pop();
+
+        &#x2F;&#x2F; 当前节点没有父母，为根节点
+        if (!parent)
+        &#123;
+            if (node-&gt;size &#x3D;&#x3D; 0)
+            &#123;
+                BTreeNode* old &#x3D; root_;
+                root_ &#x3D; root_-&gt;child[0];
+                delete old;
+            &#125;
+            return;
+        &#125;
+
+        &#x2F;&#x2F; 左兄弟富余 &#x3D;&gt; 右旋
+        if (pos &gt; 0 &amp;&amp; parent-&gt;child[pos-1]-&gt;size &gt; MEDIAN)
+        &#123;
+            BTreeNode* left &#x3D; parent-&gt;child[pos-1];
+
+            &#x2F;&#x2F; 挪出node第一个value位置，用parent填充
+            for (SizeT i &#x3D; 0; i !&#x3D; node-&gt;size; ++i)
+            &#123;
+                node-&gt;value[i+1] &#x3D; node-&gt;value[i];
+            &#125;
+            node-&gt;value[0] &#x3D; parent-&gt;value[pos];
+
+            &#x2F;&#x2F; 用left补充parent
+            parent-&gt;value[pos] &#x3D; left-&gt;value[left.size-1];
+
+            &#x2F;&#x2F; left的右儿子变成node的左儿子
+            for (SizeT i &#x3D; 0; i !&#x3D; node-&gt;size+1; ++i)
+            &#123;
+                node-&gt;child[i+1] &#x3D; node-&gt;child[i];
+            &#125;
+            node-&gt;child[0] &#x3D; left-&gt;child[left-&gt;size];
+
+            &#x2F;&#x2F; 更新size
+            ++node-&gt;size;
+            --left-&gt;size;
+            return;
+        &#125;
+
+        &#x2F;&#x2F; 右兄弟富余 &#x3D;&gt; 左旋
+        if (pos &lt; p.size &amp;&amp; parent-&gt;child[pos+1]-&gt;size &gt; MEDIAN)
+        &#123;
+            BTreeNode* right &#x3D; parent-&gt;child[pos+1];
+
+            &#x2F;&#x2F; 用parent填充node最后一个位置
+            node-&gt;value[node-&gt;size] &#x3D; parent-&gt;value[pos];
+
+            &#x2F;&#x2F; 用right补充parent
+            parent-&gt;value[pos] &#x3D; right-&gt;value[0];
+            for (SizeT i &#x3D; 1; i !&#x3D; right-&gt;size; ++i)
+            &#123;
+                right-&gt;value[i-1] &#x3D; right-&gt;value[i];
+            &#125;
+
+            &#x2F;&#x2F; right的左儿子变成node的右儿子
+            node-&gt;child[node-&gt;size+1] &#x3D; right-&gt;child[0];
+            for (SizeT i &#x3D; 1; i !&#x3D; right-&gt;size+1; ++i)
+            &#123;
+                right-&gt;child[i-1] &#x3D; right-&gt;child[i];
+            &#125;
+
+            &#x2F;&#x2F; 更新size
+            ++node-&gt;size;
+            --right-&gt;size;
+            return;
+        &#125;
+
+        &#x2F;&#x2F; 合并
+        if (pos &gt; 0)
+        &#123;
+            merge(parent, pos-1);
+        &#125;
+        else
+        &#123;
+            merge(parent, pos)
+        &#125;
+        node &#x3D; parent;
+    &#125;
+&#125;
+
+&#x2F;&#x2F; 合并parent的pos与pos+1孩子
+void merge(BTreeNode* parent, SizeT pos)
+&#123;
+    BTreeNode* left &#x3D; parent-&gt;child[pos];
+    BTreeNode* right &#x3D; parent-&gt;child[pos+1];
+
+    &#x2F;&#x2F; 父节点下移
+    left-&gt;value[left-&gt;size] &#x3D; parent-&gt;value[pos];
+
+    &#x2F;&#x2F; 调整parent
+    for (SizeT i &#x3D; pos+1; i !&#x3D; parent-&gt;size; ++i)
+    &#123;
+        parent-&gt;value[i-1] &#x3D; parent-&gt;value[i];
+    &#125;
+    for (SizeT i &#x3D; pos+2; i !&#x3D; parent-&gt;size+1; ++i)
+    &#123;
+        parent-&gt;child[i+1] &#x3D; parent-&gt;child[i];
+    &#125;
+    --parent-&gt;size;
+
+    &#x2F;&#x2F; 合并左右节点
+    for (SizeT i &#x3D; 0; i !&#x3D; right-&gt;size; ++i)
+    &#123;
+        left-&gt;value[i + left-&gt;size + 1] &#x3D; right-&gt;value[i];
+    &#125;
+    for (SizeT i &#x3D; 0; i !&#x3D; right-&gt;size+1; ++i)
+    &#123;
+        left-&gt;child[i + left-&gt;size + 1] &#x3D; right-&gt;child[i];
+    &#125;
+    left-&gt;size +&#x3D; right-&gt;size + 1;
+    delete right;
+&#125;</code></pre>
+<h1 id="b树的优势">B树的优势</h1>
+<h2 id="大数据与磁盘检索">大数据与磁盘检索</h2>
+<p>相比于传统的二叉搜索树，B树在大数据的查找上更有优势。</p>
+<p>大数据一般存储在磁盘上，相比键值比较所用的时间，从磁盘上读取数据的时间占支配地位。
+磁盘上的数据检索以页作为基本单位，当分页大小为4KB时，读取1B数据和读取4KB数据
+都需要进行一次磁盘IO，耗时几乎相同。
+另外，磁盘的顺序读写性能也要比随机读写性能好得多。
+因此，B树将多个键值合并在同一节点的作法就非常适合进行大数据读写。</p>
+<p>此外，相比二叉树，B树这种多叉树的树高较小，可以有效减少磁盘IO的次数。</p>
+<p>因此，B树常被用于文件系统和数据库中。</p>
+<h2 id="数据局部性与缓存友好">数据局部性与缓存友好</h2>
+<p>现代计算机体系中的内存普遍采用缓存架构，在这种条件下，
+读取内存中连续数据的性能要远快于随机跳转。
+使用B树能够极大提高数据局部性，利用好缓存机制，
+实际性能表现往往要优于传统的BST。</p>
+<p>新兴编程语言Rust中的<code>TreeMap</code>就是用B树而不是红黑树来实现的。</p>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/B%E6%A0%91/">B树 |
+维基百科</a></li>
+<li><a target="_blank" rel="noopener" href="https://oi-wiki.org/ds/b-tree/">B树 | OI Wiki</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/463641767">B树详解与实现 |
+知乎专栏</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>SuniRein
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://sunirein.github.io/b-tree/" title="B树">https://sunirein.github.io/b-tree/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 数据结构与算法</a>
+              <a href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> 平衡树</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/cpp-platform-check-macro/" rel="prev" title="C/C++中的检测宏">
+                  <i class="fa fa-angle-left"></i> C/C++中的检测宏
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">SuniRein</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/SuniRein" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js" integrity="sha256-4mJNT2bMXxcc1GCJaxBmMPdmah5ji0Ldnd79DKd1hoM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-AjM0J5XIbiB590BrznLEgZGLnOQWrt62s3BEq65Q/I0=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha256-9cmf7tcLdXpKsPi/2AWE93PbZpTp4M4tqzFk+lWomjU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/viz.js/1.7.1/viz.js'></script>
+  <script>
+    String.prototype.replaceAll = function(search, replacement) {
+      var target = this;
+      return target.split(search).join(replacement);
+    };
+
+    let vizObjects = document.querySelectorAll('.graphviz')
+
+    for (let item of vizObjects) {
+      let svg = undefined
+      try {
+        svg = Viz(item.textContent.replaceAll('–', '--'), 'svg')
+      } catch(e) {
+        svg = `<pre class="error">${e}</pre>`
+      }
+      item.outerHTML = svg
+    }
+  </script>
+
+
+</body>
+</html>

@@ -93,7 +93,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">3</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">7</span></a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">3</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">8</span></a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -159,7 +159,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -335,13 +335,13 @@ Manager，是一个Node.js的版本管理器。
 我们使用nvm来帮助我们管理本地的Node.js环境。</p>
 <p>如果你有别的需求，也可以使用其它方式来安装和管理Node.js，这对后续的部署没有影响。</p>
 <p>nvm的安装非常简单，只需要运行下面的安装脚本即可一键安装。</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">curl -o- https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;nvm-sh&#x2F;nvm&#x2F;v0.40.0&#x2F;install.sh | bash</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">curl -o- https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;nvm-sh&#x2F;nvm&#x2F;v0.40.0&#x2F;install.sh | bash</code></pre>
 <p>具体的安装细节，可以查看<a
 target="_blank" rel="noopener" href="https://github.com/nvm-sh/nvm#install--update-script">官方文档</a>。
 注意，由于时间因素，在你阅读此博客时，上述脚本可能已经不是最新的了，建议查询官网后自行安装。</p>
 <h2 id="安装node.js">安装Node.js</h2>
 <p>使用nvm安装Node.js非常简单，只需要运行下面的命令。</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"># 安装最新版本的node
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 安装最新版本的node
 nvm install node
 
 # 安装特定版本的node
@@ -353,14 +353,14 @@ nvm use node</code></pre>
 <h2 id="安装hexo">安装Hexo</h2>
 <p>使用npm直接安装Hexo即可。
 <strong>注意，安装Hexo前需要保证你的电脑安装了git。</strong></p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">npm install hexo-cli -g</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">npm install hexo-cli -g</code></pre>
 <p>如果你是熟悉npm的用户，可以仅局部安装Hexo包，然后使用npx来执行。
 详见<a
 target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/#%E5%AE%89%E8%A3%85-Hexo">官方文档</a>。</p>
 <h1 id="hexo的使用">Hexo的使用</h1>
 <h2 id="创建hexo仓库">创建Hexo仓库</h2>
 <p>在安装完Hexo后，执行下面命令，在你的指定文件夹下初始化Hexo仓库。</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"># 运行完这条命令后可能会有警告：
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 运行完这条命令后可能会有警告：
 # Failed to install dependencies.
 # 这是正常的，无须在意。
 hexo init &lt;folder&gt;
@@ -369,7 +369,7 @@ cd &lt;folder&gt;
 
 npm install </code></pre>
 <p>初始化后，Hexo的项目文件夹如下：</p>
-<pre class="language-treeview" data-language="treeview"><code class="language-treeview">&lt;folder&gt;
+<pre class="line-numbers language-treeview" data-language="treeview"><code class="language-treeview">&lt;folder&gt;
 ├── _config.landscape.yml
 ├── _config.yml
 ├── package.json
@@ -405,7 +405,7 @@ target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-but
 <p>这个是Hexo默认主题<a
 target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-theme-landscape">landscape</a>的配置文件。</p>
 <h2 id="创建博客文章">创建博客文章</h2>
-<pre class="language-bash" data-language="bash"><code class="language-bash"># 注意文章标题有空格需要使用引号括起来，或者用&#39;\&#39;转义空格。
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 注意文章标题有空格需要使用引号括起来，或者用&#39;\&#39;转义空格。
 hexo new [layout] &lt;title&gt;</code></pre>
 <p>使用这行命令即可创建对应布局的文章。如果不提供layout，使用默认布局post。
 可以通过编辑<code>_config.yml</code>中的<code>default_layout</code>来修改默认布局。</p>
@@ -413,14 +413,14 @@ hexo new [layout] &lt;title&gt;</code></pre>
 <code>source/_posts</code>、<code>source</code>、<code>source/_drafts</code>。</p>
 <p>draft是一个特殊布局，用来存放草稿文件。
 使用此布局的文章可以使用以下命令来发布为其他格式的布局。</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">hexo publish [layout] &lt;title&gt;</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">hexo publish [layout] &lt;title&gt;</code></pre>
 <p>Hexo默认情况下不会展示草稿。可以在运行Hexo的时候加入<code>--draft</code>参数或
 修改<code>_config.yml</code>中的<code>render_drafts</code>项来渲染草稿。</p>
 <p>通过编辑<code>source</code>文件夹下的文件即可修改你的文章。</p>
 <p>更多的细节可以阅读<a
 target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/writing">官方文档</a>。</p>
 <h2 id="静态网站渲染">静态网站渲染</h2>
-<pre class="language-none"><code class="language-none">hexo server</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">hexo server</code></pre>
 <p>使用上述命令在本地启用一个Hexo网站服务器。可以通过<localhost:4000>来访问该网址。</p>
 <p>Hexo默认使用4000端口，如果端口被占用，可以通过<code>--port &lt;port&gt;</code>来切换端口。</p>
 <p>建议在本地渲染时使用<code>--debug</code>参数，会输出调试信息并记录到<code>debug.log</code>中。</p>
@@ -550,6 +550,27 @@ Pages发布你的文章，使博客可以被别人访问。</p>
   <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
 <script src="/js/third-party/math/mathjax.js"></script>
 
+
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/viz.js/1.7.1/viz.js'></script>
+  <script>
+    String.prototype.replaceAll = function(search, replacement) {
+      var target = this;
+      return target.split(search).join(replacement);
+    };
+
+    let vizObjects = document.querySelectorAll('.graphviz')
+
+    for (let item of vizObjects) {
+      let svg = undefined
+      try {
+        svg = Viz(item.textContent.replaceAll('–', '--'), 'svg')
+      } catch(e) {
+        svg = `<pre class="error">${e}</pre>`
+      }
+      item.outerHTML = svg
+    }
+  </script>
 
 
 </body>

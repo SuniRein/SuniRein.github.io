@@ -6,7 +6,7 @@
   <link href="https://sunirein.github.io/atom.xml" rel="self"/>
   
   <link href="https://sunirein.github.io/"/>
-  <updated>2024-09-29T05:48:02.392Z</updated>
+  <updated>2024-10-05T10:51:04.233Z</updated>
   <id>https://sunirein.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>B树</title>
+    <link href="https://sunirein.github.io/b-tree/"/>
+    <id>https://sunirein.github.io/b-tree/</id>
+    <published>2024-10-05T10:51:04.000Z</published>
+    <updated>2024-10-05T10:51:04.233Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;概述&quot;&gt;概述&lt;/h1&gt;
+&lt;p&gt;B树（B-tree），是一种在计算机科学自平衡的树，能够保持数据有序。
+与传统的自平衡二叉查找树不同，B树是一种多叉树，允许一个节点拥有多于两个孩子。
+B树能够减少定位记录时所经历的中间过程，从而加快访问速度，
+常被用于读写相对大的数据块的存储系统，例如磁盘。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="高级数据结构与算法" scheme="https://sunirein.github.io/categories/%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="数据结构与算法" scheme="https://sunirein.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="平衡树" scheme="https://sunirein.github.io/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/"/>
+    
+  </entry>
   
   <entry>
     <title>C/C++中的检测宏</title>

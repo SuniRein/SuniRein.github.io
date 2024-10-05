@@ -94,7 +94,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">3</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">7</span></a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">3</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">8</span></a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -160,7 +160,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -326,7 +326,7 @@ class="math inline">\(f_n\)</span>为节点数。</p>
 <h1 id="原理">原理</h1>
 <h2 id="节点">节点</h2>
 <p>由于AVL树的操作需要涉及到树的高度，我们需要在节点中设置<code>height</code>。</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp">struct TreeNode
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">struct TreeNode
 &#123;
   int value&#123;&#125;;
   int height&#123;&#125;;
@@ -341,7 +341,7 @@ class="math inline">\(f_n\)</span>为节点数。</p>
 叶子节点的高度为<span
 class="math inline">\(0\)</span>，空节点的高度为<span
 class="math inline">\(-1\)</span>。</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;&#x2F; 获取节点高度
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;&#x2F; 获取节点高度
 int AVLTree::height(const TreeNode* node)
 &#123;
   return node ? node-&gt;height : -1;
@@ -361,7 +361,7 @@ void AVLTree::update_height(TreeNode* node)
 class="math inline">\(0\)</span>。
 AVL树要求平衡因子的绝对值小于等于<span
 class="math inline">\(1\)</span>。</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp">int AVLTree::balance_factor(const TreeNode* node)
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int AVLTree::balance_factor(const TreeNode* node)
 &#123;
   return node ? height(node-&gt;left) - height(node-&gt;right) : 0;
 &#125;</code></pre>
@@ -377,7 +377,7 @@ class="math inline">\(1\)</span>。</p>
 <p>在下图中，node为3，child为1。</p>
 <p>node所在子树左边偏大，child所在子树也是左边偏大，这种情况称为LL。
 此时应做一次右旋。</p>
-<pre class="language-pic" data-language="pic"><code class="language-pic">      4                          4
+<pre class="line-numbers language-pic" data-language="pic"><code class="language-pic">      4                          4
      &#x2F; \                        &#x2F; \
     3   5                      1   5
    &#x2F;               &#x3D;&#x3D;&#x3D;&gt;       &#x2F; \
@@ -388,14 +388,14 @@ class="math inline">\(1\)</span>。</p>
 在旋转后的子树中，child变成根节点，node变成child的右儿子，其余保持不变。</p>
 <p>如果child已经有右儿子（称其为grant_child），则需将grant_child作为node的左儿子。
 如下图所示。</p>
-<pre class="language-pic" data-language="pic"><code class="language-pic">      5                          3
+<pre class="line-numbers language-pic" data-language="pic"><code class="language-pic">      5                          3
      &#x2F; \                        &#x2F; \
     3   6                      1   5
    &#x2F; \             &#x3D;&#x3D;&#x3D;&gt;       &#x2F;   &#x2F; \
   1   4                      0   4   6
  &#x2F;
 0</code></pre>
-<p>代码实现如下： <pre class="language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::right_rotate(TreeNode* node)
+<p>代码实现如下： <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::right_rotate(TreeNode* node)
 &#123;
   TreeNode* child &#x3D; node-&gt;left;
   TreeNode* grant_child &#x3D; child-&gt;right;
@@ -413,7 +413,7 @@ class="math inline">\(1\)</span>。</p>
 <h3 id="左旋">左旋</h3>
 <p>RR为LL的镜像，此时应做一次左旋。</p>
 <p>代码实现与右旋基本相同，只是将左右互换了。</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::left_rotate(TreeNode* node)
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::left_rotate(TreeNode* node)
 &#123;
   TreeNode* child &#x3D; node-&gt;right;
   TreeNode* grant_child &#x3D; child-&gt;left;
@@ -430,7 +430,7 @@ class="math inline">\(1\)</span>。</p>
 <p>当node所在子树左边偏大，但child所在子树右边偏大，即LR时，仅做一次旋转不够，
 需要先对child左旋，再对node右旋。</p>
 <p>如下图所示：</p>
-<pre class="language-pic" data-language="pic"><code class="language-pic">    4                          4                        4
+<pre class="line-numbers language-pic" data-language="pic"><code class="language-pic">    4                          4                        4
    &#x2F; \                        &#x2F; \                      &#x2F; \
   3   5                      3   5                    2   5
  &#x2F;               &#x3D;&#x3D;&#x3D;&gt;       &#x2F;              &#x3D;&#x3D;&gt;       &#x2F; \
@@ -485,7 +485,7 @@ class="math inline">\(1\)</span>。</p>
 </tr>
 </tbody>
 </table>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::rotate(TreeNode* node)
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::rotate(TreeNode* node)
 &#123;
   int factor &#x3D; balance_factor(node);
 
@@ -526,7 +526,7 @@ class="math inline">\(1\)</span>。</p>
 唯一的区别在于插入后AVL树可能会出现失衡节点，我们需要沿着
 插入后的节点到根节点的路径进行搜索，找到失衡节点，并进行树旋转，
 以维护其平衡。</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::insert(TreeNode* node, int value)
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::insert(TreeNode* node, int value)
 &#123;
   if (!node)
   &#123;
@@ -552,7 +552,7 @@ class="math inline">\(1\)</span>。</p>
 &#125;</code></pre>
 <h2 id="删除节点">删除节点</h2>
 <p>删除节点的操作与插入节点类似。</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::remove(TreeNode* node, int value)
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::remove(TreeNode* node, int value)
 &#123;
   if (!node)
   &#123;
@@ -742,6 +742,27 @@ target="_blank" rel="noopener" href="https://www.cnblogs.com/1873cy/p/18395797">
   <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
 <script src="/js/third-party/math/mathjax.js"></script>
 
+
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/viz.js/1.7.1/viz.js'></script>
+  <script>
+    String.prototype.replaceAll = function(search, replacement) {
+      var target = this;
+      return target.split(search).join(replacement);
+    };
+
+    let vizObjects = document.querySelectorAll('.graphviz')
+
+    for (let item of vizObjects) {
+      let svg = undefined
+      try {
+        svg = Viz(item.textContent.replaceAll('–', '--'), 'svg')
+      } catch(e) {
+        svg = `<pre class="error">${e}</pre>`
+      }
+      item.outerHTML = svg
+    }
+  </script>
 
 
 </body>
