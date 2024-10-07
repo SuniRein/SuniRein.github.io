@@ -6,7 +6,7 @@
   <link href="https://sunirein.github.io/atom.xml" rel="self"/>
   
   <link href="https://sunirein.github.io/"/>
-  <updated>2024-10-05T10:51:04.233Z</updated>
+  <updated>2024-10-07T02:08:23.744Z</updated>
   <id>https://sunirein.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>红黑树</title>
+    <link href="https://sunirein.github.io/red-black-tree/"/>
+    <id>https://sunirein.github.io/red-black-tree/</id>
+    <published>2024-10-07T02:07:57.000Z</published>
+    <updated>2024-10-07T02:08:23.744Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;概述&quot;&gt;概述&lt;/h1&gt;
+&lt;p&gt;红黑树是一种常见的自平衡二叉搜索树，C++中的&lt;code&gt;std::map&lt;/code&gt;就是用红黑树实现的。&lt;/p&gt;
+&lt;p&gt;红黑树的节点有一个额外的颜色字段，其值只能是红色和黑色，这也是它名字的由来。
+红黑树通过一套特殊的染色规则来维护自身的平衡，从而实现较高的查询、插入、删除性能。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="高级数据结构与算法" scheme="https://sunirein.github.io/categories/%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="数据结构与算法" scheme="https://sunirein.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="平衡树" scheme="https://sunirein.github.io/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/"/>
+    
+  </entry>
   
   <entry>
     <title>B树</title>
