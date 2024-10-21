@@ -6,7 +6,7 @@
   <link href="https://sunirein.me/atom.xml" rel="self"/>
   
   <link href="https://sunirein.me/"/>
-  <updated>2024-10-07T02:08:23.744Z</updated>
+  <updated>2024-10-21T09:42:01.816Z</updated>
   <id>https://sunirein.me/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>B+树</title>
+    <link href="https://sunirein.me/bplus-tree/"/>
+    <id>https://sunirein.me/bplus-tree/</id>
+    <published>2024-10-21T09:41:31.000Z</published>
+    <updated>2024-10-21T09:42:01.816Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;概述&quot;&gt;概述&lt;/h1&gt;
+&lt;p&gt;B+树是&lt;a href=&quot;/b-tree/&quot;&gt;B树&lt;/a&gt;的一个变体。
+旨在提升B树在数据库和文件系统等应用场景中的存取效率。
+它在范围查找和顺序访问方面表现出更优越的性能。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="高级数据结构与算法" scheme="https://sunirein.me/categories/%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="数据结构与算法" scheme="https://sunirein.me/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="平衡树" scheme="https://sunirein.me/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/"/>
+    
+  </entry>
   
   <entry>
     <title>红黑树</title>
