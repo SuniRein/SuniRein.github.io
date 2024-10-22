@@ -6,7 +6,7 @@
   <link href="https://sunirein.me/atom.xml" rel="self"/>
   
   <link href="https://sunirein.me/"/>
-  <updated>2024-10-21T09:42:01.816Z</updated>
+  <updated>2024-10-22T08:29:15.748Z</updated>
   <id>https://sunirein.me/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>左偏树</title>
+    <link href="https://sunirein.me/leftist-tree/"/>
+    <id>https://sunirein.me/leftist-tree/</id>
+    <published>2024-10-22T08:29:15.000Z</published>
+    <updated>2024-10-22T08:29:15.748Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;概述&quot;&gt;概述&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;左偏树&lt;/strong&gt;，也叫&lt;strong&gt;左偏堆&lt;/strong&gt;，是一种&lt;strong&gt;可并堆&lt;/strong&gt;。
+它具有堆的性质，且支持高效的合并操作。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="高级数据结构与算法" scheme="https://sunirein.me/categories/%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="数据结构与算法" scheme="https://sunirein.me/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="堆" scheme="https://sunirein.me/tags/%E5%A0%86/"/>
+    
+    <category term="可并堆" scheme="https://sunirein.me/tags/%E5%8F%AF%E5%B9%B6%E5%A0%86/"/>
+    
+  </entry>
   
   <entry>
     <title>B+树</title>

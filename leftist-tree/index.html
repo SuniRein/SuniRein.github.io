@@ -22,31 +22,30 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"sunirein.me","root":"/","images":"/images","scheme":"Gemini","darkmode":"auto","version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac","show_result":true},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":3,"unescape":true,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="概述 B+树是B树的一个变体。 旨在提升B树在数据库和文件系统等应用场景中的存取效率。 它在范围查找和顺序访问方面表现出更优越的性能。">
+    <meta name="description" content="概述 左偏树，也叫左偏堆，是一种可并堆。 它具有堆的性质，且支持高效的合并操作。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="B+树">
-<meta property="og:url" content="https://sunirein.me/bplus-tree/">
+<meta property="og:title" content="左偏树">
+<meta property="og:url" content="https://sunirein.me/leftist-tree/">
 <meta property="og:site_name" content="SuniRein 的个人小站">
-<meta property="og:description" content="概述 B+树是B树的一个变体。 旨在提升B树在数据库和文件系统等应用场景中的存取效率。 它在范围查找和顺序访问方面表现出更优越的性能。">
+<meta property="og:description" content="概述 左偏树，也叫左偏堆，是一种可并堆。 它具有堆的性质，且支持高效的合并操作。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sunirein.me/images/2024/bplus-tree.webp">
-<meta property="article:published_time" content="2024-10-21T09:41:31.000Z">
-<meta property="article:modified_time" content="2024-10-21T09:42:01.816Z">
+<meta property="article:published_time" content="2024-10-22T08:29:15.000Z">
+<meta property="article:modified_time" content="2024-10-22T08:29:15.748Z">
 <meta property="article:author" content="SuniRein">
 <meta property="article:tag" content="数据结构与算法">
-<meta property="article:tag" content="平衡树">
+<meta property="article:tag" content="堆">
+<meta property="article:tag" content="可并堆">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://sunirein.me/images/2024/bplus-tree.webp">
 
 
-<link rel="canonical" href="https://sunirein.me/bplus-tree/">
+<link rel="canonical" href="https://sunirein.me/leftist-tree/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://sunirein.me/bplus-tree/","path":"bplus-tree/","title":"B+树"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://sunirein.me/leftist-tree/","path":"leftist-tree/","title":"左偏树"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>B+树 | SuniRein 的个人小站</title>
+<title>左偏树 | SuniRein 的个人小站</title>
   
 
 
@@ -147,7 +146,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE"><span class="nav-number">3.1.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%8D%E5%8E%86"><span class="nav-number">3.2.</span> <span class="nav-text">遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%85%A5"><span class="nav-number">3.3.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4"><span class="nav-number">3.4.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%96%E9%83%A8%E9%93%BE%E6%8E%A5"><span class="nav-number">3.5.</span> <span class="nav-text">外部链接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E9%A2%86%E5%9F%9F"><span class="nav-number">4.</span> <span class="nav-text">应用领域</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">4.1.</span> <span class="nav-text">文件系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">4.2.</span> <span class="nav-text">数据库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%A7%E8%B4%A8"><span class="nav-number">2.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E5%B9%B6"><span class="nav-number">3.1.</span> <span class="nav-text">合并</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%85%A5"><span class="nav-number">3.2.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4"><span class="nav-number">3.3.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%BB%99%E5%AE%9A%E8%8A%82%E7%82%B9"><span class="nav-number">3.4.</span> <span class="nav-text">删除给定节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E6%A0%91"><span class="nav-number">3.5.</span> <span class="nav-text">建树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81"><span class="nav-number">3.6.</span> <span class="nav-text">完整实现代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%98%E4%BD%93"><span class="nav-number">4.</span> <span class="nav-text">变体</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E5%A0%86"><span class="nav-number">4.1.</span> <span class="nav-text">随机堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%9C%E5%A0%86"><span class="nav-number">4.2.</span> <span class="nav-text">斜堆</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -211,7 +210,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sunirein.me/bplus-tree/">
+    <link itemprop="mainEntityOfPage" href="https://sunirein.me/leftist-tree/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.avif">
@@ -224,12 +223,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="B+树 | SuniRein 的个人小站">
+      <meta itemprop="name" content="左偏树 | SuniRein 的个人小站">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          B+树
+          左偏树
         </h1>
 
         <div class="post-meta-container">
@@ -239,9 +238,8 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-10-21 17:41:31 / 修改时间：17:42:01" itemprop="dateCreated datePublished" datetime="2024-10-21T17:41:31+08:00">2024-10-21</time>
+      <time title="创建时间：2024-10-22 16:29:15" itemprop="dateCreated datePublished" datetime="2024-10-22T16:29:15+08:00">2024-10-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -260,7 +258,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>889</span>
+      <span>1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -278,83 +276,205 @@
     
     
     <div class="post-body" itemprop="articleBody"><h1 id="概述">概述</h1>
-<p>B+树是<a href="/b-tree/">B树</a>的一个变体。
-旨在提升B树在数据库和文件系统等应用场景中的存取效率。
-它在范围查找和顺序访问方面表现出更优越的性能。</p>
+<p><strong>左偏树</strong>，也叫<strong>左偏堆</strong>，是一种<strong>可并堆</strong>。
+它具有堆的性质，且支持高效的合并操作。</p>
 <span id="more"></span>
-<figure>
-<img data-src="/images/2024/bplus-tree.webp" alt="一棵普通的B+树" />
-<figcaption aria-hidden="true">一棵普通的B+树</figcaption>
-</figure>
-<h1 id="特点">特点</h1>
-<p>相比于B树，B+树在结构上具有以下特点：</p>
-<ol type="1">
-<li>所有数据均存在叶子节点中，并通过链表相连。</li>
-<li>内部节点仅存储键值作为索引，不存储实际数据。</li>
-</ol>
-<p>这些结构特点使B+树具备了一些B树不具备的功能性质：</p>
-<ol type="1">
-<li>查询效率更稳定，每个关键字的查找必然走一条从根节点到叶子节点的路。</li>
-<li>内部结点相比较小，在相同内存能容纳更多的关键字，从而降低了IO读写次数。</li>
-<li>B+树可以直接遍历叶子节点来实现范围查找，而B树的范围查找只能通过中序遍历。</li>
-</ol>
-<p>因此，B+树更适合且被广泛应用于文件系统和数据库索引等场景。</p>
+<h1 id="性质">性质</h1>
+<p>我们定义左偏树的<strong>外节点</strong>为子节点数小于2的节点；
+定义一个节点的dist为其到子树中最近的外节点所经过的边的数量；
+空节点的dist定义为-1，外节点的dist为0。
+同时，我们也把根节点的dist称为左偏树的dist。</p>
+<p>左偏树是一棵二叉树，它同时具备<strong>堆</strong>和<strong>左偏</strong>的性质。</p>
+<ul>
+<li>堆性质：父节点的优先级总是大于子节点。</li>
+<li>左偏性质：每个节点左儿子的dist总是大于等于右儿子。</li>
+</ul>
+<p>根据左偏树的性质我们可以得到以下推论：</p>
+<ul>
+<li>每个节点的dist等于右儿子的dist加1。</li>
+<li>一棵dist为<span
+class="math inline">\(k\)</span>的左偏树，节点数量最少为<span
+class="math inline">\(2^{k+1}-1\)</span>。</li>
+<li>一棵有<span
+class="math inline">\(n\)</span>个节点的左偏树，dist最大不超过<span
+class="math inline">\(\log(n+1)-1\)</span>。</li>
+</ul>
+<div class="note info"><p>左偏树并不要求树的结构平衡，相反，它的深度没有保证。
+正如名字所言，左偏树左边会偏大，最极端的情况下，
+一条向左的链也可以是一棵左偏树， 其上每个节点的dist均为0。</p>
+</div>
 <h1 id="实现">实现</h1>
-<h2 id="查找">查找</h2>
-<p>B+树的查找过程和B树类似。 我们从根节点开始，从上到下递归地遍历树。
-在每一层上，搜索的范围被减小到包含搜索值的子树中。</p>
-<h2 id="遍历">遍历</h2>
-<p>B+树只在叶子节点的层级上就可以实现整棵树的遍历。
-从根节点一路搜索到最左端的叶子节点之后即可根据指针遍历。</p>
+<h2 id="合并">合并</h2>
+<p>左偏树既然是可并堆，当然需要有高效的合并操作。
+这也是左偏树的核心操作。</p>
+<p>合并两棵左偏树的具体步骤如下：</p>
+<ol type="1">
+<li>取两个树根中优先级较高的点作为合并后树的根节点。</li>
+<li>保留根节点的左儿子，递归地合并右儿子与另一棵树。</li>
+<li>若合并后不满足左偏性质，交换左右儿子。</li>
+<li>维护新树的dist。</li>
+</ol>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Node* LeftistTree::merge(Node* lhs, Node* rhs)
+&#123;
+    if (!lhs)
+    &#123;
+        return rhs;
+    &#125;
+    if (!rhs)
+    &#123;
+        return lhs;
+    &#125;
+
+    &#x2F;&#x2F; 取较小的节点作为根节点
+    if (lhs-&gt;key &gt; rhs-&gt;key)
+    &#123;
+        std::swap(lhs, rhs);
+    &#125;
+
+    lhs-&gt;right &#x3D; merge(lhs-&gt;right, rhs);
+
+    if (!lhs-&gt;left || lhs-&gt;left-&gt;dist &lt; lhs-&gt;right-&gt;dist)
+    &#123;
+        std::swap(lhs-&gt;left, lhs-&gt;right);
+    &#125;
+    lhs-&gt;dist &#x3D; lhs-&gt;right ? lhs-&gt;right-&gt;dist + 1 : 0;
+    return lhs;
+&#125;</code></pre>
+<p>由于左偏性质，每递归一层，其中一棵树根节点的dist会减少1。
+而一个有<span
+class="math inline">\(n\)</span>个节点的左偏树，树根的dist不会超过<span
+class="math inline">\(\lceil\log(n+1)\rceil\)</span>。
+因此，合并分别为<span class="math inline">\(n\)</span>和<span
+class="math inline">\(m\)</span>的两棵左偏树，时间复杂度为<span
+class="math inline">\(O(\log n + \log m)\)</span>。</p>
 <h2 id="插入">插入</h2>
-<p>B+树的插入仅在叶子节点执行。</p>
-<ol type="1">
-<li>若为空树，创建一个叶子结点作为根节点。</li>
-<li>针对叶子结点，将关键字插入合适的位置后，如果当前节点大小超出限制，将其分裂，
-新的索引值（右节点的第一个关键字）进位到父节点。</li>
-<li>针对索引节点，将关键字插入合适的位置后，如果当前节点大小超出限制，将其分裂，
-挑选位于中间的关键字单独进位到父节点。</li>
-</ol>
+<p>插入操作相当于将一个单节点的树合并进原先的树内。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void LeftistTree::push(ValueType const&amp; key)
+&#123;
+    Node* node &#x3D; new Node(key);
+    root_      &#x3D; merge(root_, node);
+&#125;</code></pre>
 <h2 id="删除">删除</h2>
-<p>B+树的删除操作也仅在叶子节点执行。</p>
-<ol type="1">
-<li>首先查询关键字所在地叶子结点，删除该叶子节点的数据。</li>
-<li>如果删除叶子结点之后的数据数量满足B+树的要求，则不做其他修改。</li>
-<li>否则优先从足够关键字数量的相邻兄弟节点中移用关键字来作为补充，
-如果不行则与相邻的兄弟节点合并。
-<ol type="1">
-<li>如果选择借用，需要调整父节点中相应关键字的值。</li>
-<li>如果选择合并，不仅需要调整相应的值，而且父节点可能存在不平衡，
-需要继续处理。</li>
-</ol></li>
-</ol>
-<h2 id="外部链接">外部链接</h2>
-<p>以下为两份Github上的B+树实现示例，可供参考。</p>
-<ul>
-<li><a
-target="_blank" rel="noopener" href="https://github.com/shashikdm/B-Plus-Tree">shashikdm/B-Plus-Tree</a></li>
-<li><a
-target="_blank" rel="noopener" href="https://github.com/goyalarchit/B_Plus_Tree">goyalarchit/B_Plus_Tree</a></li>
-</ul>
-<h1 id="应用领域">应用领域</h1>
-<h2 id="文件系统">文件系统</h2>
-<ul>
-<li>ReiserFS、NSS、XFS、JFS、ReFS和BFS等文件系统均使用B+树进行元数据索引。</li>
-<li>BFS使用B+树来存储目录。</li>
-<li>NTFS使用B+树来索引目录和与安全有关的元数据。</li>
-<li>EXT4使用区段树（修改的B+树）来索引文件区段。</li>
-</ul>
-<h2 id="数据库">数据库</h2>
-<p>B+树被广泛用于MySQL等数据库系统中，
-其范围查找和顺序访问的性能颇受数据库的青睐。</p>
+<p>删除操作只需要直接将根节点删除，合并左右子树即可。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void LeftistTree::pop()
+&#123;
+    if (root_)
+    &#123;
+        Node* origin &#x3D; root_;
+        root_        &#x3D; merge(root_-&gt;left, root_-&gt;right);
+        delete origin;
+    &#125;
+&#125;</code></pre>
+<h2 id="删除给定节点">删除给定节点</h2>
+<p>这里的删除节点指的是删除堆上一个给定的节点，而不是删除某个权值的节点。</p>
+<p>实现起来非常简单，只需要合并该节点的左右儿子，
+并自底向上维护dist和左偏性质即可。</p>
+<p>由于该操作在使用中不常见，且需要维护额外的<code>parent</code>字段，以实现向上回溯，
+这里就不给出具体的源代码。</p>
+<h2 id="建树">建树</h2>
+<p>我们可以直接将节点一一合并进左偏树， 但这样效率太低。</p>
+<p>一种简单的实现方法是依靠队列来辅助建树。
+首先将每个节点当作一棵左偏树放入队列中，
+每次取出对首的两棵树，将其合并，重新放入队列， 直至队列仅剩下一棵树。
+可以证明，这样实现的复杂度为<span
+class="math inline">\(O(n)\)</span>。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void LeftistTree::assign(ForwardIter start, ForwardIter end)
+&#123;
+    clear();
+
+    std::queue&lt;Node*&gt; queue;
+    while (start !&#x3D; end)
+    &#123;
+        queue.push(new Node(*start++));
+    &#125;
+
+    size_ &#x3D; queue.size();
+
+    while (queue.size() &gt;&#x3D; 2)
+    &#123;
+        Node* lhs &#x3D; queue.front();
+        queue.pop();
+        Node* rhs &#x3D; queue.front();
+        queue.pop();
+        queue.push(merge(lhs, rhs));
+    &#125;
+
+    root_ &#x3D; queue.front();
+&#125;</code></pre>
+<h2 id="完整实现代码">完整实现代码</h2>
+<p>点击<a href="/codes/leftist-tree.h">传送门</a>查看。</p>
+<h1 id="变体">变体</h1>
+<h2 id="随机堆">随机堆</h2>
+<p>随机堆在合并的时候在用随机数而不是dist来进行决策，
+省去了对dist的维护，插入和删除时的平均时间复杂度为<span
+class="math inline">\(O(log n)\)</span>。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Node* RandomizedHeap::merge(Node* lhs, Node* rhs)
+&#123;
+    if (!lhs)
+    &#123;
+        return rhs;
+    &#125;
+    if (!rhs)
+    &#123;
+        return lhs;
+    &#125;
+
+    &#x2F;&#x2F; 取较小的节点作为根节点
+    if (lhs-&gt;key &gt; rhs-&gt;key)
+    &#123;
+        std::swap(lhs, rhs);
+    &#125;
+
+    &#x2F;&#x2F; 使用随机数进行决策
+    if (random() % 2 &#x3D;&#x3D; 1)
+    &#123;
+        std::swap(lhs-&gt;left, lhs-&gt;right);
+    &#125;
+    lhs-&gt;lhs &#x3D; merge(lhs-&gt;lhs, rhs);
+
+    return lhs;
+&#125;</code></pre>
+<h2 id="斜堆">斜堆</h2>
+<p>斜堆（Skew Heap），也叫自适应堆（Self-adjusting
+Heap）,是左偏树的自适应形式。
+当合并两个堆时，它无条件交换合并路径上的所有节点，以维护平衡，
+在插入和删除时具有<span class="math inline">\(O(log
+n)\)</span>的均摊复杂度。</p>
+<p>通常情况下，斜堆具有比左偏树<strong>更高效的性能</strong>。</p>
+<div class="note info"><p>所谓自适应，是指斜堆能够在进行操作时根据需要自我调整结构，
+有效适应输入序列的变化，而不依赖严格的平衡规则。</p>
+</div>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Node* SkewHeap::merge(Node* lhs, Node* rhs)
+&#123;
+    if (!lhs)
+    &#123;
+        return rhs;
+    &#125;
+    if (!rhs)
+    &#123;
+        return lhs;
+    &#125;
+
+    &#x2F;&#x2F; 取较小的节点作为根节点
+    if (lhs-&gt;key &gt; rhs-&gt;key)
+    &#123;
+        std::swap(lhs, rhs);
+    &#125;
+
+    &#x2F;&#x2F; 无条件交换左右儿子
+    std::swap(lhs-&gt;left, lhs-&gt;right);
+    lhs-&gt;lhs &#x3D; merge(lhs-&gt;lhs, rhs);
+
+    return lhs;
+&#125;</code></pre>
 <h1 id="参考资料">参考资料</h1>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://oi-wiki.org/ds/bplus-tree">B+树 | OI Wiki</a></li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/B%252B_tree">B+树 |
-维基百科</a></li>
-<li><a
-target="_blank" rel="noopener" href="https://www.cnblogs.com/henuliulei/p/15114440.html">b树，b+树，b-树,红黑树详解一锅端
-| 博客园 你的雷哥</a></li>
+<li><a target="_blank" rel="noopener" href="https://oi-wiki.org/ds/leftist-tree/">左偏树 | OI
+Wiki</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/HachikoT/p/16951306.html">斜堆 |
+博客园 HachikoT</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/TEoS/p/11351372.html">左偏树详解 |
+博客园 TEoS</a></li>
 </ul>
 
     </div>
@@ -373,7 +493,7 @@ target="_blank" rel="noopener" href="https://www.cnblogs.com/henuliulei/p/151144
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://sunirein.me/bplus-tree/" title="B+树">https://sunirein.me/bplus-tree/</a>
+      <a href="https://sunirein.me/leftist-tree/" title="左偏树">https://sunirein.me/leftist-tree/</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -383,21 +503,19 @@ target="_blank" rel="noopener" href="https://www.cnblogs.com/henuliulei/p/151144
 
           <div class="post-tags">
               <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 数据结构与算法</a>
-              <a href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> 平衡树</a>
+              <a href="/tags/%E5%A0%86/" rel="tag"><i class="fa fa-tag"></i> 堆</a>
+              <a href="/tags/%E5%8F%AF%E5%B9%B6%E5%A0%86/" rel="tag"><i class="fa fa-tag"></i> 可并堆</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/red-black-tree/" rel="prev" title="红黑树">
-                  <i class="fa fa-angle-left"></i> 红黑树
+                <a href="/bplus-tree/" rel="prev" title="B+树">
+                  <i class="fa fa-angle-left"></i> B+树
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/leftist-tree/" rel="next" title="左偏树">
-                  左偏树 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
@@ -478,7 +596,7 @@ target="_blank" rel="noopener" href="https://www.cnblogs.com/henuliulei/p/151144
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
 <script src="/js/third-party/math/mathjax.js"></script>
 
 
