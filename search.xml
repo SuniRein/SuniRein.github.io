@@ -494,6 +494,108 @@ Pages发布你的文章，使博客可以被别人访问。</p>
       </tags>
   </entry>
   <entry>
+    <title>七日创站记 第二日 Github Pages</title>
+    <url>/website-genesis_day-two/</url>
+    <content><![CDATA[<blockquote>
+<p>神说：「众水之间要有穹苍，把水和水分开！」事就这样成了。
+神造了穹苍，把穹苍以下的水和穹苍以上的水分开了。
+神称穹苍为天。有晚上，有早晨；这是第二日。</p>
+<p align="right">
+—— 《圣经·创世记·创造天地万物》
+</p>
+</blockquote>
+<h1 id="github-pages介绍">Github Pages介绍</h1>
+<p><a
+href="https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages">Github
+Pages</a>
+是Github提供的一项静态站点托管服务，它从Github上的仓库获取HTML、CSS和JavaScript文件，
+通过构造过程运行文件，然后发布网站。</p>
+<p>一共有三种类型的Github Pages：项目、个人和组织。
+项目站点链接到Github上托管的特定项目，用户和组织站点则链接到Github上已有的账户。
+每个用户只能创建一个个人或组织站点，项目站点则没有限制。</p>
+<p>默认的用户站点域名为<code>&lt;username&gt;.github.io</code>。Github
+Pages支持用户提供自己的域名。</p>
+<p>Github Pages有一些使用限制，详见<a
+href="https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages#usage-limits">文档</a>。
+不过对于一个简单的个人博客来说，这已经远远够用了。</p>
+<span id="more"></span>
+<h1 id="创建github-pages个人站点">创建Github Pages个人站点</h1>
+<p>首先，你需要有一个Github账户。 如果你还没有Github账户，可以点击<a
+href="https://github.com/signup">这里</a>创建。
+注意，Github在国内的访问受限，有时候可能连接不上，建议使用科学上网。</p>
+<p>登录你的Github账户后，点击右上角的加号，点击<code>New repository</code>新建一个仓库。
+仓库的名称为<code>&lt;username&gt;.github.io</code>，其他选项保持默认即可。
+最下方的<code>Disable Projects and Wikis</code>可以选择勾选。
+之后点击<code>Create repository</code>，完成仓库的创建。</p>
+<p>这样，你的Github Pages个人站点就创建好了。
+点击个人头像，<code>Your repositories</code>，可以看到你新建的这个仓库。
+仓库的名称后面还会有一个链接图标，表明这是你的个人站点。
+不过现在里面只是一个空仓库，需要我们上传相应的文件使其可以访问。</p>
+<h1 id="建立ssh连接">建立ssh连接</h1>
+<p>我们需要在本地建立与Github之间的ssh连接，才能访问和更改Github上的个人仓库。</p>
+<div class="note info"><p>这一步也可以跳过，直接使用http连接，但每次更新Github仓库就需要你手动输入用户名和密码。</p>
+<p>建议使用ssh连接，安全性更高，且更加方便。</p>
+</div>
+<p>首先，需要在本地生成ssh秘钥。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 一般将ssh秘钥保存至个人目录下的.ssh文件夹
+# 如果不存在可以手动创建一个
+cd ~&#x2F;.ssh
+
+# 生成ssh密钥
+# -t: 制定秘钥类型，如果不指定，默认为rsa；建议使用ed25519
+# 可以使用-f &lt;file&gt;指定生成文件的名字，并配置ssh config文件来访问
+ssh-keygen -t ed25519</code></pre>
+<p>上述命令会在当前目录下生成两个文件：<code>id_ed25519</code>和<code>id_ed25519.pub</code>，分别为私钥和公钥。</p>
+<p>打开<a href="https://github.com">Github</a> &gt;
+<code>settings</code> &gt; <code>SSH and GPG keys</code>，
+右上角点击<code>Add new SSH key</code>，将生成的公钥复制到这里面。
+<code>Keys</code>类型选择<code>Authentication Key</code>，并输入一个标题。
+点击<code>Add SSH key</code>，完成添加秘钥。
+之后你就可以在本机通过ssh连接访问github。</p>
+<p>之后运行<code>ssh git@github.com</code>测试是否能够正常连接。</p>
+<p>如果连接正常，你会看到类似这样的输出信息。</p>
+<pre class="line-numbers language-none"><code class="language-none">PTY allocation request failed on channel 0
+Hi &lt;username&gt;! You&#39;ve successfully authenticated, but GitHub does not provide shell access.
+Connection to github.com closed.</code></pre>
+<h1 id="hexo设置deploy">Hexo设置deploy</h1>
+<p>进入你博客所在的文件夹，编辑<code>_config.yml</code>里面的<code>deploy</code>项（如果没有则自行添加），设置如下：</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">deploy:
+- type: git # 最前面的&#96;-&#96;也可以不加，但后续如果需要添加其他仓库，则必须添加
+  repo: git@github.com:&lt;用户名&gt;&#x2F;&lt;仓库名&gt;.git # 这一项的链接可以在你的仓库里的Code按钮下的ssh找到
+                                             # 如果你想使用http连接，这里需要切换成相应的http链接
+  branch: main</code></pre>
+<p>然后运行下面的命令：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 清除缓存已生成的文件
+hexo clean
+
+# 重新生成相关文件
+hexo generate
+
+# 部署到相应的位置
+hexo deploy
+
+# 后面两条命令也可以合成一条
+# hexo deploy -g</code></pre>
+<p>此时你就可以访问对应的域名来查看你的个人博客。</p>
+<div class="note info"><p>Github
+Pages的刷新可能会有几分钟的延迟，如果没看到更新可以等待一会。</p>
+<p>如果你想最快确认部署是否有效，可直接在相应的Github仓库里查看提交信息。</p>
+</div>
+<h1 id="总结">总结</h1>
+<p>在完成Github
+Pages的部署后，个人博客已经基本成型，可以投入使用了。</p>
+<p>但是，Github Pages有一些功能上的限制，且在国内的访问速度不太理想。
+如果对于博客有更高的需求，可以自己搭建服务器来部署博客。
+在下一节里，我将演示如何通过阿里云服务器来部署自己的博客。</p>
+]]></content>
+      <categories>
+        <category>七日创站记</category>
+      </categories>
+      <tags>
+        <tag>网站搭建</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>七日创站记 第三日 阿里云服务器</title>
     <url>/website-genesis_day-three/</url>
     <content><![CDATA[<blockquote>
@@ -710,108 +812,6 @@ id="access.log下能找到访问记录但显示没有权限">access.log下能找
 <p>今天讲述了在阿里云服务器上配置git和nginx来部署个人网站的方法。
 至此，个人网站的部署工作全部完成了。</p>
 <p>在后续的文章中，我将讲述包括博客的美化、域名购买与备案、CDN分流等功能，感谢你的阅读。</p>
-]]></content>
-      <categories>
-        <category>七日创站记</category>
-      </categories>
-      <tags>
-        <tag>网站搭建</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>七日创站记 第二日 Github Pages</title>
-    <url>/website-genesis_day-two/</url>
-    <content><![CDATA[<blockquote>
-<p>神说：「众水之间要有穹苍，把水和水分开！」事就这样成了。
-神造了穹苍，把穹苍以下的水和穹苍以上的水分开了。
-神称穹苍为天。有晚上，有早晨；这是第二日。</p>
-<p align="right">
-—— 《圣经·创世记·创造天地万物》
-</p>
-</blockquote>
-<h1 id="github-pages介绍">Github Pages介绍</h1>
-<p><a
-href="https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages">Github
-Pages</a>
-是Github提供的一项静态站点托管服务，它从Github上的仓库获取HTML、CSS和JavaScript文件，
-通过构造过程运行文件，然后发布网站。</p>
-<p>一共有三种类型的Github Pages：项目、个人和组织。
-项目站点链接到Github上托管的特定项目，用户和组织站点则链接到Github上已有的账户。
-每个用户只能创建一个个人或组织站点，项目站点则没有限制。</p>
-<p>默认的用户站点域名为<code>&lt;username&gt;.github.io</code>。Github
-Pages支持用户提供自己的域名。</p>
-<p>Github Pages有一些使用限制，详见<a
-href="https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages#usage-limits">文档</a>。
-不过对于一个简单的个人博客来说，这已经远远够用了。</p>
-<span id="more"></span>
-<h1 id="创建github-pages个人站点">创建Github Pages个人站点</h1>
-<p>首先，你需要有一个Github账户。 如果你还没有Github账户，可以点击<a
-href="https://github.com/signup">这里</a>创建。
-注意，Github在国内的访问受限，有时候可能连接不上，建议使用科学上网。</p>
-<p>登录你的Github账户后，点击右上角的加号，点击<code>New repository</code>新建一个仓库。
-仓库的名称为<code>&lt;username&gt;.github.io</code>，其他选项保持默认即可。
-最下方的<code>Disable Projects and Wikis</code>可以选择勾选。
-之后点击<code>Create repository</code>，完成仓库的创建。</p>
-<p>这样，你的Github Pages个人站点就创建好了。
-点击个人头像，<code>Your repositories</code>，可以看到你新建的这个仓库。
-仓库的名称后面还会有一个链接图标，表明这是你的个人站点。
-不过现在里面只是一个空仓库，需要我们上传相应的文件使其可以访问。</p>
-<h1 id="建立ssh连接">建立ssh连接</h1>
-<p>我们需要在本地建立与Github之间的ssh连接，才能访问和更改Github上的个人仓库。</p>
-<div class="note info"><p>这一步也可以跳过，直接使用http连接，但每次更新Github仓库就需要你手动输入用户名和密码。</p>
-<p>建议使用ssh连接，安全性更高，且更加方便。</p>
-</div>
-<p>首先，需要在本地生成ssh秘钥。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 一般将ssh秘钥保存至个人目录下的.ssh文件夹
-# 如果不存在可以手动创建一个
-cd ~&#x2F;.ssh
-
-# 生成ssh密钥
-# -t: 制定秘钥类型，如果不指定，默认为rsa；建议使用ed25519
-# 可以使用-f &lt;file&gt;指定生成文件的名字，并配置ssh config文件来访问
-ssh-keygen -t ed25519</code></pre>
-<p>上述命令会在当前目录下生成两个文件：<code>id_ed25519</code>和<code>id_ed25519.pub</code>，分别为私钥和公钥。</p>
-<p>打开<a href="https://github.com">Github</a> &gt;
-<code>settings</code> &gt; <code>SSH and GPG keys</code>，
-右上角点击<code>Add new SSH key</code>，将生成的公钥复制到这里面。
-<code>Keys</code>类型选择<code>Authentication Key</code>，并输入一个标题。
-点击<code>Add SSH key</code>，完成添加秘钥。
-之后你就可以在本机通过ssh连接访问github。</p>
-<p>之后运行<code>ssh git@github.com</code>测试是否能够正常连接。</p>
-<p>如果连接正常，你会看到类似这样的输出信息。</p>
-<pre class="line-numbers language-none"><code class="language-none">PTY allocation request failed on channel 0
-Hi &lt;username&gt;! You&#39;ve successfully authenticated, but GitHub does not provide shell access.
-Connection to github.com closed.</code></pre>
-<h1 id="hexo设置deploy">Hexo设置deploy</h1>
-<p>进入你博客所在的文件夹，编辑<code>_config.yml</code>里面的<code>deploy</code>项（如果没有则自行添加），设置如下：</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">deploy:
-- type: git # 最前面的&#96;-&#96;也可以不加，但后续如果需要添加其他仓库，则必须添加
-  repo: git@github.com:&lt;用户名&gt;&#x2F;&lt;仓库名&gt;.git # 这一项的链接可以在你的仓库里的Code按钮下的ssh找到
-                                             # 如果你想使用http连接，这里需要切换成相应的http链接
-  branch: main</code></pre>
-<p>然后运行下面的命令：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 清除缓存已生成的文件
-hexo clean
-
-# 重新生成相关文件
-hexo generate
-
-# 部署到相应的位置
-hexo deploy
-
-# 后面两条命令也可以合成一条
-# hexo deploy -g</code></pre>
-<p>此时你就可以访问对应的域名来查看你的个人博客。</p>
-<div class="note info"><p>Github
-Pages的刷新可能会有几分钟的延迟，如果没看到更新可以等待一会。</p>
-<p>如果你想最快确认部署是否有效，可直接在相应的Github仓库里查看提交信息。</p>
-</div>
-<h1 id="总结">总结</h1>
-<p>在完成Github
-Pages的部署后，个人博客已经基本成型，可以投入使用了。</p>
-<p>但是，Github Pages有一些功能上的限制，且在国内的访问速度不太理想。
-如果对于博客有更高的需求，可以自己搭建服务器来部署博客。
-在下一节里，我将演示如何通过阿里云服务器来部署自己的博客。</p>
 ]]></content>
       <categories>
         <category>七日创站记</category>
