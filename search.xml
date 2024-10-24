@@ -821,445 +821,6 @@ Pages的部署后，个人博客已经基本成型，可以投入使用了。</p
       </tags>
   </entry>
   <entry>
-    <title>AVL树</title>
-    <url>/AVL-tree/</url>
-    <content><![CDATA[<h1 id="avl树">AVL树</h1>
-<p><strong>AVL树</strong>是一种平衡二叉树，它通过<strong>平衡因子（Balance
-Factor）</strong>来衡量树的平衡程度，
-并通过<strong>树旋转</strong>来维护平衡。</p>
-<div class="note info"><p>AVL是苏联教授G.M. Adelson-Velsky和E.M. Landis名称的缩写。
-他们最早提出了最早的平衡二叉树，为了纪念他们，将这种平衡二叉树成为AVL树。</p>
-</div>
-<span id="more"></span>
-<p>AVL树的平衡因子定义为左右子树的高度差，且空节点的平衡因子为<span
-class="math inline">\(0\)</span>。 当节点的平衡因子绝对值小于等于<span
-class="math inline">\(1\)</span>时，称该节点为<strong>平衡节点</strong>，否则为<strong>失衡节点</strong>。</p>
-<p>AVL树的树高不会超过<span class="math inline">\(O(\log
-n)\)</span>。</p>
-<details class="note primary no-icon"><summary><p>证明</p>
-</summary>
-<p>设<span class="math inline">\(f_n\)</span>为高度<span
-class="math inline">\(n\)</span>的AVL树所包含的最少节点数，则有</p>
-<p><span class="math display">\[
-f_n = \begin{cases}
-1, &amp; x = 1 \\\\
-2, &amp; x = 2 \\\\
-f_{n-1} + f_{n-2} + 1, &amp; x \ge 3
-\end{cases}
-\]</span></p>
-<p>则<span class="math inline">\({f_n +
-1}\)</span>是一个斐波那契数列。不难算出其通项为</p>
-<p><span class="math display">\[
-f_n = \frac{5+2\sqrt{5}}{5} (\frac{1+\sqrt{5}}{2})^n +
-\frac{5-2\sqrt{5}}{5} (\frac{1-\sqrt{5}}{2})^n - 1
-\]</span></p>
-<p>当<span class="math inline">\(n\)</span>足够大时，有<span
-class="math inline">\(f_n \sim \frac{5+2\sqrt{5}}{5}
-(\frac{1+\sqrt{5}}{2})^n\)</span>。</p>
-<p>对于树高<span class="math inline">\(n\)</span>，则有</p>
-<p><span class="math display">\[
-n \lt \log_{\frac{1+\sqrt{5}}{2}} (f_n + 1) \sim \log (f_n + 1)
-\]</span></p>
-<p>因此AVL树的高度为<span class="math inline">\(O(\log
-f_n)\)</span>，这里<span
-class="math inline">\(f_n\)</span>为节点数。</p>
-
-</details>
-<h1 id="原理">原理</h1>
-<h2 id="节点">节点</h2>
-<p>由于AVL树的操作需要涉及到树的高度，我们需要在节点中设置<code>height</code>。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">struct TreeNode
-&#123;
-  int value&#123;&#125;;
-  int height&#123;&#125;;
-  TreeNode* left&#123;&#125;;
-  TreeNode* right&#123;&#125;;
-
-  TreeNode() &#x3D; default;
-  explict TreeNode(int x): value(x) &#123;&#125;
-&#125;;</code></pre>
-<h2 id="节点高度">节点高度</h2>
-<p>节点高度定义为从该节点到距离最远的子节点经过的边数。
-叶子节点的高度为<span
-class="math inline">\(0\)</span>，空节点的高度为<span
-class="math inline">\(-1\)</span>。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;&#x2F; 获取节点高度
-int AVLTree::height(const TreeNode* node)
-&#123;
-  return node ? node-&gt;height : -1;
-&#125;
-
-&#x2F;&#x2F;&#x2F; 更新节点高度
-void AVLTree::update_height(TreeNode* node)
-&#123;
-  if (node)
-  &#123;
-    node-&gt;height &#x3D; std::max(height(node-&gt;left), height(right)) + 1;
-  &#125;
-&#125;
-</code></pre>
-<h2 id="节点平衡因子">节点平衡因子</h2>
-<p>节点平衡因子定义为左子树的高度减去右子树的高度，并规定空节点平衡因子为<span
-class="math inline">\(0\)</span>。
-AVL树要求平衡因子的绝对值小于等于<span
-class="math inline">\(1\)</span>。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int AVLTree::balance_factor(const TreeNode* node)
-&#123;
-  return node ? height(node-&gt;left) - height(node-&gt;right) : 0;
-&#125;</code></pre>
-<h2 id="树旋转">树旋转</h2>
-<p>AVL树通过树旋转来维护平衡。 树旋转包括左旋和右旋。</p>
-<p>在尝试修改树的节点时，可能会破坏AVL树的性质，产生失衡节点。
-由于修改前AVL的节点平衡因子大小不超过1，如果平衡被破坏，
-则失衡节点的平衡因子只可能是<span class="math inline">\(\pm
-2\)</span>。</p>
-<p>我们从底向上研究改变后的AVL树，找到第一个失衡节点，记该节点为node。
-该节点必有子节点，记其高度较大的子节点为child。</p>
-<h3 id="右旋">右旋</h3>
-<p>在下图中，node为3，child为1。</p>
-<p>node所在子树左边偏大，child所在子树也是左边偏大，这种情况称为LL。
-此时应做一次右旋。</p>
-<pre class="line-numbers language-pic" data-language="pic"><code class="language-pic">      4                          4
-     &#x2F; \                        &#x2F; \
-    3   5                      1   5
-   &#x2F;               &#x3D;&#x3D;&#x3D;&gt;       &#x2F; \
-  1                          0   3
- &#x2F;
-0</code></pre>
-<p>我们对以node为根节点的子树作一次右旋操作。
-在旋转后的子树中，child变成根节点，node变成child的右儿子，其余保持不变。</p>
-<p>如果child已经有右儿子（称其为grant_child），则需将grant_child作为node的左儿子。
-如下图所示。</p>
-<pre class="line-numbers language-pic" data-language="pic"><code class="language-pic">      5                          3
-     &#x2F; \                        &#x2F; \
-    3   6                      1   5
-   &#x2F; \             &#x3D;&#x3D;&#x3D;&gt;       &#x2F;   &#x2F; \
-  1   4                      0   4   6
- &#x2F;
-0</code></pre>
-<p>代码实现如下： <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::right_rotate(TreeNode* node)
-&#123;
-  TreeNode* child &#x3D; node-&gt;left;
-  TreeNode* grant_child &#x3D; child-&gt;right;
-
-  child-&gt;right &#x3D; node;
-  node-&gt;left &#x3D; grant_child;
-
-  &#x2F;&#x2F; 注意需要更新节点的高度
-  update_height(node);
-  update_height(child);
-
-  &#x2F;&#x2F; 返回新子树的根节点
-  return child;
-&#125;</code></pre></p>
-<h3 id="左旋">左旋</h3>
-<p>RR为LL的镜像，此时应做一次左旋。</p>
-<p>代码实现与右旋基本相同，只是将左右互换了。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::left_rotate(TreeNode* node)
-&#123;
-  TreeNode* child &#x3D; node-&gt;right;
-  TreeNode* grant_child &#x3D; child-&gt;left;
-
-  child-&gt;left &#x3D; node;
-  node-&gt;right &#x3D; grant_child;
-
-  update_height(node);
-  update_height(child);
-
-  return child;
-&#125;</code></pre>
-<h3 id="左旋后右旋">左旋后右旋</h3>
-<p>当node所在子树左边偏大，但child所在子树右边偏大，即LR时，仅做一次旋转不够，
-需要先对child左旋，再对node右旋。</p>
-<p>如下图所示：</p>
-<pre class="line-numbers language-pic" data-language="pic"><code class="language-pic">    4                          4                        4
-   &#x2F; \                        &#x2F; \                      &#x2F; \
-  3   5                      3   5                    2   5
- &#x2F;               &#x3D;&#x3D;&#x3D;&gt;       &#x2F;              &#x3D;&#x3D;&gt;       &#x2F; \
-1                          2                        1   3
- \                        &#x2F;
-  2                      1</code></pre>
-<h3 id="右旋后左旋">右旋后左旋</h3>
-<p>RL为LR的镜像，此时应先对child右旋，后对node左旋。</p>
-<h3 id="完整实现">完整实现</h3>
-<p>根据失衡节点node及较大侧子节点child的平衡因子，可以分四种情况，如下表所示：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">失衡节点的平衡因子</th>
-<th style="text-align: center;">子节点的平衡因子</th>
-<th style="text-align: center;">所属情况</th>
-<th style="text-align: center;">应采取的旋转方法</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><span class="math inline">\(\gt
-1\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\ge
-0\)</span></td>
-<td style="text-align: center;">LL</td>
-<td style="text-align: center;">右旋</td>
-</tr>
-<tr>
-<td style="text-align: center;"><span class="math inline">\(\gt
-1\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\lt
-0\)</span></td>
-<td style="text-align: center;">LR</td>
-<td style="text-align: center;">先左旋后右旋</td>
-</tr>
-<tr>
-<td style="text-align: center;"><span class="math inline">\(\lt
--1\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\le
-0\)</span></td>
-<td style="text-align: center;">RR</td>
-<td style="text-align: center;">左旋</td>
-</tr>
-<tr>
-<td style="text-align: center;"><span class="math inline">\(\lt
--1\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\gt
-0\)</span></td>
-<td style="text-align: center;">RL</td>
-<td style="text-align: center;">先右旋后左旋</td>
-</tr>
-</tbody>
-</table>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::rotate(TreeNode* node)
-&#123;
-  int factor &#x3D; balance_factor(node);
-
-  &#x2F;&#x2F; L
-  if (factor &gt; 1)
-  &#123;
-    &#x2F;&#x2F; LL
-    if (balance_factor(node-&gt;left) &gt;&#x3D; 0)
-    &#123;
-      return right_rotate(node);
-    &#125;
-
-    &#x2F;&#x2F; LR
-    node-&gt;left &#x3D; left_rotate(node-&gt;left);
-    return right_rotate(node);
-  &#125;
-
-  &#x2F;&#x2F; R
-  if (factor &lt; -1)
-  &#123;
-    &#x2F;&#x2F; RR
-    if (balance_factor(node-&gt;right) &lt;&#x3D; 0)
-    &#123;
-      return left_rotate(node);
-    &#125;
-
-    &#x2F;&#x2F; RL
-    node-&gt;right &#x3D; right_rotate(node-&gt;right);
-    return left_rotate(node);
-  &#125;
-
-  &#x2F;&#x2F; 无需旋转，直接返回
-  return node;
-&#125;</code></pre>
-<h1 id="avl树基本操作">AVL树基本操作</h1>
-<h2 id="插入节点">插入节点</h2>
-<p>AVL树的插入操作与二叉搜索树的插入类似。
-唯一的区别在于插入后AVL树可能会出现失衡节点，我们需要沿着
-插入后的节点到根节点的路径进行搜索，找到失衡节点，并进行树旋转，
-以维护其平衡。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::insert(TreeNode* node, int value)
-&#123;
-  if (!node)
-  &#123;
-    return new TreeNode(value);
-  &#125;
-
-  if (node-&gt;value &lt; value)
-  &#123;
-    node-&gt;right &#x3D; insert(node-&gt;right, value);
-  &#125;
-  else
-  &#123;
-    node-&gt;left &#x3D; insert(node-&gt;left, value);
-  &#125;
-
-  &#x2F;&#x2F; 注意更新节点高度
-  update_height(node);
-
-  &#x2F;&#x2F; 维护平衡
-  node &#x3D; rotate(node);
-
-  return node;
-&#125;</code></pre>
-<h2 id="删除节点">删除节点</h2>
-<p>删除节点的操作与插入节点类似。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::remove(TreeNode* node, int value)
-&#123;
-  if (!node)
-  &#123;
-    return nullptr;
-  &#125;
-
-  if (node-&gt;value &lt; value)
-  &#123;
-    node-&gt;right &#x3D; remove(node-&gt;right, value);
-  &#125;
-  else if (node-&gt;value &gt; value)
-  &#123;
-    node-&gt;left &#x3D; remove(node-&gt;left, value);
-  &#125;
-  else &#x2F;&#x2F; 删除自身
-  &#123;
-    &#x2F;&#x2F; 0或1个子节点
-    if (!node-&gt;left || !node-&gt;right)
-    &#123;
-      TreeNode* child &#x3D; node-&gt;left ? node-&gt;left : node-&gt;right;
-      delete node;
-      node &#x3D; child;
-    &#125;
-    else &#x2F;&#x2F; 2个子节点
-    &#123;
-      &#x2F;&#x2F; 找到中序遍历的后一个节点（右子树的最左边元素）
-      TreeNode next &#x3D; node-&gt;right;
-      while (next-&gt;left)
-      &#123;
-        next &#x3D; next-&gt;left;
-      &#125;
-
-      node-&gt;value &#x3D; next_value;
-      node-&gt;right &#x3D; remove(node-&gt;right, next-&gt;value);
-    &#125;
-  &#125;
-
-  &#x2F;&#x2F; 注意更新节点高度
-  update_height(node);
-
-  &#x2F;&#x2F; 维护平衡
-  node &#x3D; rotate(node);
-
-  return node;
-&#125;</code></pre>
-<h2 id="查找节点">查找节点</h2>
-<p>AVL树的查找操作与二叉平衡树一样，这里就不再详细列出。</p>
-<h1 id="与红黑树的比较">与红黑树的比较</h1>
-<p>AVL树经常被与红黑树作比较，
-它们都是计算机科学中常见的自平衡二叉查找树。</p>
-<p>事实上，每一颗AVL树都可以被染色成红黑树，但红黑树不一定是AVL树。</p>
-<p>与红黑树相比，AVL树的平衡性更强，平衡要求更高，故其查找性能相对会更好，
-但插入和删除效率则会更低。</p>
-<p>AVL树更适合插入删除次数少、查找次数多的场景，红黑树则更胜任于频繁查删的场景。
-Windows
-NT内核中就广泛使用了AVL树，而C++标准库里的<code>std::map</code>和<code>std::set</code>
-都是用红黑树实现的。</p>
-<h1 id="参考资料">参考资料</h1>
-<ul>
-<li><a
-href="https://www.cnblogs.com/1873cy/p/18395797">算法与数据结构——AVL树（平衡二叉搜索树）|
-博客园</a></li>
-<li><a href="https://oi-wiki.org/ds/avl/">AVL 树 | OI Wiki</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>高级数据结构与算法</category>
-      </categories>
-      <tags>
-        <tag>数据结构与算法</tag>
-        <tag>平衡树</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>B+树</title>
-    <url>/bplus-tree/</url>
-    <content><![CDATA[<h1 id="概述">概述</h1>
-<p>B+树是<a href="/b-tree/">B树</a>的一个变体。
-旨在提升B树在数据库和文件系统等应用场景中的存取效率。
-它在范围查找和顺序访问方面表现出更优越的性能。</p>
-<span id="more"></span>
-<figure>
-<img data-src="/images/2024/bplus-tree.webp" alt="一棵普通的B+树" />
-<figcaption aria-hidden="true">一棵普通的B+树</figcaption>
-</figure>
-<h1 id="特点">特点</h1>
-<p>相比于B树，B+树在结构上具有以下特点：</p>
-<ol type="1">
-<li>所有数据均存在叶子节点中，并通过链表相连。</li>
-<li>内部节点仅存储键值作为索引，不存储实际数据。</li>
-</ol>
-<p>这些结构特点使B+树具备了一些B树不具备的功能性质：</p>
-<ol type="1">
-<li>查询效率更稳定，每个关键字的查找必然走一条从根节点到叶子节点的路。</li>
-<li>内部结点相比较小，在相同内存能容纳更多的关键字，从而降低了IO读写次数。</li>
-<li>B+树可以直接遍历叶子节点来实现范围查找，而B树的范围查找只能通过中序遍历。</li>
-</ol>
-<p>因此，B+树更适合且被广泛应用于文件系统和数据库索引等场景。</p>
-<h1 id="实现">实现</h1>
-<h2 id="查找">查找</h2>
-<p>B+树的查找过程和B树类似。 我们从根节点开始，从上到下递归地遍历树。
-在每一层上，搜索的范围被减小到包含搜索值的子树中。</p>
-<h2 id="遍历">遍历</h2>
-<p>B+树只在叶子节点的层级上就可以实现整棵树的遍历。
-从根节点一路搜索到最左端的叶子节点之后即可根据指针遍历。</p>
-<h2 id="插入">插入</h2>
-<p>B+树的插入仅在叶子节点执行。</p>
-<ol type="1">
-<li>若为空树，创建一个叶子结点作为根节点。</li>
-<li>针对叶子结点，将关键字插入合适的位置后，如果当前节点大小超出限制，将其分裂，
-新的索引值（右节点的第一个关键字）进位到父节点。</li>
-<li>针对索引节点，将关键字插入合适的位置后，如果当前节点大小超出限制，将其分裂，
-挑选位于中间的关键字单独进位到父节点。</li>
-</ol>
-<h2 id="删除">删除</h2>
-<p>B+树的删除操作也仅在叶子节点执行。</p>
-<ol type="1">
-<li>首先查询关键字所在地叶子结点，删除该叶子节点的数据。</li>
-<li>如果删除叶子结点之后的数据数量满足B+树的要求，则不做其他修改。</li>
-<li>否则优先从足够关键字数量的相邻兄弟节点中移用关键字来作为补充，
-如果不行则与相邻的兄弟节点合并。
-<ol type="1">
-<li>如果选择借用，需要调整父节点中相应关键字的值。</li>
-<li>如果选择合并，不仅需要调整相应的值，而且父节点可能存在不平衡，
-需要继续处理。</li>
-</ol></li>
-</ol>
-<h2 id="外部链接">外部链接</h2>
-<p>以下为两份Github上的B+树实现示例，可供参考。</p>
-<ul>
-<li><a
-href="https://github.com/shashikdm/B-Plus-Tree">shashikdm/B-Plus-Tree</a></li>
-<li><a
-href="https://github.com/goyalarchit/B_Plus_Tree">goyalarchit/B_Plus_Tree</a></li>
-</ul>
-<h1 id="应用领域">应用领域</h1>
-<h2 id="文件系统">文件系统</h2>
-<ul>
-<li>ReiserFS、NSS、XFS、JFS、ReFS和BFS等文件系统均使用B+树进行元数据索引。</li>
-<li>BFS使用B+树来存储目录。</li>
-<li>NTFS使用B+树来索引目录和与安全有关的元数据。</li>
-<li>EXT4使用区段树（修改的B+树）来索引文件区段。</li>
-</ul>
-<h2 id="数据库">数据库</h2>
-<p>B+树被广泛用于MySQL等数据库系统中，
-其范围查找和顺序访问的性能颇受数据库的青睐。</p>
-<h1 id="参考资料">参考资料</h1>
-<ul>
-<li><a href="https://oi-wiki.org/ds/bplus-tree">B+树 | OI Wiki</a></li>
-<li><a href="https://en.wikipedia.org/wiki/B%252B_tree">B+树 |
-维基百科</a></li>
-<li><a
-href="https://www.cnblogs.com/henuliulei/p/15114440.html">b树，b+树，b-树,红黑树详解一锅端
-| 博客园 你的雷哥</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>高级数据结构与算法</category>
-      </categories>
-      <tags>
-        <tag>数据结构与算法</tag>
-        <tag>平衡树</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>七日创站记 第四日 站点装修与美化</title>
     <url>/website-genesis_day-four/</url>
     <content><![CDATA[<blockquote>
@@ -1809,6 +1370,354 @@ href="https://hexo-next.readthedocs.io/zh-cn/latest/">Hexo-NexT</a></li>
       </tags>
   </entry>
   <entry>
+    <title>AVL树</title>
+    <url>/AVL-tree/</url>
+    <content><![CDATA[<h1 id="avl树">AVL树</h1>
+<p><strong>AVL树</strong>是一种平衡二叉树，它通过<strong>平衡因子（Balance
+Factor）</strong>来衡量树的平衡程度，
+并通过<strong>树旋转</strong>来维护平衡。</p>
+<div class="note info"><p>AVL是苏联教授G.M. Adelson-Velsky和E.M. Landis名称的缩写。
+他们最早提出了最早的平衡二叉树，为了纪念他们，将这种平衡二叉树成为AVL树。</p>
+</div>
+<span id="more"></span>
+<p>AVL树的平衡因子定义为左右子树的高度差，且空节点的平衡因子为<span
+class="math inline">\(0\)</span>。 当节点的平衡因子绝对值小于等于<span
+class="math inline">\(1\)</span>时，称该节点为<strong>平衡节点</strong>，否则为<strong>失衡节点</strong>。</p>
+<p>AVL树的树高不会超过<span class="math inline">\(O(\log
+n)\)</span>。</p>
+<details class="note primary no-icon"><summary><p>证明</p>
+</summary>
+<p>设<span class="math inline">\(f_n\)</span>为高度<span
+class="math inline">\(n\)</span>的AVL树所包含的最少节点数，则有</p>
+<p><span class="math display">\[
+f_n = \begin{cases}
+1, &amp; x = 1 \\\\
+2, &amp; x = 2 \\\\
+f_{n-1} + f_{n-2} + 1, &amp; x \ge 3
+\end{cases}
+\]</span></p>
+<p>则<span class="math inline">\({f_n +
+1}\)</span>是一个斐波那契数列。不难算出其通项为</p>
+<p><span class="math display">\[
+f_n = \frac{5+2\sqrt{5}}{5} (\frac{1+\sqrt{5}}{2})^n +
+\frac{5-2\sqrt{5}}{5} (\frac{1-\sqrt{5}}{2})^n - 1
+\]</span></p>
+<p>当<span class="math inline">\(n\)</span>足够大时，有<span
+class="math inline">\(f_n \sim \frac{5+2\sqrt{5}}{5}
+(\frac{1+\sqrt{5}}{2})^n\)</span>。</p>
+<p>对于树高<span class="math inline">\(n\)</span>，则有</p>
+<p><span class="math display">\[
+n \lt \log_{\frac{1+\sqrt{5}}{2}} (f_n + 1) \sim \log (f_n + 1)
+\]</span></p>
+<p>因此AVL树的高度为<span class="math inline">\(O(\log
+f_n)\)</span>，这里<span
+class="math inline">\(f_n\)</span>为节点数。</p>
+
+</details>
+<h1 id="原理">原理</h1>
+<h2 id="节点">节点</h2>
+<p>由于AVL树的操作需要涉及到树的高度，我们需要在节点中设置<code>height</code>。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">struct TreeNode
+&#123;
+  int value&#123;&#125;;
+  int height&#123;&#125;;
+  TreeNode* left&#123;&#125;;
+  TreeNode* right&#123;&#125;;
+
+  TreeNode() &#x3D; default;
+  explict TreeNode(int x): value(x) &#123;&#125;
+&#125;;</code></pre>
+<h2 id="节点高度">节点高度</h2>
+<p>节点高度定义为从该节点到距离最远的子节点经过的边数。
+叶子节点的高度为<span
+class="math inline">\(0\)</span>，空节点的高度为<span
+class="math inline">\(-1\)</span>。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;&#x2F; 获取节点高度
+int AVLTree::height(const TreeNode* node)
+&#123;
+  return node ? node-&gt;height : -1;
+&#125;
+
+&#x2F;&#x2F;&#x2F; 更新节点高度
+void AVLTree::update_height(TreeNode* node)
+&#123;
+  if (node)
+  &#123;
+    node-&gt;height &#x3D; std::max(height(node-&gt;left), height(right)) + 1;
+  &#125;
+&#125;
+</code></pre>
+<h2 id="节点平衡因子">节点平衡因子</h2>
+<p>节点平衡因子定义为左子树的高度减去右子树的高度，并规定空节点平衡因子为<span
+class="math inline">\(0\)</span>。
+AVL树要求平衡因子的绝对值小于等于<span
+class="math inline">\(1\)</span>。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int AVLTree::balance_factor(const TreeNode* node)
+&#123;
+  return node ? height(node-&gt;left) - height(node-&gt;right) : 0;
+&#125;</code></pre>
+<h2 id="树旋转">树旋转</h2>
+<p>AVL树通过树旋转来维护平衡。 树旋转包括左旋和右旋。</p>
+<p>在尝试修改树的节点时，可能会破坏AVL树的性质，产生失衡节点。
+由于修改前AVL的节点平衡因子大小不超过1，如果平衡被破坏，
+则失衡节点的平衡因子只可能是<span class="math inline">\(\pm
+2\)</span>。</p>
+<p>我们从底向上研究改变后的AVL树，找到第一个失衡节点，记该节点为node。
+该节点必有子节点，记其高度较大的子节点为child。</p>
+<h3 id="右旋">右旋</h3>
+<p>在下图中，node为3，child为1。</p>
+<p>node所在子树左边偏大，child所在子树也是左边偏大，这种情况称为LL。
+此时应做一次右旋。</p>
+<pre class="line-numbers language-pic" data-language="pic"><code class="language-pic">      4                          4
+     &#x2F; \                        &#x2F; \
+    3   5                      1   5
+   &#x2F;               &#x3D;&#x3D;&#x3D;&gt;       &#x2F; \
+  1                          0   3
+ &#x2F;
+0</code></pre>
+<p>我们对以node为根节点的子树作一次右旋操作。
+在旋转后的子树中，child变成根节点，node变成child的右儿子，其余保持不变。</p>
+<p>如果child已经有右儿子（称其为grant_child），则需将grant_child作为node的左儿子。
+如下图所示。</p>
+<pre class="line-numbers language-pic" data-language="pic"><code class="language-pic">      5                          3
+     &#x2F; \                        &#x2F; \
+    3   6                      1   5
+   &#x2F; \             &#x3D;&#x3D;&#x3D;&gt;       &#x2F;   &#x2F; \
+  1   4                      0   4   6
+ &#x2F;
+0</code></pre>
+<p>代码实现如下： <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::right_rotate(TreeNode* node)
+&#123;
+  TreeNode* child &#x3D; node-&gt;left;
+  TreeNode* grant_child &#x3D; child-&gt;right;
+
+  child-&gt;right &#x3D; node;
+  node-&gt;left &#x3D; grant_child;
+
+  &#x2F;&#x2F; 注意需要更新节点的高度
+  update_height(node);
+  update_height(child);
+
+  &#x2F;&#x2F; 返回新子树的根节点
+  return child;
+&#125;</code></pre></p>
+<h3 id="左旋">左旋</h3>
+<p>RR为LL的镜像，此时应做一次左旋。</p>
+<p>代码实现与右旋基本相同，只是将左右互换了。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::left_rotate(TreeNode* node)
+&#123;
+  TreeNode* child &#x3D; node-&gt;right;
+  TreeNode* grant_child &#x3D; child-&gt;left;
+
+  child-&gt;left &#x3D; node;
+  node-&gt;right &#x3D; grant_child;
+
+  update_height(node);
+  update_height(child);
+
+  return child;
+&#125;</code></pre>
+<h3 id="左旋后右旋">左旋后右旋</h3>
+<p>当node所在子树左边偏大，但child所在子树右边偏大，即LR时，仅做一次旋转不够，
+需要先对child左旋，再对node右旋。</p>
+<p>如下图所示：</p>
+<pre class="line-numbers language-pic" data-language="pic"><code class="language-pic">    4                          4                        4
+   &#x2F; \                        &#x2F; \                      &#x2F; \
+  3   5                      3   5                    2   5
+ &#x2F;               &#x3D;&#x3D;&#x3D;&gt;       &#x2F;              &#x3D;&#x3D;&gt;       &#x2F; \
+1                          2                        1   3
+ \                        &#x2F;
+  2                      1</code></pre>
+<h3 id="右旋后左旋">右旋后左旋</h3>
+<p>RL为LR的镜像，此时应先对child右旋，后对node左旋。</p>
+<h3 id="完整实现">完整实现</h3>
+<p>根据失衡节点node及较大侧子节点child的平衡因子，可以分四种情况，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">失衡节点的平衡因子</th>
+<th style="text-align: center;">子节点的平衡因子</th>
+<th style="text-align: center;">所属情况</th>
+<th style="text-align: center;">应采取的旋转方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(\gt
+1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ge
+0\)</span></td>
+<td style="text-align: center;">LL</td>
+<td style="text-align: center;">右旋</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(\gt
+1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\lt
+0\)</span></td>
+<td style="text-align: center;">LR</td>
+<td style="text-align: center;">先左旋后右旋</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(\lt
+-1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\le
+0\)</span></td>
+<td style="text-align: center;">RR</td>
+<td style="text-align: center;">左旋</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(\lt
+-1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\gt
+0\)</span></td>
+<td style="text-align: center;">RL</td>
+<td style="text-align: center;">先右旋后左旋</td>
+</tr>
+</tbody>
+</table>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::rotate(TreeNode* node)
+&#123;
+  int factor &#x3D; balance_factor(node);
+
+  &#x2F;&#x2F; L
+  if (factor &gt; 1)
+  &#123;
+    &#x2F;&#x2F; LL
+    if (balance_factor(node-&gt;left) &gt;&#x3D; 0)
+    &#123;
+      return right_rotate(node);
+    &#125;
+
+    &#x2F;&#x2F; LR
+    node-&gt;left &#x3D; left_rotate(node-&gt;left);
+    return right_rotate(node);
+  &#125;
+
+  &#x2F;&#x2F; R
+  if (factor &lt; -1)
+  &#123;
+    &#x2F;&#x2F; RR
+    if (balance_factor(node-&gt;right) &lt;&#x3D; 0)
+    &#123;
+      return left_rotate(node);
+    &#125;
+
+    &#x2F;&#x2F; RL
+    node-&gt;right &#x3D; right_rotate(node-&gt;right);
+    return left_rotate(node);
+  &#125;
+
+  &#x2F;&#x2F; 无需旋转，直接返回
+  return node;
+&#125;</code></pre>
+<h1 id="avl树基本操作">AVL树基本操作</h1>
+<h2 id="插入节点">插入节点</h2>
+<p>AVL树的插入操作与二叉搜索树的插入类似。
+唯一的区别在于插入后AVL树可能会出现失衡节点，我们需要沿着
+插入后的节点到根节点的路径进行搜索，找到失衡节点，并进行树旋转，
+以维护其平衡。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::insert(TreeNode* node, int value)
+&#123;
+  if (!node)
+  &#123;
+    return new TreeNode(value);
+  &#125;
+
+  if (node-&gt;value &lt; value)
+  &#123;
+    node-&gt;right &#x3D; insert(node-&gt;right, value);
+  &#125;
+  else
+  &#123;
+    node-&gt;left &#x3D; insert(node-&gt;left, value);
+  &#125;
+
+  &#x2F;&#x2F; 注意更新节点高度
+  update_height(node);
+
+  &#x2F;&#x2F; 维护平衡
+  node &#x3D; rotate(node);
+
+  return node;
+&#125;</code></pre>
+<h2 id="删除节点">删除节点</h2>
+<p>删除节点的操作与插入节点类似。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::remove(TreeNode* node, int value)
+&#123;
+  if (!node)
+  &#123;
+    return nullptr;
+  &#125;
+
+  if (node-&gt;value &lt; value)
+  &#123;
+    node-&gt;right &#x3D; remove(node-&gt;right, value);
+  &#125;
+  else if (node-&gt;value &gt; value)
+  &#123;
+    node-&gt;left &#x3D; remove(node-&gt;left, value);
+  &#125;
+  else &#x2F;&#x2F; 删除自身
+  &#123;
+    &#x2F;&#x2F; 0或1个子节点
+    if (!node-&gt;left || !node-&gt;right)
+    &#123;
+      TreeNode* child &#x3D; node-&gt;left ? node-&gt;left : node-&gt;right;
+      delete node;
+      node &#x3D; child;
+    &#125;
+    else &#x2F;&#x2F; 2个子节点
+    &#123;
+      &#x2F;&#x2F; 找到中序遍历的后一个节点（右子树的最左边元素）
+      TreeNode next &#x3D; node-&gt;right;
+      while (next-&gt;left)
+      &#123;
+        next &#x3D; next-&gt;left;
+      &#125;
+
+      node-&gt;value &#x3D; next_value;
+      node-&gt;right &#x3D; remove(node-&gt;right, next-&gt;value);
+    &#125;
+  &#125;
+
+  &#x2F;&#x2F; 注意更新节点高度
+  update_height(node);
+
+  &#x2F;&#x2F; 维护平衡
+  node &#x3D; rotate(node);
+
+  return node;
+&#125;</code></pre>
+<h2 id="查找节点">查找节点</h2>
+<p>AVL树的查找操作与二叉平衡树一样，这里就不再详细列出。</p>
+<h1 id="与红黑树的比较">与红黑树的比较</h1>
+<p>AVL树经常被与红黑树作比较，
+它们都是计算机科学中常见的自平衡二叉查找树。</p>
+<p>事实上，每一颗AVL树都可以被染色成红黑树，但红黑树不一定是AVL树。</p>
+<p>与红黑树相比，AVL树的平衡性更强，平衡要求更高，故其查找性能相对会更好，
+但插入和删除效率则会更低。</p>
+<p>AVL树更适合插入删除次数少、查找次数多的场景，红黑树则更胜任于频繁查删的场景。
+Windows
+NT内核中就广泛使用了AVL树，而C++标准库里的<code>std::map</code>和<code>std::set</code>
+都是用红黑树实现的。</p>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a
+href="https://www.cnblogs.com/1873cy/p/18395797">算法与数据结构——AVL树（平衡二叉搜索树）|
+博客园</a></li>
+<li><a href="https://oi-wiki.org/ds/avl/">AVL 树 | OI Wiki</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>高级数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>数据结构与算法</tag>
+        <tag>平衡树</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>B树</title>
     <url>/b-tree/</url>
     <content><![CDATA[<h1 id="概述">概述</h1>
@@ -2225,6 +2134,97 @@ void merge(BTreeNode* parent, SizeT pos)
 <li><a href="https://oi-wiki.org/ds/b-tree/">B树 | OI Wiki</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/463641767">B树详解与实现 |
 知乎专栏</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>高级数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>数据结构与算法</tag>
+        <tag>平衡树</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>B+树</title>
+    <url>/bplus-tree/</url>
+    <content><![CDATA[<h1 id="概述">概述</h1>
+<p>B+树是<a href="/b-tree/">B树</a>的一个变体。
+旨在提升B树在数据库和文件系统等应用场景中的存取效率。
+它在范围查找和顺序访问方面表现出更优越的性能。</p>
+<span id="more"></span>
+<figure>
+<img data-src="/images/2024/bplus-tree.webp" alt="一棵普通的B+树" />
+<figcaption aria-hidden="true">一棵普通的B+树</figcaption>
+</figure>
+<h1 id="特点">特点</h1>
+<p>相比于B树，B+树在结构上具有以下特点：</p>
+<ol type="1">
+<li>所有数据均存在叶子节点中，并通过链表相连。</li>
+<li>内部节点仅存储键值作为索引，不存储实际数据。</li>
+</ol>
+<p>这些结构特点使B+树具备了一些B树不具备的功能性质：</p>
+<ol type="1">
+<li>查询效率更稳定，每个关键字的查找必然走一条从根节点到叶子节点的路。</li>
+<li>内部结点相比较小，在相同内存能容纳更多的关键字，从而降低了IO读写次数。</li>
+<li>B+树可以直接遍历叶子节点来实现范围查找，而B树的范围查找只能通过中序遍历。</li>
+</ol>
+<p>因此，B+树更适合且被广泛应用于文件系统和数据库索引等场景。</p>
+<h1 id="实现">实现</h1>
+<h2 id="查找">查找</h2>
+<p>B+树的查找过程和B树类似。 我们从根节点开始，从上到下递归地遍历树。
+在每一层上，搜索的范围被减小到包含搜索值的子树中。</p>
+<h2 id="遍历">遍历</h2>
+<p>B+树只在叶子节点的层级上就可以实现整棵树的遍历。
+从根节点一路搜索到最左端的叶子节点之后即可根据指针遍历。</p>
+<h2 id="插入">插入</h2>
+<p>B+树的插入仅在叶子节点执行。</p>
+<ol type="1">
+<li>若为空树，创建一个叶子结点作为根节点。</li>
+<li>针对叶子结点，将关键字插入合适的位置后，如果当前节点大小超出限制，将其分裂，
+新的索引值（右节点的第一个关键字）进位到父节点。</li>
+<li>针对索引节点，将关键字插入合适的位置后，如果当前节点大小超出限制，将其分裂，
+挑选位于中间的关键字单独进位到父节点。</li>
+</ol>
+<h2 id="删除">删除</h2>
+<p>B+树的删除操作也仅在叶子节点执行。</p>
+<ol type="1">
+<li>首先查询关键字所在地叶子结点，删除该叶子节点的数据。</li>
+<li>如果删除叶子结点之后的数据数量满足B+树的要求，则不做其他修改。</li>
+<li>否则优先从足够关键字数量的相邻兄弟节点中移用关键字来作为补充，
+如果不行则与相邻的兄弟节点合并。
+<ol type="1">
+<li>如果选择借用，需要调整父节点中相应关键字的值。</li>
+<li>如果选择合并，不仅需要调整相应的值，而且父节点可能存在不平衡，
+需要继续处理。</li>
+</ol></li>
+</ol>
+<h2 id="外部链接">外部链接</h2>
+<p>以下为两份Github上的B+树实现示例，可供参考。</p>
+<ul>
+<li><a
+href="https://github.com/shashikdm/B-Plus-Tree">shashikdm/B-Plus-Tree</a></li>
+<li><a
+href="https://github.com/goyalarchit/B_Plus_Tree">goyalarchit/B_Plus_Tree</a></li>
+</ul>
+<h1 id="应用领域">应用领域</h1>
+<h2 id="文件系统">文件系统</h2>
+<ul>
+<li>ReiserFS、NSS、XFS、JFS、ReFS和BFS等文件系统均使用B+树进行元数据索引。</li>
+<li>BFS使用B+树来存储目录。</li>
+<li>NTFS使用B+树来索引目录和与安全有关的元数据。</li>
+<li>EXT4使用区段树（修改的B+树）来索引文件区段。</li>
+</ul>
+<h2 id="数据库">数据库</h2>
+<p>B+树被广泛用于MySQL等数据库系统中，
+其范围查找和顺序访问的性能颇受数据库的青睐。</p>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a href="https://oi-wiki.org/ds/bplus-tree">B+树 | OI Wiki</a></li>
+<li><a href="https://en.wikipedia.org/wiki/B%252B_tree">B+树 |
+维基百科</a></li>
+<li><a
+href="https://www.cnblogs.com/henuliulei/p/15114440.html">b树，b+树，b-树,红黑树详解一锅端
+| 博客园 你的雷哥</a></li>
 </ul>
 ]]></content>
       <categories>
