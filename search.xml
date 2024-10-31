@@ -494,108 +494,6 @@ Pages发布你的文章，使博客可以被别人访问。</p>
       </tags>
   </entry>
   <entry>
-    <title>七日创站记 第二日 Github Pages</title>
-    <url>/website-genesis_day-two/</url>
-    <content><![CDATA[<blockquote>
-<p>神说：「众水之间要有穹苍，把水和水分开！」事就这样成了。
-神造了穹苍，把穹苍以下的水和穹苍以上的水分开了。
-神称穹苍为天。有晚上，有早晨；这是第二日。</p>
-<p align="right">
-—— 《圣经·创世记·创造天地万物》
-</p>
-</blockquote>
-<h1 id="github-pages介绍">Github Pages介绍</h1>
-<p><a
-href="https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages">Github
-Pages</a>
-是Github提供的一项静态站点托管服务，它从Github上的仓库获取HTML、CSS和JavaScript文件，
-通过构造过程运行文件，然后发布网站。</p>
-<p>一共有三种类型的Github Pages：项目、个人和组织。
-项目站点链接到Github上托管的特定项目，用户和组织站点则链接到Github上已有的账户。
-每个用户只能创建一个个人或组织站点，项目站点则没有限制。</p>
-<p>默认的用户站点域名为<code>&lt;username&gt;.github.io</code>。Github
-Pages支持用户提供自己的域名。</p>
-<p>Github Pages有一些使用限制，详见<a
-href="https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages#usage-limits">文档</a>。
-不过对于一个简单的个人博客来说，这已经远远够用了。</p>
-<span id="more"></span>
-<h1 id="创建github-pages个人站点">创建Github Pages个人站点</h1>
-<p>首先，你需要有一个Github账户。 如果你还没有Github账户，可以点击<a
-href="https://github.com/signup">这里</a>创建。
-注意，Github在国内的访问受限，有时候可能连接不上，建议使用科学上网。</p>
-<p>登录你的Github账户后，点击右上角的加号，点击<code>New repository</code>新建一个仓库。
-仓库的名称为<code>&lt;username&gt;.github.io</code>，其他选项保持默认即可。
-最下方的<code>Disable Projects and Wikis</code>可以选择勾选。
-之后点击<code>Create repository</code>，完成仓库的创建。</p>
-<p>这样，你的Github Pages个人站点就创建好了。
-点击个人头像，<code>Your repositories</code>，可以看到你新建的这个仓库。
-仓库的名称后面还会有一个链接图标，表明这是你的个人站点。
-不过现在里面只是一个空仓库，需要我们上传相应的文件使其可以访问。</p>
-<h1 id="建立ssh连接">建立ssh连接</h1>
-<p>我们需要在本地建立与Github之间的ssh连接，才能访问和更改Github上的个人仓库。</p>
-<div class="note info"><p>这一步也可以跳过，直接使用http连接，但每次更新Github仓库就需要你手动输入用户名和密码。</p>
-<p>建议使用ssh连接，安全性更高，且更加方便。</p>
-</div>
-<p>首先，需要在本地生成ssh秘钥。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 一般将ssh秘钥保存至个人目录下的.ssh文件夹
-# 如果不存在可以手动创建一个
-cd ~&#x2F;.ssh
-
-# 生成ssh密钥
-# -t: 制定秘钥类型，如果不指定，默认为rsa；建议使用ed25519
-# 可以使用-f &lt;file&gt;指定生成文件的名字，并配置ssh config文件来访问
-ssh-keygen -t ed25519</code></pre>
-<p>上述命令会在当前目录下生成两个文件：<code>id_ed25519</code>和<code>id_ed25519.pub</code>，分别为私钥和公钥。</p>
-<p>打开<a href="https://github.com">Github</a> &gt;
-<code>settings</code> &gt; <code>SSH and GPG keys</code>，
-右上角点击<code>Add new SSH key</code>，将生成的公钥复制到这里面。
-<code>Keys</code>类型选择<code>Authentication Key</code>，并输入一个标题。
-点击<code>Add SSH key</code>，完成添加秘钥。
-之后你就可以在本机通过ssh连接访问github。</p>
-<p>之后运行<code>ssh git@github.com</code>测试是否能够正常连接。</p>
-<p>如果连接正常，你会看到类似这样的输出信息。</p>
-<pre class="line-numbers language-none"><code class="language-none">PTY allocation request failed on channel 0
-Hi &lt;username&gt;! You&#39;ve successfully authenticated, but GitHub does not provide shell access.
-Connection to github.com closed.</code></pre>
-<h1 id="hexo设置deploy">Hexo设置deploy</h1>
-<p>进入你博客所在的文件夹，编辑<code>_config.yml</code>里面的<code>deploy</code>项（如果没有则自行添加），设置如下：</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">deploy:
-- type: git # 最前面的&#96;-&#96;也可以不加，但后续如果需要添加其他仓库，则必须添加
-  repo: git@github.com:&lt;用户名&gt;&#x2F;&lt;仓库名&gt;.git # 这一项的链接可以在你的仓库里的Code按钮下的ssh找到
-                                             # 如果你想使用http连接，这里需要切换成相应的http链接
-  branch: main</code></pre>
-<p>然后运行下面的命令：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 清除缓存已生成的文件
-hexo clean
-
-# 重新生成相关文件
-hexo generate
-
-# 部署到相应的位置
-hexo deploy
-
-# 后面两条命令也可以合成一条
-# hexo deploy -g</code></pre>
-<p>此时你就可以访问对应的域名来查看你的个人博客。</p>
-<div class="note info"><p>Github
-Pages的刷新可能会有几分钟的延迟，如果没看到更新可以等待一会。</p>
-<p>如果你想最快确认部署是否有效，可直接在相应的Github仓库里查看提交信息。</p>
-</div>
-<h1 id="总结">总结</h1>
-<p>在完成Github
-Pages的部署后，个人博客已经基本成型，可以投入使用了。</p>
-<p>但是，Github Pages有一些功能上的限制，且在国内的访问速度不太理想。
-如果对于博客有更高的需求，可以自己搭建服务器来部署博客。
-在下一节里，我将演示如何通过阿里云服务器来部署自己的博客。</p>
-]]></content>
-      <categories>
-        <category>七日创站记</category>
-      </categories>
-      <tags>
-        <tag>网站搭建</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>七日创站记 第三日 阿里云服务器</title>
     <url>/website-genesis_day-three/</url>
     <content><![CDATA[<blockquote>
@@ -818,6 +716,456 @@ id="access.log下能找到访问记录但显示没有权限">access.log下能找
       </categories>
       <tags>
         <tag>网站搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>七日创站记 第二日 Github Pages</title>
+    <url>/website-genesis_day-two/</url>
+    <content><![CDATA[<blockquote>
+<p>神说：「众水之间要有穹苍，把水和水分开！」事就这样成了。
+神造了穹苍，把穹苍以下的水和穹苍以上的水分开了。
+神称穹苍为天。有晚上，有早晨；这是第二日。</p>
+<p align="right">
+—— 《圣经·创世记·创造天地万物》
+</p>
+</blockquote>
+<h1 id="github-pages介绍">Github Pages介绍</h1>
+<p><a
+href="https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages">Github
+Pages</a>
+是Github提供的一项静态站点托管服务，它从Github上的仓库获取HTML、CSS和JavaScript文件，
+通过构造过程运行文件，然后发布网站。</p>
+<p>一共有三种类型的Github Pages：项目、个人和组织。
+项目站点链接到Github上托管的特定项目，用户和组织站点则链接到Github上已有的账户。
+每个用户只能创建一个个人或组织站点，项目站点则没有限制。</p>
+<p>默认的用户站点域名为<code>&lt;username&gt;.github.io</code>。Github
+Pages支持用户提供自己的域名。</p>
+<p>Github Pages有一些使用限制，详见<a
+href="https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages#usage-limits">文档</a>。
+不过对于一个简单的个人博客来说，这已经远远够用了。</p>
+<span id="more"></span>
+<h1 id="创建github-pages个人站点">创建Github Pages个人站点</h1>
+<p>首先，你需要有一个Github账户。 如果你还没有Github账户，可以点击<a
+href="https://github.com/signup">这里</a>创建。
+注意，Github在国内的访问受限，有时候可能连接不上，建议使用科学上网。</p>
+<p>登录你的Github账户后，点击右上角的加号，点击<code>New repository</code>新建一个仓库。
+仓库的名称为<code>&lt;username&gt;.github.io</code>，其他选项保持默认即可。
+最下方的<code>Disable Projects and Wikis</code>可以选择勾选。
+之后点击<code>Create repository</code>，完成仓库的创建。</p>
+<p>这样，你的Github Pages个人站点就创建好了。
+点击个人头像，<code>Your repositories</code>，可以看到你新建的这个仓库。
+仓库的名称后面还会有一个链接图标，表明这是你的个人站点。
+不过现在里面只是一个空仓库，需要我们上传相应的文件使其可以访问。</p>
+<h1 id="建立ssh连接">建立ssh连接</h1>
+<p>我们需要在本地建立与Github之间的ssh连接，才能访问和更改Github上的个人仓库。</p>
+<div class="note info"><p>这一步也可以跳过，直接使用http连接，但每次更新Github仓库就需要你手动输入用户名和密码。</p>
+<p>建议使用ssh连接，安全性更高，且更加方便。</p>
+</div>
+<p>首先，需要在本地生成ssh秘钥。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 一般将ssh秘钥保存至个人目录下的.ssh文件夹
+# 如果不存在可以手动创建一个
+cd ~&#x2F;.ssh
+
+# 生成ssh密钥
+# -t: 制定秘钥类型，如果不指定，默认为rsa；建议使用ed25519
+# 可以使用-f &lt;file&gt;指定生成文件的名字，并配置ssh config文件来访问
+ssh-keygen -t ed25519</code></pre>
+<p>上述命令会在当前目录下生成两个文件：<code>id_ed25519</code>和<code>id_ed25519.pub</code>，分别为私钥和公钥。</p>
+<p>打开<a href="https://github.com">Github</a> &gt;
+<code>settings</code> &gt; <code>SSH and GPG keys</code>，
+右上角点击<code>Add new SSH key</code>，将生成的公钥复制到这里面。
+<code>Keys</code>类型选择<code>Authentication Key</code>，并输入一个标题。
+点击<code>Add SSH key</code>，完成添加秘钥。
+之后你就可以在本机通过ssh连接访问github。</p>
+<p>之后运行<code>ssh git@github.com</code>测试是否能够正常连接。</p>
+<p>如果连接正常，你会看到类似这样的输出信息。</p>
+<pre class="line-numbers language-none"><code class="language-none">PTY allocation request failed on channel 0
+Hi &lt;username&gt;! You&#39;ve successfully authenticated, but GitHub does not provide shell access.
+Connection to github.com closed.</code></pre>
+<h1 id="hexo设置deploy">Hexo设置deploy</h1>
+<p>进入你博客所在的文件夹，编辑<code>_config.yml</code>里面的<code>deploy</code>项（如果没有则自行添加），设置如下：</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">deploy:
+- type: git # 最前面的&#96;-&#96;也可以不加，但后续如果需要添加其他仓库，则必须添加
+  repo: git@github.com:&lt;用户名&gt;&#x2F;&lt;仓库名&gt;.git # 这一项的链接可以在你的仓库里的Code按钮下的ssh找到
+                                             # 如果你想使用http连接，这里需要切换成相应的http链接
+  branch: main</code></pre>
+<p>然后运行下面的命令：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 清除缓存已生成的文件
+hexo clean
+
+# 重新生成相关文件
+hexo generate
+
+# 部署到相应的位置
+hexo deploy
+
+# 后面两条命令也可以合成一条
+# hexo deploy -g</code></pre>
+<p>此时你就可以访问对应的域名来查看你的个人博客。</p>
+<div class="note info"><p>Github
+Pages的刷新可能会有几分钟的延迟，如果没看到更新可以等待一会。</p>
+<p>如果你想最快确认部署是否有效，可直接在相应的Github仓库里查看提交信息。</p>
+</div>
+<h1 id="总结">总结</h1>
+<p>在完成Github
+Pages的部署后，个人博客已经基本成型，可以投入使用了。</p>
+<p>但是，Github Pages有一些功能上的限制，且在国内的访问速度不太理想。
+如果对于博客有更高的需求，可以自己搭建服务器来部署博客。
+在下一节里，我将演示如何通过阿里云服务器来部署自己的博客。</p>
+]]></content>
+      <categories>
+        <category>七日创站记</category>
+      </categories>
+      <tags>
+        <tag>网站搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AVL树</title>
+    <url>/AVL-tree/</url>
+    <content><![CDATA[<h1 id="avl树">AVL树</h1>
+<p><strong>AVL树</strong>是一种平衡二叉树，它通过<strong>平衡因子（Balance
+Factor）</strong>来衡量树的平衡程度，
+并通过<strong>树旋转</strong>来维护平衡。</p>
+<div class="note info"><p>AVL是苏联教授G.M. Adelson-Velsky和E.M. Landis名称的缩写。
+他们最早提出了最早的平衡二叉树，为了纪念他们，将这种平衡二叉树成为AVL树。</p>
+</div>
+<span id="more"></span>
+<p>AVL树的平衡因子定义为左右子树的高度差，且空节点的平衡因子为<span
+class="math inline">\(0\)</span>。 当节点的平衡因子绝对值小于等于<span
+class="math inline">\(1\)</span>时，称该节点为<strong>平衡节点</strong>，否则为<strong>失衡节点</strong>。</p>
+<p>AVL树的树高不会超过<span class="math inline">\(O(\log
+n)\)</span>。</p>
+<details class="note primary no-icon"><summary><p>证明</p>
+</summary>
+<p>设<span class="math inline">\(f_n\)</span>为高度<span
+class="math inline">\(n\)</span>的AVL树所包含的最少节点数，则有</p>
+<p><span class="math display">\[
+f_n = \begin{cases}
+1, &amp; x = 1 \\\\
+2, &amp; x = 2 \\\\
+f_{n-1} + f_{n-2} + 1, &amp; x \ge 3
+\end{cases}
+\]</span></p>
+<p>则<span class="math inline">\({f_n +
+1}\)</span>是一个斐波那契数列。不难算出其通项为</p>
+<p><span class="math display">\[
+f_n = \frac{5+2\sqrt{5}}{5} (\frac{1+\sqrt{5}}{2})^n +
+\frac{5-2\sqrt{5}}{5} (\frac{1-\sqrt{5}}{2})^n - 1
+\]</span></p>
+<p>当<span class="math inline">\(n\)</span>足够大时，有<span
+class="math inline">\(f_n \sim \frac{5+2\sqrt{5}}{5}
+(\frac{1+\sqrt{5}}{2})^n\)</span>。</p>
+<p>对于树高<span class="math inline">\(n\)</span>，则有</p>
+<p><span class="math display">\[
+n \lt \log_{\frac{1+\sqrt{5}}{2}} (f_n + 1) \sim \log (f_n + 1)
+\]</span></p>
+<p>因此AVL树的高度为<span class="math inline">\(O(\log
+f_n)\)</span>，这里<span
+class="math inline">\(f_n\)</span>为节点数。</p>
+
+</details>
+<h1 id="原理">原理</h1>
+<h2 id="节点">节点</h2>
+<p>由于AVL树的操作需要涉及到树的高度，我们需要在节点中设置<code>height</code>。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">struct TreeNode
+&#123;
+  int value&#123;&#125;;
+  int height&#123;&#125;;
+  TreeNode* left&#123;&#125;;
+  TreeNode* right&#123;&#125;;
+
+  TreeNode() &#x3D; default;
+  explict TreeNode(int x): value(x) &#123;&#125;
+&#125;;</code></pre>
+<h2 id="节点高度">节点高度</h2>
+<p>节点高度定义为从该节点到距离最远的子节点经过的边数。
+叶子节点的高度为<span
+class="math inline">\(0\)</span>，空节点的高度为<span
+class="math inline">\(-1\)</span>。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;&#x2F; 获取节点高度
+int AVLTree::height(const TreeNode* node)
+&#123;
+  return node ? node-&gt;height : -1;
+&#125;
+
+&#x2F;&#x2F;&#x2F; 更新节点高度
+void AVLTree::update_height(TreeNode* node)
+&#123;
+  if (node)
+  &#123;
+    node-&gt;height &#x3D; std::max(height(node-&gt;left), height(right)) + 1;
+  &#125;
+&#125;
+</code></pre>
+<h2 id="节点平衡因子">节点平衡因子</h2>
+<p>节点平衡因子定义为左子树的高度减去右子树的高度，并规定空节点平衡因子为<span
+class="math inline">\(0\)</span>。
+AVL树要求平衡因子的绝对值小于等于<span
+class="math inline">\(1\)</span>。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int AVLTree::balance_factor(const TreeNode* node)
+&#123;
+  return node ? height(node-&gt;left) - height(node-&gt;right) : 0;
+&#125;</code></pre>
+<h2 id="树旋转">树旋转</h2>
+<p>AVL树通过树旋转来维护平衡。 树旋转包括左旋和右旋。</p>
+<p>在尝试修改树的节点时，可能会破坏AVL树的性质，产生失衡节点。
+由于修改前AVL的节点平衡因子大小不超过1，如果平衡被破坏，
+则失衡节点的平衡因子只可能是<span class="math inline">\(\pm
+2\)</span>。</p>
+<p>我们从底向上研究改变后的AVL树，找到第一个失衡节点，记该节点为node。
+该节点必有子节点，记其高度较大的子节点为child。</p>
+<h3 id="右旋">右旋</h3>
+<p>在下图中，node为3，child为1。</p>
+<p>node所在子树左边偏大，child所在子树也是左边偏大，这种情况称为LL。
+此时应做一次右旋。</p>
+<pre class="line-numbers language-pic" data-language="pic"><code class="language-pic">      4                          4
+     &#x2F; \                        &#x2F; \
+    3   5                      1   5
+   &#x2F;               &#x3D;&#x3D;&#x3D;&gt;       &#x2F; \
+  1                          0   3
+ &#x2F;
+0</code></pre>
+<p>我们对以node为根节点的子树作一次右旋操作。
+在旋转后的子树中，child变成根节点，node变成child的右儿子，其余保持不变。</p>
+<p>如果child已经有右儿子（称其为grant_child），则需将grant_child作为node的左儿子。
+如下图所示。</p>
+<pre class="line-numbers language-pic" data-language="pic"><code class="language-pic">      5                          3
+     &#x2F; \                        &#x2F; \
+    3   6                      1   5
+   &#x2F; \             &#x3D;&#x3D;&#x3D;&gt;       &#x2F;   &#x2F; \
+  1   4                      0   4   6
+ &#x2F;
+0</code></pre>
+<p>代码实现如下： <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::right_rotate(TreeNode* node)
+&#123;
+  TreeNode* child &#x3D; node-&gt;left;
+  TreeNode* grant_child &#x3D; child-&gt;right;
+
+  child-&gt;right &#x3D; node;
+  node-&gt;left &#x3D; grant_child;
+
+  &#x2F;&#x2F; 注意需要更新节点的高度
+  update_height(node);
+  update_height(child);
+
+  &#x2F;&#x2F; 返回新子树的根节点
+  return child;
+&#125;</code></pre></p>
+<h3 id="左旋">左旋</h3>
+<p>RR为LL的镜像，此时应做一次左旋。</p>
+<p>代码实现与右旋基本相同，只是将左右互换了。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::left_rotate(TreeNode* node)
+&#123;
+  TreeNode* child &#x3D; node-&gt;right;
+  TreeNode* grant_child &#x3D; child-&gt;left;
+
+  child-&gt;left &#x3D; node;
+  node-&gt;right &#x3D; grant_child;
+
+  update_height(node);
+  update_height(child);
+
+  return child;
+&#125;</code></pre>
+<h3 id="左旋后右旋">左旋后右旋</h3>
+<p>当node所在子树左边偏大，但child所在子树右边偏大，即LR时，仅做一次旋转不够，
+需要先对child左旋，再对node右旋。</p>
+<p>如下图所示：</p>
+<pre class="line-numbers language-pic" data-language="pic"><code class="language-pic">    4                          4                        4
+   &#x2F; \                        &#x2F; \                      &#x2F; \
+  3   5                      3   5                    2   5
+ &#x2F;               &#x3D;&#x3D;&#x3D;&gt;       &#x2F;              &#x3D;&#x3D;&gt;       &#x2F; \
+1                          2                        1   3
+ \                        &#x2F;
+  2                      1</code></pre>
+<h3 id="右旋后左旋">右旋后左旋</h3>
+<p>RL为LR的镜像，此时应先对child右旋，后对node左旋。</p>
+<h3 id="完整实现">完整实现</h3>
+<p>根据失衡节点node及较大侧子节点child的平衡因子，可以分四种情况，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">失衡节点的平衡因子</th>
+<th style="text-align: center;">子节点的平衡因子</th>
+<th style="text-align: center;">所属情况</th>
+<th style="text-align: center;">应采取的旋转方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(\gt
+1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ge
+0\)</span></td>
+<td style="text-align: center;">LL</td>
+<td style="text-align: center;">右旋</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(\gt
+1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\lt
+0\)</span></td>
+<td style="text-align: center;">LR</td>
+<td style="text-align: center;">先左旋后右旋</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(\lt
+-1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\le
+0\)</span></td>
+<td style="text-align: center;">RR</td>
+<td style="text-align: center;">左旋</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(\lt
+-1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\gt
+0\)</span></td>
+<td style="text-align: center;">RL</td>
+<td style="text-align: center;">先右旋后左旋</td>
+</tr>
+</tbody>
+</table>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::rotate(TreeNode* node)
+&#123;
+  int factor &#x3D; balance_factor(node);
+
+  &#x2F;&#x2F; L
+  if (factor &gt; 1)
+  &#123;
+    &#x2F;&#x2F; LL
+    if (balance_factor(node-&gt;left) &gt;&#x3D; 0)
+    &#123;
+      return right_rotate(node);
+    &#125;
+
+    &#x2F;&#x2F; LR
+    node-&gt;left &#x3D; left_rotate(node-&gt;left);
+    return right_rotate(node);
+  &#125;
+
+  &#x2F;&#x2F; R
+  if (factor &lt; -1)
+  &#123;
+    &#x2F;&#x2F; RR
+    if (balance_factor(node-&gt;right) &lt;&#x3D; 0)
+    &#123;
+      return left_rotate(node);
+    &#125;
+
+    &#x2F;&#x2F; RL
+    node-&gt;right &#x3D; right_rotate(node-&gt;right);
+    return left_rotate(node);
+  &#125;
+
+  &#x2F;&#x2F; 无需旋转，直接返回
+  return node;
+&#125;</code></pre>
+<h1 id="avl树基本操作">AVL树基本操作</h1>
+<h2 id="插入节点">插入节点</h2>
+<p>AVL树的插入操作与二叉搜索树的插入类似。
+唯一的区别在于插入后AVL树可能会出现失衡节点，我们需要沿着
+插入后的节点到根节点的路径进行搜索，找到失衡节点，并进行树旋转，
+以维护其平衡。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::insert(TreeNode* node, int value)
+&#123;
+  if (!node)
+  &#123;
+    return new TreeNode(value);
+  &#125;
+
+  if (node-&gt;value &lt; value)
+  &#123;
+    node-&gt;right &#x3D; insert(node-&gt;right, value);
+  &#125;
+  else
+  &#123;
+    node-&gt;left &#x3D; insert(node-&gt;left, value);
+  &#125;
+
+  &#x2F;&#x2F; 注意更新节点高度
+  update_height(node);
+
+  &#x2F;&#x2F; 维护平衡
+  node &#x3D; rotate(node);
+
+  return node;
+&#125;</code></pre>
+<h2 id="删除节点">删除节点</h2>
+<p>删除节点的操作与插入节点类似。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::remove(TreeNode* node, int value)
+&#123;
+  if (!node)
+  &#123;
+    return nullptr;
+  &#125;
+
+  if (node-&gt;value &lt; value)
+  &#123;
+    node-&gt;right &#x3D; remove(node-&gt;right, value);
+  &#125;
+  else if (node-&gt;value &gt; value)
+  &#123;
+    node-&gt;left &#x3D; remove(node-&gt;left, value);
+  &#125;
+  else &#x2F;&#x2F; 删除自身
+  &#123;
+    &#x2F;&#x2F; 0或1个子节点
+    if (!node-&gt;left || !node-&gt;right)
+    &#123;
+      TreeNode* child &#x3D; node-&gt;left ? node-&gt;left : node-&gt;right;
+      delete node;
+      node &#x3D; child;
+    &#125;
+    else &#x2F;&#x2F; 2个子节点
+    &#123;
+      &#x2F;&#x2F; 找到中序遍历的后一个节点（右子树的最左边元素）
+      TreeNode next &#x3D; node-&gt;right;
+      while (next-&gt;left)
+      &#123;
+        next &#x3D; next-&gt;left;
+      &#125;
+
+      node-&gt;value &#x3D; next_value;
+      node-&gt;right &#x3D; remove(node-&gt;right, next-&gt;value);
+    &#125;
+  &#125;
+
+  &#x2F;&#x2F; 注意更新节点高度
+  update_height(node);
+
+  &#x2F;&#x2F; 维护平衡
+  node &#x3D; rotate(node);
+
+  return node;
+&#125;</code></pre>
+<h2 id="查找节点">查找节点</h2>
+<p>AVL树的查找操作与二叉平衡树一样，这里就不再详细列出。</p>
+<h1 id="与红黑树的比较">与红黑树的比较</h1>
+<p>AVL树经常被与红黑树作比较，
+它们都是计算机科学中常见的自平衡二叉查找树。</p>
+<p>事实上，每一颗AVL树都可以被染色成红黑树，但红黑树不一定是AVL树。</p>
+<p>与红黑树相比，AVL树的平衡性更强，平衡要求更高，故其查找性能相对会更好，
+但插入和删除效率则会更低。</p>
+<p>AVL树更适合插入删除次数少、查找次数多的场景，红黑树则更胜任于频繁查删的场景。
+Windows
+NT内核中就广泛使用了AVL树，而C++标准库里的<code>std::map</code>和<code>std::set</code>
+都是用红黑树实现的。</p>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a
+href="https://www.cnblogs.com/1873cy/p/18395797">算法与数据结构——AVL树（平衡二叉搜索树）|
+博客园</a></li>
+<li><a href="https://oi-wiki.org/ds/avl/">AVL 树 | OI Wiki</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>高级数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>数据结构与算法</tag>
+        <tag>平衡树</tag>
       </tags>
   </entry>
   <entry>
@@ -1370,343 +1718,86 @@ href="https://hexo-next.readthedocs.io/zh-cn/latest/">Hexo-NexT</a></li>
       </tags>
   </entry>
   <entry>
-    <title>AVL树</title>
-    <url>/AVL-tree/</url>
-    <content><![CDATA[<h1 id="avl树">AVL树</h1>
-<p><strong>AVL树</strong>是一种平衡二叉树，它通过<strong>平衡因子（Balance
-Factor）</strong>来衡量树的平衡程度，
-并通过<strong>树旋转</strong>来维护平衡。</p>
-<div class="note info"><p>AVL是苏联教授G.M. Adelson-Velsky和E.M. Landis名称的缩写。
-他们最早提出了最早的平衡二叉树，为了纪念他们，将这种平衡二叉树成为AVL树。</p>
-</div>
+    <title>B+树</title>
+    <url>/bplus-tree/</url>
+    <content><![CDATA[<h1 id="概述">概述</h1>
+<p>B+树是<a href="/b-tree/">B树</a>的一个变体。
+旨在提升B树在数据库和文件系统等应用场景中的存取效率。
+它在范围查找和顺序访问方面表现出更优越的性能。</p>
 <span id="more"></span>
-<p>AVL树的平衡因子定义为左右子树的高度差，且空节点的平衡因子为<span
-class="math inline">\(0\)</span>。 当节点的平衡因子绝对值小于等于<span
-class="math inline">\(1\)</span>时，称该节点为<strong>平衡节点</strong>，否则为<strong>失衡节点</strong>。</p>
-<p>AVL树的树高不会超过<span class="math inline">\(O(\log
-n)\)</span>。</p>
-<details class="note primary no-icon"><summary><p>证明</p>
-</summary>
-<p>设<span class="math inline">\(f_n\)</span>为高度<span
-class="math inline">\(n\)</span>的AVL树所包含的最少节点数，则有</p>
-<p><span class="math display">\[
-f_n = \begin{cases}
-1, &amp; x = 1 \\\\
-2, &amp; x = 2 \\\\
-f_{n-1} + f_{n-2} + 1, &amp; x \ge 3
-\end{cases}
-\]</span></p>
-<p>则<span class="math inline">\({f_n +
-1}\)</span>是一个斐波那契数列。不难算出其通项为</p>
-<p><span class="math display">\[
-f_n = \frac{5+2\sqrt{5}}{5} (\frac{1+\sqrt{5}}{2})^n +
-\frac{5-2\sqrt{5}}{5} (\frac{1-\sqrt{5}}{2})^n - 1
-\]</span></p>
-<p>当<span class="math inline">\(n\)</span>足够大时，有<span
-class="math inline">\(f_n \sim \frac{5+2\sqrt{5}}{5}
-(\frac{1+\sqrt{5}}{2})^n\)</span>。</p>
-<p>对于树高<span class="math inline">\(n\)</span>，则有</p>
-<p><span class="math display">\[
-n \lt \log_{\frac{1+\sqrt{5}}{2}} (f_n + 1) \sim \log (f_n + 1)
-\]</span></p>
-<p>因此AVL树的高度为<span class="math inline">\(O(\log
-f_n)\)</span>，这里<span
-class="math inline">\(f_n\)</span>为节点数。</p>
-
-</details>
-<h1 id="原理">原理</h1>
-<h2 id="节点">节点</h2>
-<p>由于AVL树的操作需要涉及到树的高度，我们需要在节点中设置<code>height</code>。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">struct TreeNode
-&#123;
-  int value&#123;&#125;;
-  int height&#123;&#125;;
-  TreeNode* left&#123;&#125;;
-  TreeNode* right&#123;&#125;;
-
-  TreeNode() &#x3D; default;
-  explict TreeNode(int x): value(x) &#123;&#125;
-&#125;;</code></pre>
-<h2 id="节点高度">节点高度</h2>
-<p>节点高度定义为从该节点到距离最远的子节点经过的边数。
-叶子节点的高度为<span
-class="math inline">\(0\)</span>，空节点的高度为<span
-class="math inline">\(-1\)</span>。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;&#x2F; 获取节点高度
-int AVLTree::height(const TreeNode* node)
-&#123;
-  return node ? node-&gt;height : -1;
-&#125;
-
-&#x2F;&#x2F;&#x2F; 更新节点高度
-void AVLTree::update_height(TreeNode* node)
-&#123;
-  if (node)
-  &#123;
-    node-&gt;height &#x3D; std::max(height(node-&gt;left), height(right)) + 1;
-  &#125;
-&#125;
-</code></pre>
-<h2 id="节点平衡因子">节点平衡因子</h2>
-<p>节点平衡因子定义为左子树的高度减去右子树的高度，并规定空节点平衡因子为<span
-class="math inline">\(0\)</span>。
-AVL树要求平衡因子的绝对值小于等于<span
-class="math inline">\(1\)</span>。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int AVLTree::balance_factor(const TreeNode* node)
-&#123;
-  return node ? height(node-&gt;left) - height(node-&gt;right) : 0;
-&#125;</code></pre>
-<h2 id="树旋转">树旋转</h2>
-<p>AVL树通过树旋转来维护平衡。 树旋转包括左旋和右旋。</p>
-<p>在尝试修改树的节点时，可能会破坏AVL树的性质，产生失衡节点。
-由于修改前AVL的节点平衡因子大小不超过1，如果平衡被破坏，
-则失衡节点的平衡因子只可能是<span class="math inline">\(\pm
-2\)</span>。</p>
-<p>我们从底向上研究改变后的AVL树，找到第一个失衡节点，记该节点为node。
-该节点必有子节点，记其高度较大的子节点为child。</p>
-<h3 id="右旋">右旋</h3>
-<p>在下图中，node为3，child为1。</p>
-<p>node所在子树左边偏大，child所在子树也是左边偏大，这种情况称为LL。
-此时应做一次右旋。</p>
-<pre class="line-numbers language-pic" data-language="pic"><code class="language-pic">      4                          4
-     &#x2F; \                        &#x2F; \
-    3   5                      1   5
-   &#x2F;               &#x3D;&#x3D;&#x3D;&gt;       &#x2F; \
-  1                          0   3
- &#x2F;
-0</code></pre>
-<p>我们对以node为根节点的子树作一次右旋操作。
-在旋转后的子树中，child变成根节点，node变成child的右儿子，其余保持不变。</p>
-<p>如果child已经有右儿子（称其为grant_child），则需将grant_child作为node的左儿子。
-如下图所示。</p>
-<pre class="line-numbers language-pic" data-language="pic"><code class="language-pic">      5                          3
-     &#x2F; \                        &#x2F; \
-    3   6                      1   5
-   &#x2F; \             &#x3D;&#x3D;&#x3D;&gt;       &#x2F;   &#x2F; \
-  1   4                      0   4   6
- &#x2F;
-0</code></pre>
-<p>代码实现如下： <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::right_rotate(TreeNode* node)
-&#123;
-  TreeNode* child &#x3D; node-&gt;left;
-  TreeNode* grant_child &#x3D; child-&gt;right;
-
-  child-&gt;right &#x3D; node;
-  node-&gt;left &#x3D; grant_child;
-
-  &#x2F;&#x2F; 注意需要更新节点的高度
-  update_height(node);
-  update_height(child);
-
-  &#x2F;&#x2F; 返回新子树的根节点
-  return child;
-&#125;</code></pre></p>
-<h3 id="左旋">左旋</h3>
-<p>RR为LL的镜像，此时应做一次左旋。</p>
-<p>代码实现与右旋基本相同，只是将左右互换了。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::left_rotate(TreeNode* node)
-&#123;
-  TreeNode* child &#x3D; node-&gt;right;
-  TreeNode* grant_child &#x3D; child-&gt;left;
-
-  child-&gt;left &#x3D; node;
-  node-&gt;right &#x3D; grant_child;
-
-  update_height(node);
-  update_height(child);
-
-  return child;
-&#125;</code></pre>
-<h3 id="左旋后右旋">左旋后右旋</h3>
-<p>当node所在子树左边偏大，但child所在子树右边偏大，即LR时，仅做一次旋转不够，
-需要先对child左旋，再对node右旋。</p>
-<p>如下图所示：</p>
-<pre class="line-numbers language-pic" data-language="pic"><code class="language-pic">    4                          4                        4
-   &#x2F; \                        &#x2F; \                      &#x2F; \
-  3   5                      3   5                    2   5
- &#x2F;               &#x3D;&#x3D;&#x3D;&gt;       &#x2F;              &#x3D;&#x3D;&gt;       &#x2F; \
-1                          2                        1   3
- \                        &#x2F;
-  2                      1</code></pre>
-<h3 id="右旋后左旋">右旋后左旋</h3>
-<p>RL为LR的镜像，此时应先对child右旋，后对node左旋。</p>
-<h3 id="完整实现">完整实现</h3>
-<p>根据失衡节点node及较大侧子节点child的平衡因子，可以分四种情况，如下表所示：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">失衡节点的平衡因子</th>
-<th style="text-align: center;">子节点的平衡因子</th>
-<th style="text-align: center;">所属情况</th>
-<th style="text-align: center;">应采取的旋转方法</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><span class="math inline">\(\gt
-1\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\ge
-0\)</span></td>
-<td style="text-align: center;">LL</td>
-<td style="text-align: center;">右旋</td>
-</tr>
-<tr>
-<td style="text-align: center;"><span class="math inline">\(\gt
-1\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\lt
-0\)</span></td>
-<td style="text-align: center;">LR</td>
-<td style="text-align: center;">先左旋后右旋</td>
-</tr>
-<tr>
-<td style="text-align: center;"><span class="math inline">\(\lt
--1\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\le
-0\)</span></td>
-<td style="text-align: center;">RR</td>
-<td style="text-align: center;">左旋</td>
-</tr>
-<tr>
-<td style="text-align: center;"><span class="math inline">\(\lt
--1\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\gt
-0\)</span></td>
-<td style="text-align: center;">RL</td>
-<td style="text-align: center;">先右旋后左旋</td>
-</tr>
-</tbody>
-</table>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::rotate(TreeNode* node)
-&#123;
-  int factor &#x3D; balance_factor(node);
-
-  &#x2F;&#x2F; L
-  if (factor &gt; 1)
-  &#123;
-    &#x2F;&#x2F; LL
-    if (balance_factor(node-&gt;left) &gt;&#x3D; 0)
-    &#123;
-      return right_rotate(node);
-    &#125;
-
-    &#x2F;&#x2F; LR
-    node-&gt;left &#x3D; left_rotate(node-&gt;left);
-    return right_rotate(node);
-  &#125;
-
-  &#x2F;&#x2F; R
-  if (factor &lt; -1)
-  &#123;
-    &#x2F;&#x2F; RR
-    if (balance_factor(node-&gt;right) &lt;&#x3D; 0)
-    &#123;
-      return left_rotate(node);
-    &#125;
-
-    &#x2F;&#x2F; RL
-    node-&gt;right &#x3D; right_rotate(node-&gt;right);
-    return left_rotate(node);
-  &#125;
-
-  &#x2F;&#x2F; 无需旋转，直接返回
-  return node;
-&#125;</code></pre>
-<h1 id="avl树基本操作">AVL树基本操作</h1>
-<h2 id="插入节点">插入节点</h2>
-<p>AVL树的插入操作与二叉搜索树的插入类似。
-唯一的区别在于插入后AVL树可能会出现失衡节点，我们需要沿着
-插入后的节点到根节点的路径进行搜索，找到失衡节点，并进行树旋转，
-以维护其平衡。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::insert(TreeNode* node, int value)
-&#123;
-  if (!node)
-  &#123;
-    return new TreeNode(value);
-  &#125;
-
-  if (node-&gt;value &lt; value)
-  &#123;
-    node-&gt;right &#x3D; insert(node-&gt;right, value);
-  &#125;
-  else
-  &#123;
-    node-&gt;left &#x3D; insert(node-&gt;left, value);
-  &#125;
-
-  &#x2F;&#x2F; 注意更新节点高度
-  update_height(node);
-
-  &#x2F;&#x2F; 维护平衡
-  node &#x3D; rotate(node);
-
-  return node;
-&#125;</code></pre>
-<h2 id="删除节点">删除节点</h2>
-<p>删除节点的操作与插入节点类似。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* AVLTree::remove(TreeNode* node, int value)
-&#123;
-  if (!node)
-  &#123;
-    return nullptr;
-  &#125;
-
-  if (node-&gt;value &lt; value)
-  &#123;
-    node-&gt;right &#x3D; remove(node-&gt;right, value);
-  &#125;
-  else if (node-&gt;value &gt; value)
-  &#123;
-    node-&gt;left &#x3D; remove(node-&gt;left, value);
-  &#125;
-  else &#x2F;&#x2F; 删除自身
-  &#123;
-    &#x2F;&#x2F; 0或1个子节点
-    if (!node-&gt;left || !node-&gt;right)
-    &#123;
-      TreeNode* child &#x3D; node-&gt;left ? node-&gt;left : node-&gt;right;
-      delete node;
-      node &#x3D; child;
-    &#125;
-    else &#x2F;&#x2F; 2个子节点
-    &#123;
-      &#x2F;&#x2F; 找到中序遍历的后一个节点（右子树的最左边元素）
-      TreeNode next &#x3D; node-&gt;right;
-      while (next-&gt;left)
-      &#123;
-        next &#x3D; next-&gt;left;
-      &#125;
-
-      node-&gt;value &#x3D; next_value;
-      node-&gt;right &#x3D; remove(node-&gt;right, next-&gt;value);
-    &#125;
-  &#125;
-
-  &#x2F;&#x2F; 注意更新节点高度
-  update_height(node);
-
-  &#x2F;&#x2F; 维护平衡
-  node &#x3D; rotate(node);
-
-  return node;
-&#125;</code></pre>
-<h2 id="查找节点">查找节点</h2>
-<p>AVL树的查找操作与二叉平衡树一样，这里就不再详细列出。</p>
-<h1 id="与红黑树的比较">与红黑树的比较</h1>
-<p>AVL树经常被与红黑树作比较，
-它们都是计算机科学中常见的自平衡二叉查找树。</p>
-<p>事实上，每一颗AVL树都可以被染色成红黑树，但红黑树不一定是AVL树。</p>
-<p>与红黑树相比，AVL树的平衡性更强，平衡要求更高，故其查找性能相对会更好，
-但插入和删除效率则会更低。</p>
-<p>AVL树更适合插入删除次数少、查找次数多的场景，红黑树则更胜任于频繁查删的场景。
-Windows
-NT内核中就广泛使用了AVL树，而C++标准库里的<code>std::map</code>和<code>std::set</code>
-都是用红黑树实现的。</p>
-<h1 id="参考资料">参考资料</h1>
+<figure>
+<img data-src="/images/2024/bplus-tree.webp" alt="一棵普通的B+树" />
+<figcaption aria-hidden="true">一棵普通的B+树</figcaption>
+</figure>
+<h1 id="特点">特点</h1>
+<p>相比于B树，B+树在结构上具有以下特点：</p>
+<ol type="1">
+<li>所有数据均存在叶子节点中，并通过链表相连。</li>
+<li>内部节点仅存储键值作为索引，不存储实际数据。</li>
+</ol>
+<p>这些结构特点使B+树具备了一些B树不具备的功能性质：</p>
+<ol type="1">
+<li>查询效率更稳定，每个关键字的查找必然走一条从根节点到叶子节点的路。</li>
+<li>内部结点相比较小，在相同内存能容纳更多的关键字，从而降低了IO读写次数。</li>
+<li>B+树可以直接遍历叶子节点来实现范围查找，而B树的范围查找只能通过中序遍历。</li>
+</ol>
+<p>因此，B+树更适合且被广泛应用于文件系统和数据库索引等场景。</p>
+<h1 id="实现">实现</h1>
+<h2 id="查找">查找</h2>
+<p>B+树的查找过程和B树类似。 我们从根节点开始，从上到下递归地遍历树。
+在每一层上，搜索的范围被减小到包含搜索值的子树中。</p>
+<h2 id="遍历">遍历</h2>
+<p>B+树只在叶子节点的层级上就可以实现整棵树的遍历。
+从根节点一路搜索到最左端的叶子节点之后即可根据指针遍历。</p>
+<h2 id="插入">插入</h2>
+<p>B+树的插入仅在叶子节点执行。</p>
+<ol type="1">
+<li>若为空树，创建一个叶子结点作为根节点。</li>
+<li>针对叶子结点，将关键字插入合适的位置后，如果当前节点大小超出限制，将其分裂，
+新的索引值（右节点的第一个关键字）进位到父节点。</li>
+<li>针对索引节点，将关键字插入合适的位置后，如果当前节点大小超出限制，将其分裂，
+挑选位于中间的关键字单独进位到父节点。</li>
+</ol>
+<h2 id="删除">删除</h2>
+<p>B+树的删除操作也仅在叶子节点执行。</p>
+<ol type="1">
+<li>首先查询关键字所在地叶子结点，删除该叶子节点的数据。</li>
+<li>如果删除叶子结点之后的数据数量满足B+树的要求，则不做其他修改。</li>
+<li>否则优先从足够关键字数量的相邻兄弟节点中移用关键字来作为补充，
+如果不行则与相邻的兄弟节点合并。
+<ol type="1">
+<li>如果选择借用，需要调整父节点中相应关键字的值。</li>
+<li>如果选择合并，不仅需要调整相应的值，而且父节点可能存在不平衡，
+需要继续处理。</li>
+</ol></li>
+</ol>
+<h2 id="外部链接">外部链接</h2>
+<p>以下为两份Github上的B+树实现示例，可供参考。</p>
 <ul>
 <li><a
-href="https://www.cnblogs.com/1873cy/p/18395797">算法与数据结构——AVL树（平衡二叉搜索树）|
-博客园</a></li>
-<li><a href="https://oi-wiki.org/ds/avl/">AVL 树 | OI Wiki</a></li>
+href="https://github.com/shashikdm/B-Plus-Tree">shashikdm/B-Plus-Tree</a></li>
+<li><a
+href="https://github.com/goyalarchit/B_Plus_Tree">goyalarchit/B_Plus_Tree</a></li>
+</ul>
+<h1 id="应用领域">应用领域</h1>
+<h2 id="文件系统">文件系统</h2>
+<ul>
+<li>ReiserFS、NSS、XFS、JFS、ReFS和BFS等文件系统均使用B+树进行元数据索引。</li>
+<li>BFS使用B+树来存储目录。</li>
+<li>NTFS使用B+树来索引目录和与安全有关的元数据。</li>
+<li>EXT4使用区段树（修改的B+树）来索引文件区段。</li>
+</ul>
+<h2 id="数据库">数据库</h2>
+<p>B+树被广泛用于MySQL等数据库系统中，
+其范围查找和顺序访问的性能颇受数据库的青睐。</p>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a href="https://oi-wiki.org/ds/bplus-tree">B+树 | OI Wiki</a></li>
+<li><a href="https://en.wikipedia.org/wiki/B%252B_tree">B+树 |
+维基百科</a></li>
+<li><a
+href="https://www.cnblogs.com/henuliulei/p/15114440.html">b树，b+树，b-树,红黑树详解一锅端
+| 博客园 你的雷哥</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -2145,97 +2236,6 @@ void merge(BTreeNode* parent, SizeT pos)
       </tags>
   </entry>
   <entry>
-    <title>B+树</title>
-    <url>/bplus-tree/</url>
-    <content><![CDATA[<h1 id="概述">概述</h1>
-<p>B+树是<a href="/b-tree/">B树</a>的一个变体。
-旨在提升B树在数据库和文件系统等应用场景中的存取效率。
-它在范围查找和顺序访问方面表现出更优越的性能。</p>
-<span id="more"></span>
-<figure>
-<img data-src="/images/2024/bplus-tree.webp" alt="一棵普通的B+树" />
-<figcaption aria-hidden="true">一棵普通的B+树</figcaption>
-</figure>
-<h1 id="特点">特点</h1>
-<p>相比于B树，B+树在结构上具有以下特点：</p>
-<ol type="1">
-<li>所有数据均存在叶子节点中，并通过链表相连。</li>
-<li>内部节点仅存储键值作为索引，不存储实际数据。</li>
-</ol>
-<p>这些结构特点使B+树具备了一些B树不具备的功能性质：</p>
-<ol type="1">
-<li>查询效率更稳定，每个关键字的查找必然走一条从根节点到叶子节点的路。</li>
-<li>内部结点相比较小，在相同内存能容纳更多的关键字，从而降低了IO读写次数。</li>
-<li>B+树可以直接遍历叶子节点来实现范围查找，而B树的范围查找只能通过中序遍历。</li>
-</ol>
-<p>因此，B+树更适合且被广泛应用于文件系统和数据库索引等场景。</p>
-<h1 id="实现">实现</h1>
-<h2 id="查找">查找</h2>
-<p>B+树的查找过程和B树类似。 我们从根节点开始，从上到下递归地遍历树。
-在每一层上，搜索的范围被减小到包含搜索值的子树中。</p>
-<h2 id="遍历">遍历</h2>
-<p>B+树只在叶子节点的层级上就可以实现整棵树的遍历。
-从根节点一路搜索到最左端的叶子节点之后即可根据指针遍历。</p>
-<h2 id="插入">插入</h2>
-<p>B+树的插入仅在叶子节点执行。</p>
-<ol type="1">
-<li>若为空树，创建一个叶子结点作为根节点。</li>
-<li>针对叶子结点，将关键字插入合适的位置后，如果当前节点大小超出限制，将其分裂，
-新的索引值（右节点的第一个关键字）进位到父节点。</li>
-<li>针对索引节点，将关键字插入合适的位置后，如果当前节点大小超出限制，将其分裂，
-挑选位于中间的关键字单独进位到父节点。</li>
-</ol>
-<h2 id="删除">删除</h2>
-<p>B+树的删除操作也仅在叶子节点执行。</p>
-<ol type="1">
-<li>首先查询关键字所在地叶子结点，删除该叶子节点的数据。</li>
-<li>如果删除叶子结点之后的数据数量满足B+树的要求，则不做其他修改。</li>
-<li>否则优先从足够关键字数量的相邻兄弟节点中移用关键字来作为补充，
-如果不行则与相邻的兄弟节点合并。
-<ol type="1">
-<li>如果选择借用，需要调整父节点中相应关键字的值。</li>
-<li>如果选择合并，不仅需要调整相应的值，而且父节点可能存在不平衡，
-需要继续处理。</li>
-</ol></li>
-</ol>
-<h2 id="外部链接">外部链接</h2>
-<p>以下为两份Github上的B+树实现示例，可供参考。</p>
-<ul>
-<li><a
-href="https://github.com/shashikdm/B-Plus-Tree">shashikdm/B-Plus-Tree</a></li>
-<li><a
-href="https://github.com/goyalarchit/B_Plus_Tree">goyalarchit/B_Plus_Tree</a></li>
-</ul>
-<h1 id="应用领域">应用领域</h1>
-<h2 id="文件系统">文件系统</h2>
-<ul>
-<li>ReiserFS、NSS、XFS、JFS、ReFS和BFS等文件系统均使用B+树进行元数据索引。</li>
-<li>BFS使用B+树来存储目录。</li>
-<li>NTFS使用B+树来索引目录和与安全有关的元数据。</li>
-<li>EXT4使用区段树（修改的B+树）来索引文件区段。</li>
-</ul>
-<h2 id="数据库">数据库</h2>
-<p>B+树被广泛用于MySQL等数据库系统中，
-其范围查找和顺序访问的性能颇受数据库的青睐。</p>
-<h1 id="参考资料">参考资料</h1>
-<ul>
-<li><a href="https://oi-wiki.org/ds/bplus-tree">B+树 | OI Wiki</a></li>
-<li><a href="https://en.wikipedia.org/wiki/B%252B_tree">B+树 |
-维基百科</a></li>
-<li><a
-href="https://www.cnblogs.com/henuliulei/p/15114440.html">b树，b+树，b-树,红黑树详解一锅端
-| 博客园 你的雷哥</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>高级数据结构与算法</category>
-      </categories>
-      <tags>
-        <tag>数据结构与算法</tag>
-        <tag>平衡树</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>左偏树</title>
     <url>/leftist-tree/</url>
     <content><![CDATA[<h1 id="概述">概述</h1>
@@ -2365,7 +2365,10 @@ class="math inline">\(O(n)\)</span>。</p>
     root_ &#x3D; queue.front();
 &#125;</code></pre>
 <h2 id="完整实现代码">完整实现代码</h2>
-<p>点击<a href="/codes/leftist-tree.h">传送门</a>查看。</p>
+<p>这是一份我个人书写的较为简单的左偏树的代码实现，
+仅实现了优先队列的常见操作，不包括删除任意节点、更新节点值等不常见操作。</p>
+<p>点击<a
+href="https://github.com/SuniRein/data-structures/blob/main/include/leftist-tree.h">传送门</a>跳转。</p>
 <h1 id="变体">变体</h1>
 <h2 id="随机堆">随机堆</h2>
 <p>随机堆在合并的时候在用随机数而不是dist来进行决策，
@@ -2438,6 +2441,537 @@ Wiki</a></li>
 博客园 HachikoT</a></li>
 <li><a href="https://www.cnblogs.com/TEoS/p/11351372.html">左偏树详解 |
 博客园 TEoS</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>高级数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>数据结构与算法</tag>
+        <tag>堆</tag>
+        <tag>可并堆</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>二项堆</title>
+    <url>/binomial-heap/</url>
+    <content><![CDATA[<h1 id="二项堆">二项堆</h1>
+<p><strong>二项堆</strong>，也称<strong>二项队列</strong>，是一种特殊的可并堆。
+不同于传统的堆，二项堆并不是一棵二叉树，而是<strong>二项树</strong>的集合，即森林。</p>
+<span id="more"></span>
+<p>所谓二项树，是满足以下定义的一类特殊的树：</p>
+<ol type="1">
+<li>二项树<span class="math inline">\(B_0\)</span>仅有一个节点。</li>
+<li>二项树<span class="math inline">\(B_k\)</span>由两棵二项树<span
+class="math inline">\(B_{k-1}\)</span>组成，其中一棵二项树是另一棵的最左孩子。</li>
+</ol>
+<div>
+<div class="graphviz">
+digraph BinomialTree { graph [nodesep = 0.1, bgcolor = gray, style =
+dashed] node [shape = circle, label = ""] subgraph cluster_0 { label =
+"B0" 00 } subgraph cluster_1 { label = "B1" 10 -&gt; 11 } subgraph
+cluster_2 { label = "B2" 20 -&gt; {22, 21} 22 -&gt; 23 } subgraph
+cluster_3 { label = "B3" 30 -&gt; {34, 32, 31} 32 -&gt; 33 34 -&gt; {36,
+35} 36 -&gt; 37 } }
+</div>
+</div>
+<p>每一个二项堆由多棵度数不同的二项树构成。
+构成二项堆的每一棵二项树都具有最小堆性质。</p>
+<div>
+<div class="graphviz">
+digraph BinomialHeap { label = "一个二项队列的示例"; graph [nodesep =
+0.4, bgcolor = gray, style = invis, splines=false] node [shape = circle]
+subgraph cluster_0 { 13 } subgraph cluster_2 { 19 -&gt; {24, 34} 24
+-&gt; 100 {rank = same; 24 -&gt; 34 [style = invis]} } subgraph
+cluster_3 { 6 -&gt; {12, 14, 28} 14 -&gt; 33 12 -&gt; {36, 35} 36 -&gt;
+37 {rank = same; 12 -&gt; 14 -&gt; 28 [style = invis]} } {rank = same;
+13, 19, 6} 13 -&gt; 19 19 -&gt; 6 [constraint = false] }
+</div>
+</div>
+<h1 id="性质">性质</h1>
+<p>二项树<span class="math inline">\(B_k\)</span>具有以下性质：</p>
+<ol type="1">
+<li><span class="math inline">\(B_k\)</span>拥有<span
+class="math inline">\(2^k\)</span>个节点。</li>
+<li><span class="math inline">\(B_k\)</span>的高度为<span
+class="math inline">\(k\)</span>。</li>
+<li><span class="math inline">\(B_k\)</span>在深度为<span
+class="math inline">\(i\)</span>处恰有<span
+class="math inline">\(C_k^i\)</span>个节点。</li>
+<li><span class="math inline">\(B_k\)</span>的根节点的度数为<span
+class="math inline">\(k\)</span>，且是所有节点中度数最大的。</li>
+</ol>
+<h1 id="实现">实现</h1>
+<h2 id="孩子兄弟表示法">孩子兄弟表示法</h2>
+<p>由于二项堆的特殊性质，即每个节点有不定数量个孩子，
+且在合并的时候需要遍历所有的孩子，因此我们用<strong>孩子兄弟表示法</strong>来存储它的结构。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">struct Node
+&#123;
+    ValueType key&#123;&#125;;
+    SizeType  degree&#123;&#125;;
+    Node*     child&#123;&#125;;
+    Node*     sibling&#123;&#125;;
+&#125;;</code></pre>
+<div class="note info"><p>尽管表示方法相同，但<strong>二项堆与二项树中节点的布局是不同的</strong>，需要明确这个区别。</p>
+<p>二项堆中的每一棵二项树在堆中按度数递增排序，
+这样的布局有利于合并操作的实现，
+因为合并操作需要从小到大进行，先合并度数低的二项树。</p>
+<p>这与二项树中子树的布局正好相反，其按度数递减排序。
+这是在合并两棵度数相同的二项树时，是直接让其中一棵成为另外一棵的孩子，
+因此度数大的子树会被插入到开头。</p>
+</div>
+<h2 id="获取最小值">获取最小值</h2>
+<p>如果直接遍历所有的二项树树根来获取最小值， 时间复杂度将为<span
+class="math inline">\(O(\log
+N)\)</span>，其代价相比传统堆结构较为高昂。</p>
+<p>事实上，我们可以在插入和删除的时候动态维护当前堆中的最小节点，
+这样就能实现时间成本低廉的获取最小值操作。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void BinomialHeap::top() const
+&#123;
+    return min_-&gt;key;
+&#125;</code></pre>
+<h2 id="合并">合并</h2>
+<p>合并操作是二项堆的<strong>核心操作</strong>，插入操作和删除操作都需要依靠合并操作来实现。</p>
+<p>二项堆在合并时，从度数较低端开始，依次合并度数相同的项，
+产生一棵度数更大的二项树作为新项，向前进位。
+如果没有度数相同的项且没有进位项，则保留原项。
+这个过程有点类似于二进制数的加法。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Node* BinomialHeap::merge(Node* lhs, Node* rhs)
+&#123;
+    Node* root &#x3D; link_heap(lhs, rhs);
+    if (!root)
+    &#123;
+        return nullptr;
+    &#125;
+
+    Node* prev&#123;&#125;;
+    Node* curr&#123;root&#125;;
+    Node* next&#123;curr-&gt;sibling&#125;;
+
+    while (next)
+    &#123;
+        &#x2F;&#x2F; 情况1：当前节点的度数不等于下一个节点的度数
+        &#x2F;&#x2F; 情况2：当前节点的度数等于下一个节点的度数，且下一个节点的度数等于下一个节点的下一个节点的度数
+        &#x2F;&#x2F; 以上两种情况，保留当前节点，移动指针
+        if (curr-&gt;degree !&#x3D; next-&gt;degree || (next-&gt;sibling &amp;&amp; next-&gt;sibling-&gt;degree &#x3D;&#x3D; curr-&gt;degree))
+        &#123;
+            prev &#x3D; curr;
+            curr &#x3D; next;
+        &#125;
+        &#x2F;&#x2F; 情况3：当前节点的度数等于下一个节点的度数，且当前节点的关键字小于下一个节点的关键字
+        &#x2F;&#x2F; 保留当前节点，将下一个节点链接到当前节点的子树中
+        else if (curr-&gt;key &lt;&#x3D; next-&gt;key)
+        &#123;
+            curr-&gt;sibling &#x3D; next-&gt;sibling;
+            link_tree(next, curr);
+        &#125;
+        &#x2F;&#x2F; 情况4：当前节点的度数等于下一个节点的度数，且当前节点的关键字大于下一个节点的关键字
+        &#x2F;&#x2F; 保留下一个节点，将当前节点链接到下一个节点的子树中
+        else
+        &#123;
+            if (!prev)
+            &#123;
+                root &#x3D; next;
+            &#125;
+            else
+            &#123;
+                prev-&gt;sibling &#x3D; next;
+            &#125;
+            link_tree(curr, next);
+            curr &#x3D; next;
+        &#125;
+        next &#x3D; curr-&gt;sibling;
+    &#125;
+
+    return root;
+&#125;
+
+&#x2F;&#x2F; 连接两个二项堆，成为一个节点度数递增的二项树链表
+Node* BinomialHeap::link_heap(Node* lhs, Node* rhs)
+&#123;
+    if (!lhs)
+    &#123;
+        return rhs;
+    &#125;
+    if (!rhs)
+    &#123;
+        return lhs;
+    &#125;
+
+    Node* head&#123;&#125;;
+    Node* tail&#123;&#125;;
+
+    &#x2F;&#x2F; 选取度数最小的节点作为第一项
+    if (lhs-&gt;degree &lt; rhs-&gt;degree)
+    &#123;
+        head &#x3D; lhs;
+        lhs  &#x3D; lhs-&gt;sibling;
+    &#125;
+    else
+    &#123;
+        head &#x3D; rhs;
+        rhs  &#x3D; rhs-&gt;sibling;
+    &#125;
+    tail &#x3D; head;
+
+    while (lhs &amp;&amp; rhs)
+    &#123;
+        if (lhs-&gt;degree &lt; rhs-&gt;degree)
+        &#123;
+            tail-&gt;sibling &#x3D; lhs;
+            lhs           &#x3D; lhs-&gt;sibling;
+        &#125;
+        else
+        &#123;
+            tail-&gt;sibling &#x3D; rhs;
+            rhs           &#x3D; rhs-&gt;sibling;
+        &#125;
+        tail &#x3D; tail-&gt;sibling;
+    &#125;
+    tail-&gt;sibling &#x3D; lhs ? lhs : rhs;
+    return head;
+&#125;
+
+&#x2F;&#x2F; 连接度数相同的两棵二项树，使其中一棵成为另一棵的子树
+void BinomialHeap::link_tree(Node* child, Node* root)
+&#123;
+    child-&gt;sibling &#x3D; root-&gt;child;
+    root-&gt;child    &#x3D; child;
+    ++root-&gt;degree;
+&#125;</code></pre>
+<h2 id="插入">插入</h2>
+<p>插入操作就相当于将一棵度数为0的二项树合并进当前的堆中。
+既然已经实现了合并操作，插入操作的实现就非常简单了。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void BinomialHeap::insert(ValueType key)
+&#123;
+    Node* node &#x3D; new Node&#123;std::move(key)&#125;;
+    root_      &#x3D; merge(root_, node);
+    if (!min_ || node-&gt;key &lt; min_-&gt;key)
+    &#123;
+        min_ &#x3D; node;
+    &#125;
+&#125;</code></pre>
+<details class="note primary"><summary><p><strong>插入操作的均摊复杂度</strong></p>
+</summary>
+<p>二项队列的合并操作类似于二进制数的加法，
+插入操作则可以类比为二进制数的自增。</p>
+<p>在二项堆列的插入中，需要涉及到两种操作，
+一种是直接将树插入一个空的位置中，
+一种是合并两棵树，生成一棵更高阶的树。
+这两种操作都可以在常数时间内完成，因此在接下来的分析中我们把
+它们都视为一个操作数。</p>
+<p>让我们具体分析下执行插入时遇到的情况：</p>
+<ol type="1">
+<li><p>如果<span class="math inline">\(B_0\)</span>为空，直接插入<span
+class="math inline">\(B_0\)</span>，插入的操作数为1。
+这种情况出现的概率为<span
+class="math inline">\(\dfrac{1}{2}\)</span>。</p></li>
+<li><p>如果<span class="math inline">\(B_0\)</span>非空，<span
+class="math inline">\(B_1\)</span>为空，插入的操作数为2，即需要先与<span
+class="math inline">\(B_0\)</span>合并，然后向<span
+class="math inline">\(B_1\)</span>进位。 这种情况出现的概率为<span
+class="math inline">\(\dfrac{1}{4}\)</span>。</p></li>
+<li><p>依此类推，如果<span class="math inline">\(B_0, B_1, ...
+B_{k-1}\)</span>非空，而<span
+class="math inline">\(B_k\)</span>为空，插入的操作数为<span
+class="math inline">\(k+1\)</span>， 且这种情况出现的概率为<span
+class="math inline">\(\dfrac{1}{2^{k+1}}\)</span></p></li>
+</ol>
+<p>那么，连续<span
+class="math inline">\(N\)</span>次插入操作的总操作数为</p>
+<p><span class="math display">\[
+\sum_{i=1}^{k} \dfrac{i}{2^i} N &lt; N \sum_{i=1}^{\infty}
+\dfrac{i}{2^i} = 2N
+\]</span></p>
+<p>因此，二项堆列插入操作的均摊复杂度为<span
+class="math inline">\(O(1)\)</span>。</p>
+
+</details>
+<h2 id="删除最小值">删除最小值</h2>
+<p>删除最小值的实现较为复杂，可分为以下步骤：</p>
+<ol type="1">
+<li>将最小值所在节点从堆中删除。</li>
+<li>最小值所在子树此时会变成一棵由若干二项树按度数递增构成的链表。
+例如，<span
+class="math inline">\(B_k\)</span>的根节点被删除后，会变成由<span
+class="math inline">\(B_{k-1}, B_{k-2}, ...,
+B_0\)</span>等多棵二项树组成的链表。</li>
+<li>反转链表使其成为一个合法的二项堆。</li>
+<li>合并新得到的二项堆。</li>
+</ol>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void BinomialHeap::pop()
+&#123;
+    if (!root_)
+    &#123;
+        return;
+    &#125;
+
+    &#x2F;&#x2F; 找到最小节点及其前驱
+    Node* prev&#123;&#125;;
+    Node* curr&#123;root_&#125;;
+    while (curr !&#x3D; min_)
+    &#123;
+        prev &#x3D; curr;
+        curr &#x3D; curr-&gt;sibling;
+    &#125;
+
+    &#x2F;&#x2F; 从二叉堆中删除最小节点的子树
+    if (!prev)
+    &#123;
+        root_ &#x3D; curr-&gt;sibling;
+    &#125;
+    else
+    &#123;
+        prev-&gt;sibling &#x3D; curr-&gt;sibling;
+    &#125;
+
+    &#x2F;&#x2F; 遍历两个新的二叉堆，维护最小节点
+    min_ &#x3D; nullptr;
+    Node* head &#x3D; root_;
+    while (head)
+    &#123;
+        if (!min_ || head-&gt;key &lt; min_-&gt;key)
+        &#123;
+            min_ &#x3D; head;
+        &#125;
+        head &#x3D; head-&gt;sibling;
+    &#125;
+    Node* min_head &#x3D; curr-&gt;child;
+    while (min_head)
+    &#123;
+        if (!min_ || min_head-&gt;key &lt; min_-&gt;key)
+        &#123;
+            min_ &#x3D; min_head;
+        &#125;
+        min_head &#x3D; min_head-&gt;sibling;
+    &#125;
+
+    &#x2F;&#x2F; 反转最小节点的子树
+    curr-&gt;child &#x3D; reverse(curr-&gt;child);
+
+    &#x2F;&#x2F; 合并两个二叉堆
+    root_ &#x3D; merge(root_, curr-&gt;child);
+
+    &#x2F;&#x2F; 释放最小节点
+    curr-&gt;child   &#x3D; nullptr;
+    curr-&gt;sibling &#x3D; nullptr;
+    delete curr;
+&#125;
+
+Node* reverse(Node* head)
+&#123;
+    Node* prev&#123;&#125;;
+    Node* curr&#123;head&#125;;
+    Node* next&#123;&#125;;
+    while (curr)
+    &#123;
+        next          &#x3D; curr-&gt;sibling;
+        curr-&gt;sibling &#x3D; prev;
+        prev          &#x3D; curr;
+        curr          &#x3D; next;
+    &#125;
+    return prev;
+&#125;</code></pre>
+<h2 id="初始化">初始化</h2>
+<p>初始化二项堆，只需要不断将节点合并进当前的二项堆即可。
+由于插入操作的均摊复杂度为<span
+class="math inline">\(O(1)\)</span>，故初始化的时间复杂度为<span
+class="math inline">\(O(N)\)</span>。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">tempalte&lt;typename InputIt&gt;
+void BinomialTree::assign(InputIt begin, InputIt end)
+&#123;
+    clear();
+    while (begin !&#x3D; end)
+    &#123;
+        push(*begin++);
+    &#125;
+&#125;</code></pre>
+<h2 id="删除特定节点">删除特定节点</h2>
+<p>这里的删除特定节点是指删除二项堆上的某个已知节点，
+即<code>Node*</code>，而不是删除特定权值的节点。</p>
+<p>要删除某个节点，我们需要将节点不断与父节点交换，直到它位于树根。
+此时按照删除最小值的方式来删除该节点即可。</p>
+<div class="note warning"><p>该操作需要设法维护额外的<code>parent</code>，以实现与父节点的交互。</p>
+</div>
+<h2 id="更新节点的值">更新节点的值</h2>
+<p>更新节点的值可分为两种情况：</p>
+<ul>
+<li>减小节点的值，即<code>DecreaseKey</code></li>
+<li>增大节点的值，即<code>IncreaseKey</code></li>
+</ul>
+<p>两种情况的实现方法类似，只是搜索的方向不同。
+<code>DecreaseKey</code>需要我们在更新节点值后不断向上搜索，检查父节点；
+<code>IncreaseKey</code>则需要不断向下搜索，以维护子树。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void BinomialHeap::update(Node* node, ValueType key)
+&#123;
+    if (node-&gt;key &lt; key)
+    &#123;
+        node-&gt;key &#x3D; key;
+        increase_key(node);
+    &#125;
+    else if (node-&gt;key &gt; key)
+    &#123;
+        node-&gt;key &#x3D; key;
+        decrease_key(node);
+    &#125;
+&#125;
+
+void BinomialHeap::decrease_key(Node* node)
+&#123;
+    Node* parent&#123;node-&gt;parent&#125;
+    while (parent &amp;&amp; node-&gt;key &lt; parent-&gt;key)
+    &#123;
+        std::swap(node-&gt;key, parent-&gt;key);
+        node &#x3D; parent;
+        parent &#x3D; node-&gt;parent;
+    &#125;
+&#125;
+
+void BinomialHeap::increase_key(Node* node)
+&#123;
+    Node* child &#x3D; node-&gt;child;
+    while (child)
+    &#123;
+        &#x2F;&#x2F; 找出最小的孩子
+        Node* min_child &#x3D; child;
+        child &#x3D; child-&gt;sibing;
+        while (child)
+        &#123;
+            if (child-&gt;key &lt; min_child)
+            &#123;
+                min_child &#x3D; child;
+            &#125;
+            child &#x3D; child-&gt;sibling;
+        &#125;
+
+        &#x2F;&#x2F; 已满足堆性质
+        if (min_child-&gt;key &gt;&#x3D; node)
+        &#123;
+            return;
+        &#125;
+
+        std::swap(min_child-&gt;key, node-&gt;key);
+        node &#x3D; min_child;
+        child &#x3D; node-&gt;child;
+    &#125;
+&#125;</code></pre>
+<div class="note warning"><p><code>DecreaseKey</code>在向上回溯时需要额外的<code>parent</code>字段，
+因此这部分的代码无法与其他部分的代码耦合，需要进行一定的修改。</p>
+</div>
+<h2 id="完整代码实现">完整代码实现</h2>
+<p>这是一份我个人书写的较为简单的二项堆的代码实现，
+仅实现了优先队列的常见操作，不包括删除任意节点、更新节点值等不常见操作。</p>
+<p>点击<a
+href="https://github.com/SuniRein/data-structures/blob/main/include/binomial-heap.h">传送门</a>跳转。</p>
+<h1 id="常见堆结构的比较">常见堆结构的比较</h1>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">项目</th>
+<th style="text-align: center;">二项堆</th>
+<th style="text-align: center;">左偏树/斜堆</th>
+<th style="text-align: center;">二叉队列</th>
+<th style="text-align: center;">斐波那契堆</th>
+<th style="text-align: center;">配对堆</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">初始化</td>
+<td style="text-align: center;"><span
+class="math inline">\(O(N)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(N)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(N)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(N)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(N)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">取最值</td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">插入</td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">删除</td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">合并</td>
+<td style="text-align: center;"><span
+class="math inline">\(O(N)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">空间需求</td>
+<td style="text-align: center;">最小</td>
+<td style="text-align: center;">较小</td>
+<td style="text-align: center;">较小</td>
+<td style="text-align: center;">较大</td>
+<td style="text-align: center;">较小</td>
+</tr>
+<tr>
+<td style="text-align: center;">代码复杂度</td>
+<td style="text-align: center;">简单</td>
+<td style="text-align: center;">简单</td>
+<td style="text-align: center;">较难</td>
+<td style="text-align: center;">极大</td>
+<td style="text-align: center;">较小</td>
+</tr>
+</tbody>
+</table>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a
+href="https://www.cnblogs.com/luanxm/p/10847925.html">数据结构——二项堆 |
+博客园 luanxm</a></li>
 </ul>
 ]]></content>
       <categories>

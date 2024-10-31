@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/orange/pace-theme-material.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.sunirein.tech","root":"/","images":"/images","scheme":"Gemini","darkmode":"auto","version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac","show_result":true},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":3,"unescape":true,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="二项堆 二项堆，也称二项队列，是一种特殊的可并堆。 不同于传统的堆，二项堆并不是一棵二叉树，而是二项树的集合，即森林。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二项堆">
+<meta property="og:url" content="https://blog.sunirein.tech/binomial-heap/">
+<meta property="og:site_name" content="SuniRein 的个人小站">
+<meta property="og:description" content="二项堆 二项堆，也称二项队列，是一种特殊的可并堆。 不同于传统的堆，二项堆并不是一棵二叉树，而是二项树的集合，即森林。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-31T12:47:59.000Z">
+<meta property="article:modified_time" content="2024-10-31T12:55:34.726Z">
+<meta property="article:author" content="SuniRein">
+<meta property="article:tag" content="数据结构与算法">
+<meta property="article:tag" content="堆">
+<meta property="article:tag" content="可并堆">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.sunirein.tech/binomial-heap/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sunirein.tech/binomial-heap/","path":"binomial-heap/","title":"二项堆"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>二项堆 | SuniRein 的个人小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="SuniRein 的个人小站" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">SuniRein 的个人小站</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">个人学习笔记兼博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">7</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">3</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">12</span></a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E9%A1%B9%E5%A0%86"><span class="nav-number">1.</span> <span class="nav-text">二项堆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%A7%E8%B4%A8"><span class="nav-number">2.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A9%E5%AD%90%E5%85%84%E5%BC%9F%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">孩子兄弟表示法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%9C%80%E5%B0%8F%E5%80%BC"><span class="nav-number">3.2.</span> <span class="nav-text">获取最小值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E5%B9%B6"><span class="nav-number">3.3.</span> <span class="nav-text">合并</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%85%A5"><span class="nav-number">3.4.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%9C%80%E5%B0%8F%E5%80%BC"><span class="nav-number">3.5.</span> <span class="nav-text">删除最小值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">3.6.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%89%B9%E5%AE%9A%E8%8A%82%E7%82%B9"><span class="nav-number">3.7.</span> <span class="nav-text">删除特定节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E8%8A%82%E7%82%B9%E7%9A%84%E5%80%BC"><span class="nav-number">3.8.</span> <span class="nav-text">更新节点的值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.9.</span> <span class="nav-text">完整代码实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%A0%86%E7%BB%93%E6%9E%84%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">4.</span> <span class="nav-text">常见堆结构的比较</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SuniRein"
+      src="/images/avatar.avif">
+  <p class="site-author-name" itemprop="name">SuniRein</p>
+  <div class="site-description" itemprop="description">一名普通技术宅的博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/SuniRein" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;SuniRein" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunireincn@gmail.com" title="E-Mail → mailto:sunireincn@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.sunirein.tech/binomial-heap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.avif">
+      <meta itemprop="name" content="SuniRein">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SuniRein 的个人小站">
+      <meta itemprop="description" content="一名普通技术宅的博客">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="二项堆 | SuniRein 的个人小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          二项堆
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-10-31 20:47:59 / 修改时间：20:55:34" itemprop="dateCreated datePublished" datetime="2024-10-31T20:47:59+08:00">2024-10-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">高级数据结构与算法</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="二项堆">二项堆</h1>
+<p><strong>二项堆</strong>，也称<strong>二项队列</strong>，是一种特殊的可并堆。
+不同于传统的堆，二项堆并不是一棵二叉树，而是<strong>二项树</strong>的集合，即森林。</p>
+<span id="more"></span>
+<p>所谓二项树，是满足以下定义的一类特殊的树：</p>
+<ol type="1">
+<li>二项树<span class="math inline">\(B_0\)</span>仅有一个节点。</li>
+<li>二项树<span class="math inline">\(B_k\)</span>由两棵二项树<span
+class="math inline">\(B_{k-1}\)</span>组成，其中一棵二项树是另一棵的最左孩子。</li>
+</ol>
+<div>
+<div class="graphviz">
+digraph BinomialTree { graph [nodesep = 0.1, bgcolor = gray, style =
+dashed] node [shape = circle, label = ""] subgraph cluster_0 { label =
+"B0" 00 } subgraph cluster_1 { label = "B1" 10 -&gt; 11 } subgraph
+cluster_2 { label = "B2" 20 -&gt; {22, 21} 22 -&gt; 23 } subgraph
+cluster_3 { label = "B3" 30 -&gt; {34, 32, 31} 32 -&gt; 33 34 -&gt; {36,
+35} 36 -&gt; 37 } }
+</div>
+</div>
+<p>每一个二项堆由多棵度数不同的二项树构成。
+构成二项堆的每一棵二项树都具有最小堆性质。</p>
+<div>
+<div class="graphviz">
+digraph BinomialHeap { label = "一个二项队列的示例"; graph [nodesep =
+0.4, bgcolor = gray, style = invis, splines=false] node [shape = circle]
+subgraph cluster_0 { 13 } subgraph cluster_2 { 19 -&gt; {24, 34} 24
+-&gt; 100 {rank = same; 24 -&gt; 34 [style = invis]} } subgraph
+cluster_3 { 6 -&gt; {12, 14, 28} 14 -&gt; 33 12 -&gt; {36, 35} 36 -&gt;
+37 {rank = same; 12 -&gt; 14 -&gt; 28 [style = invis]} } {rank = same;
+13, 19, 6} 13 -&gt; 19 19 -&gt; 6 [constraint = false] }
+</div>
+</div>
+<h1 id="性质">性质</h1>
+<p>二项树<span class="math inline">\(B_k\)</span>具有以下性质：</p>
+<ol type="1">
+<li><span class="math inline">\(B_k\)</span>拥有<span
+class="math inline">\(2^k\)</span>个节点。</li>
+<li><span class="math inline">\(B_k\)</span>的高度为<span
+class="math inline">\(k\)</span>。</li>
+<li><span class="math inline">\(B_k\)</span>在深度为<span
+class="math inline">\(i\)</span>处恰有<span
+class="math inline">\(C_k^i\)</span>个节点。</li>
+<li><span class="math inline">\(B_k\)</span>的根节点的度数为<span
+class="math inline">\(k\)</span>，且是所有节点中度数最大的。</li>
+</ol>
+<h1 id="实现">实现</h1>
+<h2 id="孩子兄弟表示法">孩子兄弟表示法</h2>
+<p>由于二项堆的特殊性质，即每个节点有不定数量个孩子，
+且在合并的时候需要遍历所有的孩子，因此我们用<strong>孩子兄弟表示法</strong>来存储它的结构。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">struct Node
+&#123;
+    ValueType key&#123;&#125;;
+    SizeType  degree&#123;&#125;;
+    Node*     child&#123;&#125;;
+    Node*     sibling&#123;&#125;;
+&#125;;</code></pre>
+<div class="note info"><p>尽管表示方法相同，但<strong>二项堆与二项树中节点的布局是不同的</strong>，需要明确这个区别。</p>
+<p>二项堆中的每一棵二项树在堆中按度数递增排序，
+这样的布局有利于合并操作的实现，
+因为合并操作需要从小到大进行，先合并度数低的二项树。</p>
+<p>这与二项树中子树的布局正好相反，其按度数递减排序。
+这是在合并两棵度数相同的二项树时，是直接让其中一棵成为另外一棵的孩子，
+因此度数大的子树会被插入到开头。</p>
+</div>
+<h2 id="获取最小值">获取最小值</h2>
+<p>如果直接遍历所有的二项树树根来获取最小值， 时间复杂度将为<span
+class="math inline">\(O(\log
+N)\)</span>，其代价相比传统堆结构较为高昂。</p>
+<p>事实上，我们可以在插入和删除的时候动态维护当前堆中的最小节点，
+这样就能实现时间成本低廉的获取最小值操作。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void BinomialHeap::top() const
+&#123;
+    return min_-&gt;key;
+&#125;</code></pre>
+<h2 id="合并">合并</h2>
+<p>合并操作是二项堆的<strong>核心操作</strong>，插入操作和删除操作都需要依靠合并操作来实现。</p>
+<p>二项堆在合并时，从度数较低端开始，依次合并度数相同的项，
+产生一棵度数更大的二项树作为新项，向前进位。
+如果没有度数相同的项且没有进位项，则保留原项。
+这个过程有点类似于二进制数的加法。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Node* BinomialHeap::merge(Node* lhs, Node* rhs)
+&#123;
+    Node* root &#x3D; link_heap(lhs, rhs);
+    if (!root)
+    &#123;
+        return nullptr;
+    &#125;
+
+    Node* prev&#123;&#125;;
+    Node* curr&#123;root&#125;;
+    Node* next&#123;curr-&gt;sibling&#125;;
+
+    while (next)
+    &#123;
+        &#x2F;&#x2F; 情况1：当前节点的度数不等于下一个节点的度数
+        &#x2F;&#x2F; 情况2：当前节点的度数等于下一个节点的度数，且下一个节点的度数等于下一个节点的下一个节点的度数
+        &#x2F;&#x2F; 以上两种情况，保留当前节点，移动指针
+        if (curr-&gt;degree !&#x3D; next-&gt;degree || (next-&gt;sibling &amp;&amp; next-&gt;sibling-&gt;degree &#x3D;&#x3D; curr-&gt;degree))
+        &#123;
+            prev &#x3D; curr;
+            curr &#x3D; next;
+        &#125;
+        &#x2F;&#x2F; 情况3：当前节点的度数等于下一个节点的度数，且当前节点的关键字小于下一个节点的关键字
+        &#x2F;&#x2F; 保留当前节点，将下一个节点链接到当前节点的子树中
+        else if (curr-&gt;key &lt;&#x3D; next-&gt;key)
+        &#123;
+            curr-&gt;sibling &#x3D; next-&gt;sibling;
+            link_tree(next, curr);
+        &#125;
+        &#x2F;&#x2F; 情况4：当前节点的度数等于下一个节点的度数，且当前节点的关键字大于下一个节点的关键字
+        &#x2F;&#x2F; 保留下一个节点，将当前节点链接到下一个节点的子树中
+        else
+        &#123;
+            if (!prev)
+            &#123;
+                root &#x3D; next;
+            &#125;
+            else
+            &#123;
+                prev-&gt;sibling &#x3D; next;
+            &#125;
+            link_tree(curr, next);
+            curr &#x3D; next;
+        &#125;
+        next &#x3D; curr-&gt;sibling;
+    &#125;
+
+    return root;
+&#125;
+
+&#x2F;&#x2F; 连接两个二项堆，成为一个节点度数递增的二项树链表
+Node* BinomialHeap::link_heap(Node* lhs, Node* rhs)
+&#123;
+    if (!lhs)
+    &#123;
+        return rhs;
+    &#125;
+    if (!rhs)
+    &#123;
+        return lhs;
+    &#125;
+
+    Node* head&#123;&#125;;
+    Node* tail&#123;&#125;;
+
+    &#x2F;&#x2F; 选取度数最小的节点作为第一项
+    if (lhs-&gt;degree &lt; rhs-&gt;degree)
+    &#123;
+        head &#x3D; lhs;
+        lhs  &#x3D; lhs-&gt;sibling;
+    &#125;
+    else
+    &#123;
+        head &#x3D; rhs;
+        rhs  &#x3D; rhs-&gt;sibling;
+    &#125;
+    tail &#x3D; head;
+
+    while (lhs &amp;&amp; rhs)
+    &#123;
+        if (lhs-&gt;degree &lt; rhs-&gt;degree)
+        &#123;
+            tail-&gt;sibling &#x3D; lhs;
+            lhs           &#x3D; lhs-&gt;sibling;
+        &#125;
+        else
+        &#123;
+            tail-&gt;sibling &#x3D; rhs;
+            rhs           &#x3D; rhs-&gt;sibling;
+        &#125;
+        tail &#x3D; tail-&gt;sibling;
+    &#125;
+    tail-&gt;sibling &#x3D; lhs ? lhs : rhs;
+    return head;
+&#125;
+
+&#x2F;&#x2F; 连接度数相同的两棵二项树，使其中一棵成为另一棵的子树
+void BinomialHeap::link_tree(Node* child, Node* root)
+&#123;
+    child-&gt;sibling &#x3D; root-&gt;child;
+    root-&gt;child    &#x3D; child;
+    ++root-&gt;degree;
+&#125;</code></pre>
+<h2 id="插入">插入</h2>
+<p>插入操作就相当于将一棵度数为0的二项树合并进当前的堆中。
+既然已经实现了合并操作，插入操作的实现就非常简单了。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void BinomialHeap::insert(ValueType key)
+&#123;
+    Node* node &#x3D; new Node&#123;std::move(key)&#125;;
+    root_      &#x3D; merge(root_, node);
+    if (!min_ || node-&gt;key &lt; min_-&gt;key)
+    &#123;
+        min_ &#x3D; node;
+    &#125;
+&#125;</code></pre>
+<details class="note primary"><summary><p><strong>插入操作的均摊复杂度</strong></p>
+</summary>
+<p>二项队列的合并操作类似于二进制数的加法，
+插入操作则可以类比为二进制数的自增。</p>
+<p>在二项堆列的插入中，需要涉及到两种操作，
+一种是直接将树插入一个空的位置中，
+一种是合并两棵树，生成一棵更高阶的树。
+这两种操作都可以在常数时间内完成，因此在接下来的分析中我们把
+它们都视为一个操作数。</p>
+<p>让我们具体分析下执行插入时遇到的情况：</p>
+<ol type="1">
+<li><p>如果<span class="math inline">\(B_0\)</span>为空，直接插入<span
+class="math inline">\(B_0\)</span>，插入的操作数为1。
+这种情况出现的概率为<span
+class="math inline">\(\dfrac{1}{2}\)</span>。</p></li>
+<li><p>如果<span class="math inline">\(B_0\)</span>非空，<span
+class="math inline">\(B_1\)</span>为空，插入的操作数为2，即需要先与<span
+class="math inline">\(B_0\)</span>合并，然后向<span
+class="math inline">\(B_1\)</span>进位。 这种情况出现的概率为<span
+class="math inline">\(\dfrac{1}{4}\)</span>。</p></li>
+<li><p>依此类推，如果<span class="math inline">\(B_0, B_1, ...
+B_{k-1}\)</span>非空，而<span
+class="math inline">\(B_k\)</span>为空，插入的操作数为<span
+class="math inline">\(k+1\)</span>， 且这种情况出现的概率为<span
+class="math inline">\(\dfrac{1}{2^{k+1}}\)</span></p></li>
+</ol>
+<p>那么，连续<span
+class="math inline">\(N\)</span>次插入操作的总操作数为</p>
+<p><span class="math display">\[
+\sum_{i=1}^{k} \dfrac{i}{2^i} N &lt; N \sum_{i=1}^{\infty}
+\dfrac{i}{2^i} = 2N
+\]</span></p>
+<p>因此，二项堆列插入操作的均摊复杂度为<span
+class="math inline">\(O(1)\)</span>。</p>
+
+</details>
+<h2 id="删除最小值">删除最小值</h2>
+<p>删除最小值的实现较为复杂，可分为以下步骤：</p>
+<ol type="1">
+<li>将最小值所在节点从堆中删除。</li>
+<li>最小值所在子树此时会变成一棵由若干二项树按度数递增构成的链表。
+例如，<span
+class="math inline">\(B_k\)</span>的根节点被删除后，会变成由<span
+class="math inline">\(B_{k-1}, B_{k-2}, ...,
+B_0\)</span>等多棵二项树组成的链表。</li>
+<li>反转链表使其成为一个合法的二项堆。</li>
+<li>合并新得到的二项堆。</li>
+</ol>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void BinomialHeap::pop()
+&#123;
+    if (!root_)
+    &#123;
+        return;
+    &#125;
+
+    &#x2F;&#x2F; 找到最小节点及其前驱
+    Node* prev&#123;&#125;;
+    Node* curr&#123;root_&#125;;
+    while (curr !&#x3D; min_)
+    &#123;
+        prev &#x3D; curr;
+        curr &#x3D; curr-&gt;sibling;
+    &#125;
+
+    &#x2F;&#x2F; 从二叉堆中删除最小节点的子树
+    if (!prev)
+    &#123;
+        root_ &#x3D; curr-&gt;sibling;
+    &#125;
+    else
+    &#123;
+        prev-&gt;sibling &#x3D; curr-&gt;sibling;
+    &#125;
+
+    &#x2F;&#x2F; 遍历两个新的二叉堆，维护最小节点
+    min_ &#x3D; nullptr;
+    Node* head &#x3D; root_;
+    while (head)
+    &#123;
+        if (!min_ || head-&gt;key &lt; min_-&gt;key)
+        &#123;
+            min_ &#x3D; head;
+        &#125;
+        head &#x3D; head-&gt;sibling;
+    &#125;
+    Node* min_head &#x3D; curr-&gt;child;
+    while (min_head)
+    &#123;
+        if (!min_ || min_head-&gt;key &lt; min_-&gt;key)
+        &#123;
+            min_ &#x3D; min_head;
+        &#125;
+        min_head &#x3D; min_head-&gt;sibling;
+    &#125;
+
+    &#x2F;&#x2F; 反转最小节点的子树
+    curr-&gt;child &#x3D; reverse(curr-&gt;child);
+
+    &#x2F;&#x2F; 合并两个二叉堆
+    root_ &#x3D; merge(root_, curr-&gt;child);
+
+    &#x2F;&#x2F; 释放最小节点
+    curr-&gt;child   &#x3D; nullptr;
+    curr-&gt;sibling &#x3D; nullptr;
+    delete curr;
+&#125;
+
+Node* reverse(Node* head)
+&#123;
+    Node* prev&#123;&#125;;
+    Node* curr&#123;head&#125;;
+    Node* next&#123;&#125;;
+    while (curr)
+    &#123;
+        next          &#x3D; curr-&gt;sibling;
+        curr-&gt;sibling &#x3D; prev;
+        prev          &#x3D; curr;
+        curr          &#x3D; next;
+    &#125;
+    return prev;
+&#125;</code></pre>
+<h2 id="初始化">初始化</h2>
+<p>初始化二项堆，只需要不断将节点合并进当前的二项堆即可。
+由于插入操作的均摊复杂度为<span
+class="math inline">\(O(1)\)</span>，故初始化的时间复杂度为<span
+class="math inline">\(O(N)\)</span>。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">tempalte&lt;typename InputIt&gt;
+void BinomialTree::assign(InputIt begin, InputIt end)
+&#123;
+    clear();
+    while (begin !&#x3D; end)
+    &#123;
+        push(*begin++);
+    &#125;
+&#125;</code></pre>
+<h2 id="删除特定节点">删除特定节点</h2>
+<p>这里的删除特定节点是指删除二项堆上的某个已知节点，
+即<code>Node*</code>，而不是删除特定权值的节点。</p>
+<p>要删除某个节点，我们需要将节点不断与父节点交换，直到它位于树根。
+此时按照删除最小值的方式来删除该节点即可。</p>
+<div class="note warning"><p>该操作需要设法维护额外的<code>parent</code>，以实现与父节点的交互。</p>
+</div>
+<h2 id="更新节点的值">更新节点的值</h2>
+<p>更新节点的值可分为两种情况：</p>
+<ul>
+<li>减小节点的值，即<code>DecreaseKey</code></li>
+<li>增大节点的值，即<code>IncreaseKey</code></li>
+</ul>
+<p>两种情况的实现方法类似，只是搜索的方向不同。
+<code>DecreaseKey</code>需要我们在更新节点值后不断向上搜索，检查父节点；
+<code>IncreaseKey</code>则需要不断向下搜索，以维护子树。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void BinomialHeap::update(Node* node, ValueType key)
+&#123;
+    if (node-&gt;key &lt; key)
+    &#123;
+        node-&gt;key &#x3D; key;
+        increase_key(node);
+    &#125;
+    else if (node-&gt;key &gt; key)
+    &#123;
+        node-&gt;key &#x3D; key;
+        decrease_key(node);
+    &#125;
+&#125;
+
+void BinomialHeap::decrease_key(Node* node)
+&#123;
+    Node* parent&#123;node-&gt;parent&#125;
+    while (parent &amp;&amp; node-&gt;key &lt; parent-&gt;key)
+    &#123;
+        std::swap(node-&gt;key, parent-&gt;key);
+        node &#x3D; parent;
+        parent &#x3D; node-&gt;parent;
+    &#125;
+&#125;
+
+void BinomialHeap::increase_key(Node* node)
+&#123;
+    Node* child &#x3D; node-&gt;child;
+    while (child)
+    &#123;
+        &#x2F;&#x2F; 找出最小的孩子
+        Node* min_child &#x3D; child;
+        child &#x3D; child-&gt;sibing;
+        while (child)
+        &#123;
+            if (child-&gt;key &lt; min_child)
+            &#123;
+                min_child &#x3D; child;
+            &#125;
+            child &#x3D; child-&gt;sibling;
+        &#125;
+
+        &#x2F;&#x2F; 已满足堆性质
+        if (min_child-&gt;key &gt;&#x3D; node)
+        &#123;
+            return;
+        &#125;
+
+        std::swap(min_child-&gt;key, node-&gt;key);
+        node &#x3D; min_child;
+        child &#x3D; node-&gt;child;
+    &#125;
+&#125;</code></pre>
+<div class="note warning"><p><code>DecreaseKey</code>在向上回溯时需要额外的<code>parent</code>字段，
+因此这部分的代码无法与其他部分的代码耦合，需要进行一定的修改。</p>
+</div>
+<h2 id="完整代码实现">完整代码实现</h2>
+<p>这是一份我个人书写的较为简单的二项堆的代码实现，
+仅实现了优先队列的常见操作，不包括删除任意节点、更新节点值等不常见操作。</p>
+<p>点击<a
+target="_blank" rel="noopener" href="https://github.com/SuniRein/data-structures/blob/main/include/binomial-heap.h">传送门</a>跳转。</p>
+<h1 id="常见堆结构的比较">常见堆结构的比较</h1>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">项目</th>
+<th style="text-align: center;">二项堆</th>
+<th style="text-align: center;">左偏树/斜堆</th>
+<th style="text-align: center;">二叉队列</th>
+<th style="text-align: center;">斐波那契堆</th>
+<th style="text-align: center;">配对堆</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">初始化</td>
+<td style="text-align: center;"><span
+class="math inline">\(O(N)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(N)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(N)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(N)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(N)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">取最值</td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">插入</td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">删除</td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">合并</td>
+<td style="text-align: center;"><span
+class="math inline">\(O(N)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(\log
+N)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(1)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">空间需求</td>
+<td style="text-align: center;">最小</td>
+<td style="text-align: center;">较小</td>
+<td style="text-align: center;">较小</td>
+<td style="text-align: center;">较大</td>
+<td style="text-align: center;">较小</td>
+</tr>
+<tr>
+<td style="text-align: center;">代码复杂度</td>
+<td style="text-align: center;">简单</td>
+<td style="text-align: center;">简单</td>
+<td style="text-align: center;">较难</td>
+<td style="text-align: center;">极大</td>
+<td style="text-align: center;">较小</td>
+</tr>
+</tbody>
+</table>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://www.cnblogs.com/luanxm/p/10847925.html">数据结构——二项堆 |
+博客园 luanxm</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>SuniRein
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.sunirein.tech/binomial-heap/" title="二项堆">https://blog.sunirein.tech/binomial-heap/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 数据结构与算法</a>
+              <a href="/tags/%E5%A0%86/" rel="tag"><i class="fa fa-tag"></i> 堆</a>
+              <a href="/tags/%E5%8F%AF%E5%B9%B6%E5%A0%86/" rel="tag"><i class="fa fa-tag"></i> 可并堆</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/leftist-tree/" rel="prev" title="左偏树">
+                  <i class="fa fa-angle-left"></i> 左偏树
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024324598号 </a>
+      <img src="/images/gongan.webp" alt=""><a href="https://beian.mps.gov.cn/#/query/webSearch?code=33010602013756" rel="noopener" target="_blank">浙公网安备33010602013756号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">SuniRein</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/SuniRein" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js" integrity="sha256-4mJNT2bMXxcc1GCJaxBmMPdmah5ji0Ldnd79DKd1hoM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-AjM0J5XIbiB590BrznLEgZGLnOQWrt62s3BEq65Q/I0=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha256-9cmf7tcLdXpKsPi/2AWE93PbZpTp4M4tqzFk+lWomjU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/viz.js/1.7.1/viz.js'></script>
+  <script>
+    String.prototype.replaceAll = function(search, replacement) {
+      var target = this;
+      return target.split(search).join(replacement);
+    };
+
+    let vizObjects = document.querySelectorAll('.graphviz')
+
+    for (let item of vizObjects) {
+      let svg = undefined
+      try {
+        svg = Viz(item.textContent.replaceAll('–', '--'), 'svg')
+      } catch(e) {
+        svg = `<pre class="error">${e}</pre>`
+      }
+      item.outerHTML = svg
+    }
+  </script>
+
+
+</body>
+</html>

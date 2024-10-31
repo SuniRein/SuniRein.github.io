@@ -6,7 +6,7 @@
   <link href="https://blog.sunirein.tech/atom.xml" rel="self"/>
   
   <link href="https://blog.sunirein.tech/"/>
-  <updated>2024-10-22T08:29:15.748Z</updated>
+  <updated>2024-10-31T12:55:34.726Z</updated>
   <id>https://blog.sunirein.tech/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>二项堆</title>
+    <link href="https://blog.sunirein.tech/binomial-heap/"/>
+    <id>https://blog.sunirein.tech/binomial-heap/</id>
+    <published>2024-10-31T12:47:59.000Z</published>
+    <updated>2024-10-31T12:55:34.726Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;二项堆&quot;&gt;二项堆&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;二项堆&lt;/strong&gt;，也称&lt;strong&gt;二项队列&lt;/strong&gt;，是一种特殊的可并堆。
+不同于传统的堆，二项堆并不是一棵二叉树，而是&lt;strong&gt;二项树&lt;/strong&gt;的集合，即森林。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="高级数据结构与算法" scheme="https://blog.sunirein.tech/categories/%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="数据结构与算法" scheme="https://blog.sunirein.tech/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="堆" scheme="https://blog.sunirein.tech/tags/%E5%A0%86/"/>
+    
+    <category term="可并堆" scheme="https://blog.sunirein.tech/tags/%E5%8F%AF%E5%B9%B6%E5%A0%86/"/>
+    
+  </entry>
+  
+  <entry>
     <title>左偏树</title>
     <link href="https://blog.sunirein.tech/leftist-tree/"/>
     <id>https://blog.sunirein.tech/leftist-tree/</id>
     <published>2024-10-22T08:29:15.000Z</published>
-    <updated>2024-10-22T08:29:15.748Z</updated>
+    <updated>2024-10-31T12:55:15.918Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;概述&quot;&gt;概述&lt;/h1&gt;
