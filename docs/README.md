@@ -1,17 +1,17 @@
 ---
 home: true
 config:
-    - type: hero
-      full: true
-      hero:
-          name: SuniRein
-          text: 一名普通的技术宅
-          actions:
-              - theme: brand
-                text: 博客
-                link: /blog/
+  - type: hero
+    full: true
+    hero:
+      name: SuniRein
+      text: 一名普通的技术宅
+      actions:
+        - theme: brand
+          text: 博客
+          link: /blog/
 
-              - theme: alt
-                text: Github
-                link: https://github.com/SuniRein
+        - theme: alt
+          text: Github
+          link: https://github.com/SuniRein
 ---
