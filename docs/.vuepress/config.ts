@@ -2,6 +2,8 @@ import { viteBundler } from '@vuepress/bundler-vite';
 import { plumeTheme } from 'vuepress-theme-plume';
 import { defineUserConfig } from 'vuepress';
 
+import { feedPlugin } from '@vuepress/plugin-feed';
+
 export default defineUserConfig({
     lang: 'zh-CN',
     title: 'SuniRein 的个人小站',
@@ -23,4 +25,12 @@ export default defineUserConfig({
         },
         hostname: 'https://sunirein.tech',
     }),
+
+    plugins: [
+        feedPlugin({
+            hostname: 'https://sunirein.tech',
+            atom: true,
+            devServer: true,
+        }),
+    ],
 });

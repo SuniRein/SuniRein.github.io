@@ -9,6 +9,13 @@ export default defineThemeConfig({
         location: '中国 杭州',
         circle: true,
     },
+    navbar: [
+        { text: '首页', link: '/' },
+        { text: '博客', link: '/blog/' },
+        { text: '标签', link: '/blog/tags/' },
+        { text: '归档', link: '/blog/archives/' },
+        { text: 'RSS', link: '/atom.xml' },
+    ],
     social: [{ icon: 'github', link: 'https://github.com/SuniRein' }],
     copyright: 'CC-BY-NC-SA-4.0',
 });
