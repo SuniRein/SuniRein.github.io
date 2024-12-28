@@ -6,7 +6,7 @@
     "scripts": {
         "docs:dev": "vuepress dev docs",
         "docs:build": "vuepress build docs",
-        "docs:deploy-aliyun": "pnpm run docs:build & rsync -avz --delete -e ssh ./docs/.vuepress/dist aliyun:Page"
+        "docs:deploy-aliyun": "pnpm run docs:build && rsync -avz --delete -e ssh ./docs/.vuepress/dist aliyun:Page"
     },
     "keywords": [],
     "author": "",
