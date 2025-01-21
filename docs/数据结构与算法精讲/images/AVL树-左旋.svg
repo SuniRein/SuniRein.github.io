@@ -1,0 +1,121 @@
+<svg width="328pt" height="190pt" viewBox="0.00 0.00 328.00 190.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 186)">
+<title>G</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-186 324,-186 324,4 -4,4"/>
+<!-- Father -->
+<g id="node1" class="node">
+<title>Father</title>
+<ellipse fill="none" stroke="black" cx="53" cy="-164" rx="35.71" ry="18"/>
+<text text-anchor="middle" x="53" y="-159.8" font-family="Times,serif" font-size="14.00">Father</text>
+</g>
+<!-- A -->
+<g id="node2" class="node">
+<title>A</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-91" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-86.8" font-family="Times,serif" font-size="14.00">A</text>
+</g>
+<!-- Father&#45;&gt;A -->
+<g id="edge1" class="edge">
+<title>Father-&gt;A</title>
+<path fill="none" stroke="black" d="M46.71,-145.81C43.79,-137.85 40.25,-128.19 36.99,-119.27"/>
+<polygon fill="black" stroke="black" points="40.3,-118.15 33.58,-109.96 33.73,-120.55 40.3,-118.15"/>
+</g>
+<!-- Child -->
+<g id="node3" class="node">
+<title>Child</title>
+<ellipse fill="none" stroke="black" cx="105" cy="-91" rx="32.5" ry="18"/>
+<text text-anchor="middle" x="105" y="-86.8" font-family="Times,serif" font-size="14.00">Child</text>
+</g>
+<!-- Father&#45;&gt;Child -->
+<g id="edge2" class="edge">
+<title>Father-&gt;Child</title>
+<path fill="none" stroke="black" d="M64.8,-146.89C71.25,-138.08 79.38,-126.98 86.64,-117.07"/>
+<polygon fill="black" stroke="black" points="89.27,-119.4 92.35,-109.27 83.62,-115.27 89.27,-119.4"/>
+</g>
+<!-- B -->
+<g id="node4" class="node">
+<title>B</title>
+<ellipse fill="none" stroke="black" cx="42" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="42" y="-13.8" font-family="Times,serif" font-size="14.00">B</text>
+</g>
+<!-- Child&#45;&gt;B -->
+<g id="edge3" class="edge">
+<title>Child-&gt;B</title>
+<path fill="none" stroke="black" d="M91.02,-74.24C82.64,-64.8 71.83,-52.61 62.49,-42.09"/>
+<polygon fill="black" stroke="black" points="65.34,-40.03 56.09,-34.88 60.11,-44.68 65.34,-40.03"/>
+</g>
+<!-- C -->
+<g id="node5" class="node">
+<title>C</title>
+<ellipse fill="none" stroke="black" cx="114" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="114" y="-13.8" font-family="Times,serif" font-size="14.00">C</text>
+</g>
+<!-- Child&#45;&gt;C -->
+<g id="edge4" class="edge">
+<title>Child-&gt;C</title>
+<path fill="none" stroke="black" d="M107.18,-72.81C108.15,-65.14 109.32,-55.89 110.42,-47.24"/>
+<polygon fill="black" stroke="black" points="113.87,-47.89 111.65,-37.53 106.92,-47.01 113.87,-47.89"/>
+</g>
+<!-- FatherN -->
+<g id="node7" class="node">
+<title>FatherN</title>
+<ellipse fill="none" stroke="black" cx="212" cy="-91" rx="35.71" ry="18"/>
+<text text-anchor="middle" x="212" y="-86.8" font-family="Times,serif" font-size="14.00">Father</text>
+</g>
+<!-- Child&#45;&gt;FatherN -->
+<g id="edge9" class="edge">
+<title>Child-&gt;FatherN</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M137.98,-91C146.44,-91 155.71,-91 164.74,-91"/>
+<polygon fill="black" stroke="black" points="164.45,-94.5 174.45,-91 164.45,-87.5 164.45,-94.5"/>
+<text text-anchor="middle" x="156.9" y="-98.2" font-family="Times,serif" font-size="14.00">左旋</text>
+</g>
+<!-- ChildN -->
+<g id="node6" class="node">
+<title>ChildN</title>
+<ellipse fill="none" stroke="black" cx="253" cy="-164" rx="32.5" ry="18"/>
+<text text-anchor="middle" x="253" y="-159.8" font-family="Times,serif" font-size="14.00">Child</text>
+</g>
+<!-- ChildN&#45;&gt;FatherN -->
+<g id="edge5" class="edge">
+<title>ChildN-&gt;FatherN</title>
+<path fill="none" stroke="black" d="M243.49,-146.53C238.63,-138.11 232.59,-127.66 227.11,-118.16"/>
+<polygon fill="black" stroke="black" points="230.25,-116.6 222.21,-109.69 224.18,-120.1 230.25,-116.6"/>
+</g>
+<!-- CN -->
+<g id="node10" class="node">
+<title>CN</title>
+<ellipse fill="none" stroke="black" cx="293" cy="-91" rx="27" ry="18"/>
+<text text-anchor="middle" x="293" y="-86.8" font-family="Times,serif" font-size="14.00">C</text>
+</g>
+<!-- ChildN&#45;&gt;CN -->
+<g id="edge6" class="edge">
+<title>ChildN-&gt;CN</title>
+<path fill="none" stroke="black" d="M262.28,-146.53C267.02,-138.11 272.91,-127.66 278.26,-118.16"/>
+<polygon fill="black" stroke="black" points="281.17,-120.13 283.03,-109.7 275.07,-116.69 281.17,-120.13"/>
+</g>
+<!-- AN -->
+<g id="node8" class="node">
+<title>AN</title>
+<ellipse fill="none" stroke="black" cx="203" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="203" y="-13.8" font-family="Times,serif" font-size="14.00">A</text>
+</g>
+<!-- FatherN&#45;&gt;AN -->
+<g id="edge7" class="edge">
+<title>FatherN-&gt;AN</title>
+<path fill="none" stroke="black" d="M209.82,-72.81C208.85,-65.14 207.68,-55.89 206.58,-47.24"/>
+<polygon fill="black" stroke="black" points="210.08,-47.01 205.35,-37.53 203.13,-47.89 210.08,-47.01"/>
+</g>
+<!-- BN -->
+<g id="node9" class="node">
+<title>BN</title>
+<ellipse fill="none" stroke="black" cx="275" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="275" y="-13.8" font-family="Times,serif" font-size="14.00">B</text>
+</g>
+<!-- FatherN&#45;&gt;BN -->
+<g id="edge8" class="edge">
+<title>FatherN-&gt;BN</title>
+<path fill="none" stroke="black" d="M225.98,-74.24C234.36,-64.8 245.17,-52.61 254.51,-42.09"/>
+<polygon fill="black" stroke="black" points="256.89,-44.68 260.91,-34.88 251.66,-40.03 256.89,-44.68"/>
+</g>
+</g>
+</svg>
