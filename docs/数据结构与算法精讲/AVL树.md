@@ -8,8 +8,8 @@ tags:
 ---
 
 在本文中，我将详细介绍 AVL 树这一自平衡二叉查找树的基本概念、核心原理以及其操作过程，
-将帮助读者理解其如何保持高效的查询、插入和删除操作。
-同时，我还将通过代码示例演示AVL树的实现，并分析其在实际应用中的优势与局限。
+帮助读者理解其如何保持高效的查询、插入和删除操作。
+同时，我还将通过代码示例演示 AVL 树的实现，并分析其在实际应用中的优势与局限。
 本文适合那些有一定数据结构基础，并希望深入了解自平衡树及其应用的读者。
 
 <!-- more -->
@@ -109,7 +109,7 @@ $$
 ![LR](images/AVL树-LR.svg)
 :::
 
-在上图中，node 为 10，child为 3。
+在上图中，node 为 10，child 为 3。
 其中 node 的左子树较大， child 的右子树较大，属于 LR，因此要先左旋后右旋。
 
 首先，我们对 3 进行一次左旋，得到下面的树结构。
@@ -158,7 +158,7 @@ AVL 树的删除也与二叉搜索树类似：
 
 ## 代码实现
 
-@[code cpp :collapsed-lines](code/avl_tree.h)
+@[code cpp:collapsed-lines](code/avl_tree.h)
 
 也可以在我的 [Github 仓库](https://github.com/SuniRein/common-data-structure/blob/main/src/avl_tree.h)上查看，仓库上的实现可能会更新一点。
 
@@ -175,6 +175,6 @@ Windows NT 内核中就广泛使用了 AVL 树，而 C++ 标准库里的 `std::m
 
 ## 参考资料
 
-- [算法与数据结构——AVL树（平衡二叉搜索树）| 博客园](https://www.cnblogs.com/1873cy/p/18395797)
+- [算法与数据结构——AVL 树（平衡二叉搜索树）| 博客园](https://www.cnblogs.com/1873cy/p/18395797)
 
 - [AVL 树 | OI Wiki](https://oi-wiki.org/ds/avl/)

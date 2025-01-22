@@ -6,13 +6,15 @@
     "scripts": {
         "docs:dev": "vuepress dev docs",
         "docs:build": "vuepress build docs",
-        "docs:deploy-aliyun": "pnpm run docs:build && rsync -avz --delete -e ssh ./docs/.vuepress/dist aliyun:Page"
+        "docs:deploy-aliyun": "pnpm run docs:build && rsync -avz --delete -e ssh ./docs/.vuepress/dist aliyun:Page",
+        "lint": "lint-md '**/*.md'"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
         "@iconify/json": "^2.2.289",
+        "@lint-md/cli": "^2.0.0",
         "@vuepress/bundler-vite": "2.0.0-rc.19",
         "@vuepress/plugin-feed": "2.0.0-rc.68",
         "sass-embedded": "^1.83.0",
