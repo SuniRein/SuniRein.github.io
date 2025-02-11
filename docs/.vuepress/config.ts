@@ -22,6 +22,16 @@ export default defineUserConfig({
             shiki: {
                 languages: ['asm', 'c', 'cpp', 'sh', 'css', 'javascript', 'typescript', 'vue'],
             },
+            comment: {
+                provider: 'Giscus',
+                comment: true,
+                repo: 'SuniRein/blog-comment',
+                repoId: 'R_kgDON36RWA',
+                category: 'Announcements',
+                categoryId: 'DIC_kwDON36RWM4Cm3sZ',
+                lightTheme: 'light_protanopia',
+                darkTheme: 'dark_dimmed',
+            },
         },
         hostname: 'https://sunirein.tech',
     }),
