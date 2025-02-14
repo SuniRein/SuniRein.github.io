@@ -1,0 +1,88 @@
+<svg width="325pt" height="178pt" viewBox="0.00 0.00 325.26 178.48" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(1.44 177.04)">
+<title>G</title>
+<polygon fill="white" stroke="none" points="-1.44,1.44 -1.44,-177.04 323.82,-177.04 323.82,1.44 -1.44,1.44"/>
+<!-- Root -->
+<g id="node1" class="node">
+<title>Root</title>
+<polygon fill="none" stroke="black" stroke-width="2" points="147.1,-106.3 147.1,-175.1 231.38,-175.1 231.38,-106.3 147.1,-106.3"/>
+<text text-anchor="middle" x="165.14" y="-151.3" font-family="Consolas" font-size="22.00">7</text>
+<polyline fill="none" stroke="black" stroke-width="2" points="183.19,-140.7 183.19,-175.1"/>
+<text text-anchor="middle" x="207.29" y="-151.3" font-family="Consolas" font-size="22.00">16</text>
+<polyline fill="none" stroke="black" stroke-width="2" points="147.1,-140.7 231.38,-140.7"/>
+<text text-anchor="middle" x="161.14" y="-116.9" font-family="Consolas" font-size="22.00"> </text>
+<polyline fill="none" stroke="black" stroke-width="2" points="175.19,-106.3 175.19,-140.7"/>
+<text text-anchor="middle" x="189.24" y="-116.9" font-family="Consolas" font-size="22.00"> </text>
+<polyline fill="none" stroke="black" stroke-width="2" points="203.29,-106.3 203.29,-140.7"/>
+<text text-anchor="middle" x="217.33" y="-116.9" font-family="Consolas" font-size="22.00"> </text>
+</g>
+<!-- Leave0 -->
+<g id="node2" class="node">
+<title>Leave0</title>
+<polygon fill="none" stroke="black" stroke-width="2" points="0,-0.5 0,-69.3 140.48,-69.3 140.48,-0.5 0,-0.5"/>
+<text text-anchor="middle" x="17.55" y="-45.5" font-family="Consolas" font-size="22.00">1</text>
+<polyline fill="none" stroke="black" stroke-width="2" points="35.1,-34.9 35.1,-69.3"/>
+<text text-anchor="middle" x="52.64" y="-45.5" font-family="Consolas" font-size="22.00">2</text>
+<polyline fill="none" stroke="black" stroke-width="2" points="70.19,-34.9 70.19,-69.3"/>
+<text text-anchor="middle" x="87.74" y="-45.5" font-family="Consolas" font-size="22.00">5</text>
+<polyline fill="none" stroke="black" stroke-width="2" points="105.29,-34.9 105.29,-69.3"/>
+<text text-anchor="middle" x="122.83" y="-45.5" font-family="Consolas" font-size="22.00">6</text>
+<polyline fill="none" stroke="black" stroke-width="2" points="0,-34.9 140.48,-34.9"/>
+<text text-anchor="middle" x="14.05" y="-11.1" font-family="Consolas" font-size="22.00"> </text>
+<polyline fill="none" stroke="black" stroke-width="2" points="28.1,-0.5 28.1,-34.9"/>
+<text text-anchor="middle" x="42.14" y="-11.1" font-family="Consolas" font-size="22.00"> </text>
+<polyline fill="none" stroke="black" stroke-width="2" points="56.19,-0.5 56.19,-34.9"/>
+<text text-anchor="middle" x="70.24" y="-11.1" font-family="Consolas" font-size="22.00"> </text>
+<polyline fill="none" stroke="black" stroke-width="2" points="84.29,-0.5 84.29,-34.9"/>
+<text text-anchor="middle" x="98.33" y="-11.1" font-family="Consolas" font-size="22.00"> </text>
+<polyline fill="none" stroke="black" stroke-width="2" points="112.38,-0.5 112.38,-34.9"/>
+<text text-anchor="middle" x="126.43" y="-11.1" font-family="Consolas" font-size="22.00"> </text>
+</g>
+<!-- Root&#45;&gt;Leave0 -->
+<g id="edge1" class="edge">
+<title>Root:f0-&gt;Leave0</title>
+<path fill="none" stroke="black" stroke-width="2" d="M161.14,-105.8C161.14,-105.8 143.08,-91.91 123.06,-76.52"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="126.55,-74.79 116.49,-71.47 122.29,-80.34 126.55,-74.79"/>
+</g>
+<!-- Leave1 -->
+<g id="node3" class="node">
+<title>Leave1</title>
+<polygon fill="none" stroke="black" stroke-width="2" points="147.1,-0.5 147.1,-69.3 231.38,-69.3 231.38,-0.5 147.1,-0.5"/>
+<text text-anchor="middle" x="165.14" y="-45.5" font-family="Consolas" font-size="22.00">9</text>
+<polyline fill="none" stroke="black" stroke-width="2" points="183.19,-34.9 183.19,-69.3"/>
+<text text-anchor="middle" x="207.29" y="-45.5" font-family="Consolas" font-size="22.00">12</text>
+<polyline fill="none" stroke="black" stroke-width="2" points="147.1,-34.9 231.38,-34.9"/>
+<text text-anchor="middle" x="161.14" y="-11.1" font-family="Consolas" font-size="22.00"> </text>
+<polyline fill="none" stroke="black" stroke-width="2" points="175.19,-0.5 175.19,-34.9"/>
+<text text-anchor="middle" x="189.24" y="-11.1" font-family="Consolas" font-size="22.00"> </text>
+<polyline fill="none" stroke="black" stroke-width="2" points="203.29,-0.5 203.29,-34.9"/>
+<text text-anchor="middle" x="217.33" y="-11.1" font-family="Consolas" font-size="22.00"> </text>
+</g>
+<!-- Root&#45;&gt;Leave1 -->
+<g id="edge2" class="edge">
+<title>Root:f1-&gt;Leave1</title>
+<path fill="none" stroke="black" stroke-width="2" d="M189.24,-105.8C189.24,-105.8 189.24,-94.4 189.24,-80.81"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="192.74,-82.65 189.24,-72.65 185.74,-82.65 192.74,-82.65"/>
+</g>
+<!-- Leave2 -->
+<g id="node4" class="node">
+<title>Leave2</title>
+<polygon fill="none" stroke="black" stroke-width="2" points="238.1,-0.5 238.1,-69.3 322.38,-69.3 322.38,-0.5 238.1,-0.5"/>
+<text text-anchor="middle" x="258.69" y="-45.5" font-family="Consolas" font-size="22.00">18</text>
+<polyline fill="none" stroke="black" stroke-width="2" points="279.29,-34.9 279.29,-69.3"/>
+<text text-anchor="middle" x="300.38" y="-45.5" font-family="Consolas" font-size="22.00">21</text>
+<polyline fill="none" stroke="black" stroke-width="2" points="238.1,-34.9 322.38,-34.9"/>
+<text text-anchor="middle" x="252.14" y="-11.1" font-family="Consolas" font-size="22.00"> </text>
+<polyline fill="none" stroke="black" stroke-width="2" points="266.19,-0.5 266.19,-34.9"/>
+<text text-anchor="middle" x="280.24" y="-11.1" font-family="Consolas" font-size="22.00"> </text>
+<polyline fill="none" stroke="black" stroke-width="2" points="294.29,-0.5 294.29,-34.9"/>
+<text text-anchor="middle" x="308.33" y="-11.1" font-family="Consolas" font-size="22.00"> </text>
+</g>
+<!-- Root&#45;&gt;Leave2 -->
+<g id="edge3" class="edge">
+<title>Root:f2-&gt;Leave2</title>
+<path fill="none" stroke="black" stroke-width="2" d="M217.33,-105.8C217.33,-105.8 229.06,-92.77 242.39,-77.96"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="243.78,-81.65 247.87,-71.87 238.58,-76.96 243.78,-81.65"/>
+</g>
+</g>
+</svg>
