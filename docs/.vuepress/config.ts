@@ -20,7 +20,7 @@ export default defineUserConfig({
                 },
             },
             shiki: {
-                languages: ['asm', 'c', 'cpp', 'sh', 'css', 'javascript', 'typescript', 'vue'],
+                languages: ['asm', 'c', 'cpp', 'sh', 'css', 'javascript', 'typescript', 'vue', 'nginx'],
             },
             comment: {
                 provider: 'Giscus',
