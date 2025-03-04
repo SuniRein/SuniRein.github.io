@@ -11,6 +11,10 @@ config:
           text: 博客
           link: /blog/
 
+        - theme: brand
+          text: GTest
+          link: /gtest/
+
         - theme: alt
           text: Github
           link: https://github.com/SuniRein
