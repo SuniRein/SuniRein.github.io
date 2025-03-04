@@ -13,13 +13,13 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@iconify/json": "^2.2.289",
+        "@iconify/json": "^2.2.312",
         "@lint-md/cli": "^2.0.0",
-        "@vuepress/bundler-vite": "2.0.0-rc.19",
-        "@vuepress/plugin-feed": "2.0.0-rc.68",
-        "sass-embedded": "^1.83.0",
+        "@vuepress/bundler-vite": "2.0.0-rc.20",
+        "@vuepress/plugin-feed": "2.0.0-rc.80",
+        "sass-embedded": "^1.85.1",
         "vue": "^3.5.13",
-        "vuepress": "2.0.0-rc.19",
-        "vuepress-theme-plume": "1.0.0-rc.124"
+        "vuepress": "2.0.0-rc.20",
+        "vuepress-theme-plume": "1.0.0-rc.135"
     }
 }
