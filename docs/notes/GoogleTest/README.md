@@ -13,15 +13,15 @@ config:
       actions:
         - theme: brand
           text: 快速开始 →
-          link: ./1.入门/1.支持的平台.md
+          link: ./platforms.md
 
         - theme: alt
           text: 指南
-          link: ./2.指南/1.GoogleTest 初探.md
+          link: ./primer.md
 
         - theme: alt
           text: Reference
-          link: ./3.Reference/1.Testing 参考.md
+          link: ./reference/testing.md
 
         - theme: alt
           text: 官方文档
