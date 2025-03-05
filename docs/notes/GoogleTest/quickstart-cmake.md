@@ -9,7 +9,7 @@ copyright:
 
 本教程旨在帮助你使用 CMake 快速上手 GoogleTest。
 如果你是第一次使用 GoogleTest 或需要复习，我们推荐你从本教程开始。
-如果你的项目使用 Bazel，请参阅 [快速开始：Bazel](quickstart-bazel.md)。
+如果你的项目使用 Bazel，请参阅[快速开始：Bazel](quickstart-bazel.md)。
 
 ## 先决条件
 

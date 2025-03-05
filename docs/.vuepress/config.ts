@@ -20,6 +20,7 @@ export default defineUserConfig({
                 npmTo: {
                     tabs: ['pnpm', 'npm', 'yarn'],
                 },
+                annotation: true,
             },
             shiki: {
                 languages: [
