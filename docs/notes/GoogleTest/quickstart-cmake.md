@@ -97,8 +97,8 @@ TEST(HelloTest, BasicAssertions) {
 
 :::
 
-GoogleTest 为你提供了[断言（Assertions）](<!-- TODO: primer.md#assertions -->)来测试代码的行为。
-上面的示例中包含了 GoogleTest 的主要头文件，并演示了一些基本的断言。
+GoogleTest 为你提供了[断言（_assertion_）](primer.md#assertions)来测试代码的行为。
+上面的示例中包含了 GoogleTest 的主头文件，并演示了一些基本的断言。
 
 要构建代码，请在你的 `CMakeLists.txt` 文件末尾添加以下内容：
 
@@ -157,6 +157,6 @@ Total Test time (real) = 0.01 sec
 
 ## 下一步
 
-- [入门指南](<!-- TODO:primer.md -->)：开始学习如何编写简单的测试。
+- [初学者指南](primer.md)：开始学习如何编写简单的测试。
 
 - [代码示例](<!-- TODO:samples.md -->)：获取更多使用各种 GoogleTest 功能的示例。

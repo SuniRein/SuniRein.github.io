@@ -32,6 +32,7 @@ export default defineUserConfig({
                     'css',
                     'javascript',
                     'nginx',
+                    'proto',
                     'rust',
                     'sh',
                     'typescript',

@@ -7,7 +7,7 @@ copyright:
   source: https://google.github.io/googletest/primer.html
 ---
 
-## 引入：为什么选择 GoogleTest？
+## 引言：为什么选择 GoogleTest？
 
 ==GoogleTest== 可以帮助你编写更好的 C++ 测试。
 
@@ -104,7 +104,7 @@ GoogleTest 最近开始将术语 _Test Case_ 替换为 _Test Suite_。
 
 我们现在将解释如何编写测试程序，从单个断言开始，逐步构建测试单元和测试套件。
 
-## 断言
+## 断言 {#assertions}
 
 在 GoogleTest 中， ==断言==是类似于函数的宏。
 你通过对其行为进行断言来测试一个类或函数。
@@ -329,7 +329,7 @@ TEST_F(QueueTest, DequeueWorks) {
 
 ::: steps
 
-- 保存所有 GoogleTest 参数的状态。
+- 保存所有 GoogleTest 标志的状态。
 
 - 为第一个测试单元创建测试测试夹具对象。
 
@@ -341,7 +341,7 @@ TEST_F(QueueTest, DequeueWorks) {
 
 - 删除夹具。
 
-- 恢复所有 GoogleTest 参数的状态。
+- 恢复所有 GoogleTest 标志的状态。
 
 - 为下一个测试单元重复上述步骤，直到所有测试单元都运行完毕。
 
@@ -355,7 +355,7 @@ TEST_F(QueueTest, DequeueWorks) {
 这样设计的理由是，自动化测试服务根据其退出代码而不是 stdout/stderr 输出来判断测试是否通过，因此你的 `main()` 函数必须返回 `RUN_ALL_TESTS()` 的值。
 
 此外，你应该只调用 `RUN_ALL_TESTS()` **一次**。
-多次调用它会与一些高级 GoogleTest 功能（例如，线程安全的[死亡测试](<!-- TODO:advanced.md#death-tests -->)）冲突，因此不受支持。
+多次调用会与一些 GoogleTest 高级功能（例如，线程安全的[死亡测试](advanced.md#death-tests)）冲突，因此不受支持。
 
 :::
 
@@ -427,9 +427,9 @@ int main(int argc, char **argv) {
 }
 ```
 
-`testing::InitGoogleTest()` 函数解析命令行以获取 GoogleTest 参数，并删除所有识别到的参数。
-这允许用户通过各种参数来控制测试程序的行为，我们将在[进阶指南](advanced.md)中介绍这些参数。
-你**必须**在调用 `RUN_ALL_TESTS()` 之前调用此函数，否则这些参数将无法被正确初始化。
+`testing::InitGoogleTest()` 函数解析命令行以获取 GoogleTest 标志，并删除所有识别到的标志。
+这允许用户通过各种标志来控制测试程序的行为，我们将在[进阶指南](advanced.md)中介绍这些标志。
+你**必须**在调用 `RUN_ALL_TESTS()` 之前调用此函数，否则这些标志将无法被正确初始化。
 
 在 Windows 上，`InitGoogleTest()` 也适用于宽字符串，因此它可以在 `UNICODE` 模式下编译的程序中使用。
 

@@ -79,7 +79,7 @@ TEST(HelloTest, BasicAssertions) {
 
 :::
 
-GoogleTest 为你提供了[断言（Assertions）](<!-- TODO: primer.md#assertions -->)来测试代码的行为。
+GoogleTest 为你提供了[断言（_assertions_）](primer.md#assertions)来测试代码的行为。
 上面的示例中包含了 GoogleTest 的主要头文件，并演示了一些基本的断言。
 
 要构建该测试，请在同一目录中创建一个名为 `BUILD` 的文件，内容如下：
@@ -145,6 +145,6 @@ INFO: Build completed successfully, 27 total actions
 
 ## 下一步
 
-- [入门指南](<!-- TODO:primer.md -->)：开始学习如何编写简单的测试。
+- [初学者指南](primer.md)：开始学习如何编写简单的测试。
 
 - [代码示例](<!-- TODO:samples.md -->)：获取更多使用各种 GoogleTest 功能的示例。
