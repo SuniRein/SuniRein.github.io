@@ -15,6 +15,9 @@ export default defineUserConfig({
 
     theme: plumeTheme({
         plugins: {
+            markdownEnhance: {
+                mermaid: true,
+            },
             markdownPower: {
                 // See https://theme-plume.vuejs.press/guide/markdown/npm-to
                 npmTo: {
