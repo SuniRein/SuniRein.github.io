@@ -33,6 +33,7 @@ export default defineUserConfig({
                     'cmake',
                     'cpp',
                     'css',
+                    'elisp',
                     'javascript',
                     'nginx',
                     'proto',

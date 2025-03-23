@@ -122,7 +122,7 @@ class Turtle {
 ::: steps
 
 - 从 `Turtle` 派生出 `MockTurtle` 类。
-- 选取要模拟的虚函数（尽管 gmock 支持[通过模板模拟非虚函数](<!-- TODO:gmock_cook_book.md#MockingNonVirtualMethods -->)，
+- 选取要模拟的虚函数（尽管 gmock 支持[通过模板模拟非虚函数](gmock_cook_book.md#mocking-non-virtual-methods)，
   但实现起来较为复杂）。
 - 在 `public:` 区域使用 `MOCK_METHOD()` 宏。
 - 现在到了最重要的一步：
@@ -177,7 +177,7 @@ class MockTurtle : public Turtle {
 另一种更推荐的方式是引入一个 `FooAdaptor` 中间层——它完全属于你，因此你可以从容处理 `Foo` 接口变化的影响。
 尽管这会增加初始开发成本，但一个合理的中间层相比 `Foo` 更能满足你的特定需求，从而可以提高代码的可读性和可维护性。
 
-## 在测试中使用模拟对象
+## 在测试中使用模拟对象 {#using-mocks-in-tests}
 
 使用模拟对象的典型工作流程如下：
 
@@ -330,7 +330,7 @@ EXPECT_CALL(turtle, GoTo(50, _));
 在 `EXPECT_CALL()` 中，任何需要函数参数的地方都可以使用匹配器。
 
 上面示例中的 `100` 和 `50` 也是匹配器，它们等价于 `Eq(100)` 和 `Eq(50)`，表示函数参数必须与匹配器参数相等（使用 `operator==`）。
-gMock 为常见类型提供了许多[内置匹配器](<!-- TODO:reference/matchers.md -->)，同时也支持[自定义匹配器](<!-- TODO:gmock_cook_book.md#NewMatchers -->)。
+gMock 为常见类型提供了许多[内置匹配器](<!-- TODO:reference/matchers.md -->)，同时也支持[自定义匹配器](gmock_cook_book.md#new-matchers)。
 例如：
 
 ```cpp
@@ -350,7 +350,7 @@ EXPECT_CALL(turtle, GoTo);
 ```
 
 不过，这种语法仅适用于没有重载的方法。
-如果方法存在重载，需通过指定参数数量甚至[参数类型](<!-- TODO:gmock_cook_book.md#SelectOverload -->)来帮助 gMock 解析要使用的重载版本。
+如果方法存在重载，需通过指定参数数量甚至[参数类型](gmock_cook_book.md#select-overload)来帮助 gMock 解析要使用的重载版本。
 
 ### 基数：对调用次数的期望
 
@@ -413,7 +413,7 @@ EXPECT_CALL(turtle, GetY())
 如果你显示指定了 `Times()`，gMock 将不再自动推断基数。
 这时，如果你指定的基数超出 `WillOnce()` 描述的数量，且没有指定 `WillRepeatedly()`，在耗尽所有 `WillOnce()` 后，方法将执行默认行为。
 
-在设置动作时，除了 `Return()` 外，还可以使用 `RuturnRef(`_`variable`_`)` 来返回引用，或者执行其他[预定义行为](<!-- TODO:gmock_cook_book.md#using-actions -->)。
+在设置动作时，除了 `Return()` 外，还可以使用 `RuturnRef(`_`variable`_`)` 来返回引用，或者执行其他[预定义行为](gmock_cook_book.md#using-actions)。
 
 ::: warning
 `EXPECT_CALL()` 语句仅会执行动作子句一次，即使该动作可能被多次执行，因此需谨慎对待副作用。
@@ -431,7 +431,7 @@ EXPECT_CALL(turtle, GetX())
 
 `n++` 语句只会被执行一次，因此该方法将始终返回 100，而不是 100、101、102、...。
 类似地，`Return(new Foo)` 会在 `EXPECT_CALL()` 执行时创建一个 `Foo` 对象，之后每次都会返回相同的指针。
-如果你希望副作用能够正常发生，可以使用自定义动作，这部分将在 [<!-- TODO:cook book -->](gmock_cook_book.md) 中提及。
+如果你希望副作用能够正常发生，可以使用自定义动作，这部分将在 [gMock 高级技巧](gmock_cook_book.md)中提及。
 
 :::
 
@@ -481,7 +481,7 @@ gMock 选用**逆序**来匹配期望，是因为这样允许用户在模拟对�
 这使得方法的任何调用都能满足预期。
 对于那些根本不会涉及的方法（称为“无趣”，_uninteresting_）来说，这样做没有必要；
 但对于那些设置了一些期望、同时也允许其他调用方式的方法来说非常有用。
-详见 [Understanding Uninteresting vs Unexpected Calls](<!-- TODO:gmock_cook_book.md#uninteresting-vs-unexpected -->)。
+详见[理解无趣调用与意外调用](gmock_cook_book.md#uninteresting-vs-unexpected)。
 :::
 
 ### 有序调用 vs 无序调用 {#ordered-calls}
@@ -516,7 +516,7 @@ TEST(FooTest, DrawsLineSegment) {
 
 ::: note
 如果你只关心部分方法的调用顺序，而不是所有方法，gMock 也允许你指定任意的偏序关系（_arbitrary partial order_）。
-你可以在[这里](<!-- TODO:gmock_cook_book.md#OrderedCalls -->)了解更多细节。
+你可以在[这里](gmock_cook_book.md#ordered-calls)了解更多细节。
 :::
 
 ### 期望的持久性 {#sticky-expectations}
@@ -601,4 +601,4 @@ using ::testing::Return;
 在 gMock 中，对于不关注的方法，无需设置任何期望。
 当这些方法被调用时，测试会输出警告信息，但不会导致测试失败。
 这种行为称为“唠叨（_naggy_）模式”。
-如果你想改变该默认行为，请参考[友好模式、严格模式和唠叨模式](<!-- TODO:gmock_cook_book.md#NiceStrictNaggy -->)。
+如果你想改变该默认行为，请参考[友好模式、严格模式和唠叨模式](gmock_cook_book.md#nice-strict-naggy)。

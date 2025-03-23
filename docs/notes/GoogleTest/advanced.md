@@ -272,7 +272,7 @@ TEST_F(SkipFixture, SkipsOneTest) {
 
 与断言宏类似，你可以将自定义信息流式传输到 `GTEST_SKIP()` 中。
 
-## 告诉 GoogleTest 如何打印参数值
+## 告诉 GoogleTest 如何打印参数值 {#teaching-googletest-how-to-print-your-values}
 
 当试断言（如 `EXPECT_EQ`）失败时，GoogleTest 会打印参数值以帮助你调试。
 这是通过用户可扩展的打印器（_user-extensible value printer_）来实现的。
@@ -570,7 +570,7 @@ TEST(MyDeathTest, TestTwo) {
 ## 在子程序中使用断言
 
 ::: warning
-若你需要在子程序中编写一系列测试断言来验证复杂条件，建议改用[自定义的 GMock 匹配器](<!-- TODO:gmock_cook_book.md#NewMatchers -->)。
+若你需要在子程序中编写一系列测试断言来验证复杂条件，建议改用[自定义 gMock 匹配器](gmock_cook_book.md#new-matchers)。
 这种方式能在失败时提供更易读的错误信息，并规避下文所述的所有问题。
 :::
 
