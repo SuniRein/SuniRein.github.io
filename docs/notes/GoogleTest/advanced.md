@@ -21,7 +21,7 @@ outline: [2, 4]
 
 请参阅断言参考手册中的[显式的成功与失败](<!-- TODO:reference/assertions.md#success-failure -->)（_Explicit Success and Failure_）一节。
 
-### 异常断言 {#ExceptionAssertions}
+### 异常断言 {#exception-assertions}
 
 请参阅断言参考手册中的[异常断言](<!-- TODO:reference/assertions.md#exceptions -->)（_Exception Assertions_）一节。
 
@@ -415,7 +415,7 @@ GoogleTest 定义了一些宏来显示它正在使用的正则表达式语法，
 ::: note
 如果一段代码抛出异常，我们不认为这是“死亡”。
 因为代码的调用者可以捕获异常以避免崩溃。
-如果你想验证代码抛出的异常，请参阅[异常断言](#ExceptionAssertions)。
+如果你想验证代码抛出的异常，请参阅[异常断言](#exception-assertions)。
 :::
 
 ::: note

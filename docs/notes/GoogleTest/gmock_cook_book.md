@@ -1368,7 +1368,7 @@ gMock 不保证匹配器的调用时间和调用次数。
 
 ## 设置期望
 
-### 了解何时设置期望 {#use-OnCall}
+### 了解何时设置期望 {#use-on-call}
 
 **`ON_CALL`** 很可能是 gMock 中**最缺乏充分利用的构造**。
 
@@ -1949,7 +1949,7 @@ class MockFoo : public Foo {
 我们建议你谨慎使用此功能。
 例如，确保 `Set()` 和 `Clear()` 紧邻相应的测试代码。
 
-### 为模拟方法设置默认动作 {#OnCall}
+### 为模拟方法设置默认动作 {#on-call}
 
 上节中我们学习了如何更改给定类型的默认值。
 然而，这可能还无法满足需求：也许你有两个返回类型相同的模拟方法，并且希望它们具有不同的默认行为。
@@ -2555,7 +2555,7 @@ using ::testing::IsNull;
   EXPECT_THAT(mock_buzzer_.MakeBuzz("hello"), IsNull());
 ```
 
-如果需要调整默认动作，可按常规方法修改（参见[为模拟方法设置默认动作](#OnCall)）。
+如果需要调整默认动作，可按常规方法修改（参见[为模拟方法设置默认动作](#on-call)）。
 
 若只需返回仅移动类型的值，可结合 `WillOnce` 使用：
 
@@ -3463,7 +3463,7 @@ PolymorphicMatcher<NotNullMatcher> NotNull() {
 基数（_cardinality_）被用于 `Times()` 方法中，告知 gMock 调用次数的预期范围（无需精确数值）。
 例如，`AtLeast(5)` 表示至少 5 次，`Between(2, 4)` 表示 2 到 4 次。
 
-如果[内置基数集](TODO:gmock_cheat_sheet.md#CardinalityList)不能满足需求，
+如果[内置基数集](gmock_cheat_sheet.md#cardinality-List)不能满足需求，
 可通过实现以下接口（位于 `testing` 命名空间）自定义基数：
 
 ```cpp

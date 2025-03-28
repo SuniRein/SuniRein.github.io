@@ -363,7 +363,7 @@ EXPECT_CALL(turtle, GoTo);
 若发生此类调用，gMock 将产生一个失败。
 
 在前面的示例中，我们已经接触过像 `AtLeast(n)` 这样的模糊基数。
-你可以在[此处](<!-- TODO:gmock_cheat_sheet.md#CardinalityList -->)查阅完整的内置基数列表。
+你可以在[此处](gmock_cheat_sheet.md#cardinality-list)查阅完整的内置基数列表。
 
 `Times()` 子句可以省略。
 若省略 `Times()`，gMock 会根据以下规则自动推断基数：
