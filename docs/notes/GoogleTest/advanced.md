@@ -172,7 +172,7 @@ using ::testing::MatchesRegex;
 
 请参阅中断言参考手册中的 [Windows HRESULT 断言](<!-- TODO:reference/assertions.md#HRESULT -->)一节。
 
-### 类型断言
+### 类型断言 {#type-assertions}
 
 你可以使用函数
 
@@ -243,7 +243,7 @@ void Test2() { Foo<bool> foo; foo.Bar(); }
 它只会从构造函数或析构函数中提前返回，这可能会让你的对象处于部分构造或部分销毁的状态！
 :::
 
-## 跳过测试的执行
+## 跳过测试的执行 {#skipping-test-execution}
 
 你可以使用 `GTEST_SKIP()` 宏在运行时跳过后续测试的执行。
 在你需要在运行时检查被测系统的部分条件并以合适的方式跳过后续测试时，这将非常有用。
@@ -574,7 +574,7 @@ TEST(MyDeathTest, TestTwo) {
 这种方式能在失败时提供更易读的错误信息，并规避下文所述的所有问题。
 :::
 
-### 为断言添加追踪信息
+### 为断言添加追踪信息 {#adding-traces-to-assertions}
 
 当多处调用同一个测试子程序时，若其内部断言失败，可能难以定位具体是由哪个调用导致的失败。
 虽然可以通过额外日志或自定义失败信息来排查，但这通常会使测试代码变得臃肿。
@@ -927,7 +927,7 @@ testing::Environment* const foo_env = testing::AddGlobalTestEnvironment(new FooE
 因为依赖于全局变量的初始化会影响代码的可读性，
 且跨编译单元时全局变量的初始化顺序可能导致一些问题（编译器不保证不同编译单元中的全局变量的初始化顺序）。
 
-## 值参数化测试
+## 值参数化测试 {#value-parameterized-tests}
 
 **值参数化测试**（_value-parameterized test_）允许你使用不同的参数来测试代码，而无需为同一测试编写多个副本。
 这在很多场景中非常有用，例如：
@@ -981,9 +981,9 @@ TEST_P(FooTest, HasBlahBlah) {
 ```
 
 最后，使用 `INSTANTIATE_TEST_SUITE_P` 宏来实例化测试套件。
-GoogleTest 提供了多种测试参数的生成函数，详细信息请参阅测试参考手册中的 [INSTANTIATE_TEST_SUITE_P](<!-- TODO:reference/testing.md#INSTANTIATE_TEST_SUITE_P -->)。
+GoogleTest 提供了多种测试参数的生成函数，详细信息请参阅测试参考中的 [INSTANTIATE_TEST_SUITE_P](reference/testing.md#INSTANTIATE_TEST_SUITE_P)。
 
-例如，以下语句将使用 [`Values`](<!-- TODO:reference/testing.md#param-generators -->) 参数生成器，
+例如，以下语句将使用 [`Values` 参数生成器](reference/testing.md#param-generators)，
 分别以 `"meeny"`、`"miny"` 和 `"moe"`为参数来实例化 `FooTest` 测试套件：
 
 ```cpp
@@ -997,7 +997,7 @@ INSTANTIATE_TEST_SUITE_P(MeenyMinyMoe,
 :::
 
 `INSTANTIATE_TEST_SUITE_P` 的第一个参数是测试套件实例的唯一名称，
-第二个参数是测试模式的名称，最后一个参数是[参数生成器](<!-- TODO:reference/testing.md#param-generators -->)。
+第二个参数是测试模式的名称，最后一个参数是[参数生成器](reference/testing.md#param-generators)。
 
 参数生成器表达式在 GoogleTest 初始化（调用 `InitGoogleTest()`）之后才会被求值。
 因此，在 `main` 函数中进行的初始化操作（如使用命令行标志解析结果）都可在参数生成器中使用。
@@ -1015,8 +1015,8 @@ INSTANTIATE_TEST_SUITE_P(MeenyMinyMoe,
 
 你可以在 [`--gtest_filter`](#running-a-subset-of-the-tests) 中使用这些名称。
 
-以下语句使用 [`ValuesIn`](<!-- TODO:reference/testing.md#param-generators -->)
-参数生成器，以 `"cat"` 和 `"dog"` 为参数再次实例化 `FooTest`：
+以下语句使用 [`ValuesIn` 参数生成器](reference/testing.md#param-generators)，
+以 `"cat"` 和 `"dog"` 为参数再次实例化 `FooTest`：
 
 ```cpp
 constexpr absl::string_view kPets[] = {"cat", "dog"};
@@ -1064,7 +1064,7 @@ GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(FooTest);
 抽象测试定义完成后，用户可通过包含 `foo_param_test.h`、调用 `INSTANTIATE_TEST_SUITE_P()` 并链接包含 `foo_param_test.cc` 的库来实例化这些测试。
 抽象测试可以多次实例化，包括在不同的源文件中实例化。
 
-### 指定值参数化测试参数名称
+### 指定值参数化测试参数名称 {#specifying-names-for-value-parameterized-test-parameters}
 
 `INSTANTIATE_TEST_SUITE_P()` 的最后一个参数是一个可选参数，
 允许用户指定一个函数或函数对象，根据测试参数生成自定义的测试名称后缀。
@@ -1112,7 +1112,7 @@ INSTANTIATE_TEST_SUITE_P(
     });
 ```
 
-## 类型化测试
+## 类型化测试 {#typed-tests}
 
 假设你有同一接口的多个实现，希望确保它们都满足某些共同约束。
 又或者，你可能定义了多个应遵循同一“概念”（_concept_）的类型，并希望验证这一点。
@@ -1176,7 +1176,7 @@ INSTANTIATE_TEST_SUITE_P(
 
 [sample6_unittest.cc]: https://github.com/google/googletest/blob/main/googletest/samples/sample6_unittest.cc '类型化测试示例'
 
-## 类型参数化测试
+## 类型参数化测试 {#type-parameterized-tests}
 
 **类型参数化测试**（_type-parameterized test_）类似于类型化测试，但是无需预先知晓测试类型列表。
 你可以先定义测试逻辑，后续再使用不同的类型列表进行实例化，甚至可以在同一个程序中多次实例化。
@@ -1241,7 +1241,7 @@ INSTANTIATE_TYPED_TEST_SUITE_P(My, FooTest, int);
 
 完整示例参见 [sample6_unittest.cc]。
 
-## 测试私有代码
+## 测试私有代码 {#testing-private-code}
 
 当你修改了软件的内部实现时，只要变更对用户不可见，测试就不应该失败。
 因此，**遵循黑盒测试原则，大多数情况下应通过公共接口进行测试。**
@@ -1387,7 +1387,7 @@ Windows 平台暂不支持捕获多线程中的失败。
 2. `EXPECT_FATAL_FAILURE{_ON_ALL_THREADS}()` 中的 `statement` 不能使用局部非静态变量或 `this` 对象的非静态成员。
 3. `EXPECT_FATAL_FAILURE{_ON_ALL_THREADS}()` 中的 `statement` 不能有返回值。
 
-## 用编程方式手动注册测试
+## 用编程方式手动注册测试 {#registering-tests-programmatically}
 
 `TEST` 宏处理了绝大多数使用场景，但也有少数需要在运行时注册测试逻辑的情况。
 为此，框架提供了 `::testing::RegisterTest`，允许调用者动态注册任意测试。
@@ -1457,9 +1457,9 @@ int main(int argc, char** argv) {
 
 有时函数可能需要知道当前正在运行的测试的名称。
 例如，你可能正在使用测试夹具的 `SetUp()` 方法，根据正在运行的测试来设置基准文件名称（_golden file name_）。
-[`TestInfo`](<!-- TODO:reference/testing.md#TestInfo -->) 类包含这些信息。
+[`TestInfo`](reference/testing.md#TestInfo) 类包含这些信息。
 
-要获取当前运行测试的 `TestInfo` 对象，可以调用 [`UnitTest`](<!-- TODO:reference/testing.md#UnitTest -->) 单例对象的 `current_test_info()` 方法：
+要获取当前运行测试的 `TestInfo` 对象，可以调用 [`UnitTest`](reference/testing.md#UnitTest) 单例对象的 `current_test_info()` 方法：
 
 ```cpp
 // 获取当前运行测试的信息。
@@ -1489,8 +1489,8 @@ GoogleTest 提供了**事件监听器**（_event listener_） API，允许你监
 ### 定义事件监听器
 
 要定义事件监听器（_event listener_），你可以派生
-[`testing::TestEventListener`](<!-- TODO:reference/testing.md#TestEventListener -->)
-或 [`testing::EmptyTestEventListener`](<!-- TODO:reference/testing.md#EmptyTestEventListener -->)。
+[`testing::TestEventListener`](reference/testing.md#TestEventListener)
+或 [`testing::EmptyTestEventListener`](reference/testing.md#EmptyTestEventListener)。
 前者是一个接口，可以重写每个纯虚函数以处理测试事件（例如，测试开始时将调用 `OnTestStart()` 方法）。
 后者为接口中所有方法提供了空实现，使得派生类只需要重写它关心的方法。
 
@@ -1534,7 +1534,7 @@ class MinimalistPrinter : public testing::EmptyTestEventListener {
 ### 使用事件监听器
 
 要使用自定义的事件监听器，需要在调用 `RUN_ALL_TESTS()` 之前，
-将其实例添加到 GoogleTest 事件监听器列表中（由 [TestEventListeners](<!-- TODO:reference/testing.md#TestEventListeners -->) 类管理）：
+将其实例添加到 GoogleTest 事件监听器列表中（由 [TestEventListeners](reference/testing.md#TestEventListeners) 类管理）：
 
 ```cpp
 int main(int argc, char** argv) {
