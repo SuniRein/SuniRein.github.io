@@ -595,10 +595,7 @@ ScopedTrace trace("file_path", line_number, message);
 
 示例：
 
-::: code-tabs
-@tab foo_test.cc
-
-```cpp :line-numbers=10
+```cpp title="foo_test.cc" :line-numbers=10
 void Sub1(int n) {
   EXPECT_EQ(Bar(n), 1);
   EXPECT_EQ(Bar(n + 1), 2);
@@ -614,8 +611,6 @@ TEST(FooTest, Bar) {
   Sub1(9);
 }
 ```
-
-:::
 
 可能产生的错误信息：
 

@@ -2650,10 +2650,7 @@ mock_buzzer_.ShareBuzz(std::make_unique<Buzz>(AccessLevel::kInternal), 0);
 以下通过代码示例演示优化方法。
 优化前的模拟类定义如下：
 
-::: code-tabs
-@tab mock_foo.h
-
-```cpp
+```cpp title="mock_foo.h"
 ...
 class MockFoo : public Foo {
  public:
@@ -2665,8 +2662,6 @@ class MockFoo : public Foo {
   // ... 更多模拟方法 ...
 };
 ```
-
-:::
 
 优化后的版本如下：
 

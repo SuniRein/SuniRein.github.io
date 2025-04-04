@@ -45,10 +45,7 @@ mkdir my_project && cd my_project
 在 CMake 生态中有许多表达依赖的方式，本指南将使用 [CMake 的 `FetchContent` 模块](https://cmake.org/cmake/help/latest/module/FetchContent.html)。
 为此，在你的项目目录中创建一个名为 `CMakeLists.txt` 的文件，内容如下：
 
-::: code-tabs
-@tab CMakeLists.txt
-
-```cmake
+```cmake title="CMakeLists.txt"
 cmake_minimum_required(VERSION 3.14)
 project(my_project)
 
@@ -65,8 +62,6 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE) # 针对 Windows：防止覆�
 FetchContent_MakeAvailable(googletest)
 ```
 
-:::
-
 上述配置声明了对 GoogleTest 的依赖，该依赖将从 GitHub 上下载。
 `03597a01ee50ed33e9dfd640b249b4be3799d395` 是我们要使用的 GoogleTest 版本的 Git 提交哈希。
 我们建议经常性更新该哈希值以指向最新版本。
@@ -79,10 +74,7 @@ FetchContent_MakeAvailable(googletest)
 
 作为一个示例，在你的 `my_workspace` 目录中创建一个名为 `hello_test.cc` 的文件，内容如下：
 
-::: code-tabs
-@tab hello_test.cc
-
-```cpp
+```cpp title="hello_test.cc"
 #include <gtest/gtest.h>
 
 // 演示一些基本的断言。
@@ -95,17 +87,12 @@ TEST(HelloTest, BasicAssertions) {
 }
 ```
 
-:::
-
 GoogleTest 为你提供了[断言（_assertion_）](primer.md#assertions)来测试代码的行为。
 上面的示例中包含了 GoogleTest 的主头文件，并演示了一些基本的断言。
 
 要构建代码，请在你的 `CMakeLists.txt` 文件末尾添加以下内容：
 
-::: code-tabs
-@tab CMakeLists.txt
-
-```cmake
+```cmake title="CMakeLists.txt"
 ...
 
 enable_testing()

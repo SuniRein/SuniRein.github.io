@@ -42,16 +42,11 @@ mkdir my_workspace && cd my_workspace
 从 Bazel 7.0 开始，推荐通过 [Bazel 中央注册表（Bazel Central Registry）](https://registry.bazel.build/modules/googletest) 使用 GoogleTest。
 为此，请在你的 Bazel 工作区的根目录下创建 `MODULE.bazel` 文件，内容如下：
 
-::: code-tabs
-@tab MODULE.bazel
-
-```txt
+```txt title="MODULE.bazel"
 # 这里的 version 请填入 https://registry.bazel.build/modules/googletest 上可用的最新版本
 // [!code word:1.16.0]
 bazel_dep(name = "googletest", version = "1.16.0")
 ```
-
-:::
 
 现在你已经做好了构建使用 GoogleTest 的 C++ 项目的准备。
 
@@ -61,10 +56,7 @@ bazel_dep(name = "googletest", version = "1.16.0")
 
 作为一个示例，在你的 `my_workspace` 目录中创建一个名为 `hello_test.cc` 的文件，内容如下：
 
-::: code-tabs
-@tab hello_test.cc
-
-```cpp
+```cpp title="hello_test.cc"
 #include <gtest/gtest.h>
 
 // 演示一些基本的断言。
@@ -77,17 +69,12 @@ TEST(HelloTest, BasicAssertions) {
 }
 ```
 
-:::
-
 GoogleTest 为你提供了[断言（_assertions_）](primer.md#assertions)来测试代码的行为。
 上面的示例中包含了 GoogleTest 的主要头文件，并演示了一些基本的断言。
 
 要构建该测试，请在同一目录中创建一个名为 `BUILD` 的文件，内容如下：
 
-::: code-tabs
-@tab BUILD
-
-```txt
+```txt title="BUILD"
 cc_test(
     name = "hello_test",
     size = "small",
@@ -98,8 +85,6 @@ cc_test(
     ],
 )
 ```
-
-:::
 
 此 `cc_test` 规则声明了你要构建的 C++ 测试文件，
 并链接 GoogleTest 库（`@googletest//:gtest`）和 `main()` 函数（`@googletest//:gtest_main`）。
