@@ -26,23 +26,6 @@ export default defineUserConfig({
                 annotation: true,
             },
             shiki: {
-                languages: [
-                    'ansi',
-                    'asm',
-                    'c',
-                    'cmake',
-                    'cpp',
-                    'css',
-                    'elisp',
-                    'javascript',
-                    'nginx',
-                    'proto',
-                    'rust',
-                    'sh',
-                    'typescript',
-                    'vue',
-                    'xml',
-                ],
                 lineNumbers: false,
             },
             comment: {

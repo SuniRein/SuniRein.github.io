@@ -1,28 +1,28 @@
 {
-    "name": "vuepress",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "docs:dev": "vuepress dev docs",
-        "docs:build": "vuepress build docs",
-        "docs:deploy-aliyun": "pnpm run docs:build && rsync -avz --delete -e ssh ./docs/.vuepress/dist aliyun:Page",
-        "lint": "lint-md '**/*.md'"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "devDependencies": {
-        "@iconify/json": "^2.2.312",
-        "@lint-md/cli": "^2.0.0",
-        "@vuepress/bundler-vite": "2.0.0-rc.20",
-        "@vuepress/plugin-feed": "2.0.0-rc.80",
-        "sass-embedded": "^1.85.1",
-        "vue": "^3.5.13",
-        "vuepress": "2.0.0-rc.20",
-        "vuepress-theme-plume": "1.0.0-rc.135"
-    },
-    "dependencies": {
-        "mermaid": "^11.5.0"
-    }
+  "name": "vuepress",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "docs:deploy-aliyun": "pnpm run docs:build && rsync -avz --delete -e ssh ./docs/.vuepress/dist aliyun:Page",
+    "lint": "lint-md '**/*.md'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@iconify/json": "^2.2.323",
+    "@lint-md/cli": "^2.0.0",
+    "@vuepress/bundler-vite": "2.0.0-rc.20",
+    "@vuepress/plugin-feed": "2.0.0-rc.91",
+    "sass-embedded": "^1.86.3",
+    "vue": "^3.5.13",
+    "vuepress": "2.0.0-rc.20",
+    "vuepress-theme-plume": "1.0.0-rc.138"
+  },
+  "dependencies": {
+    "mermaid": "^11.6.0"
+  }
 }
