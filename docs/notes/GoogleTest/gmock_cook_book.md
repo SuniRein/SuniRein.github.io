@@ -1551,7 +1551,7 @@ using ::testing::InSequence;
 此时测试应反映真实意图，而非过度约束。
 
 gMock 允许你设定任意有向无环图（DAG）型的调用顺序。
-一种用来构建 DAG 的方式是使用 `EXPECT_CALL` 的 [`After` 子句](TODO:reference/mocking.md#EXPECT_CALL.After)。
+一种用来构建 DAG 的方式是使用 `EXPECT_CALL` 的 [`After` 子句](reference/mocking.md#EXPECT_CALL.After)。
 
 另一种方法是使用 `InSequence()` 子句（不同于 `InSequence` 类），该语法借鉴自 jMock 2。
 它的灵活性比 `After()` 稍差，但无需为链中的期望各自命名，使用更加便捷，更适合表达长链型的顺序调用。

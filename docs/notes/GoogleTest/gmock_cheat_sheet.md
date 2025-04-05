@@ -137,7 +137,7 @@ TEST(BarTest, DoesThis) {
 对于返回类型为 `void`、`bool`、数值类型或指针的函数，gMock 提供了内置默认动作。
 另外，在 C++11 中，若类型存在默认构造函数，gMock 将返回默认构造值。
 
-如果要为返回类型为 `T` 的函数定制默认动作，可使用 [`DefaultValue<T>`](TODO:reference/mocking.md#DefaultValue)。
+如果要为返回类型为 `T` 的函数定制默认动作，可使用 [`DefaultValue<T>`](reference/mocking.md#DefaultValue)。
 例如：
 
 ```cpp
@@ -158,33 +158,33 @@ EXPECT_NE(buzz1, buzz2);
 DefaultValue<std::unique_ptr<Buzz>>::Clear();
 ```
 
-要为特定模拟对象的某个方法定制默认操作，可使用 [`ON_CALL`](TODO:reference/mocking.md#ON_CALL)。
+要为特定模拟对象的某个方法定制默认操作，可使用 [`ON_CALL`](reference/mocking.md#ON_CALL)。
 `ON_CALL` 的语法与 `EXPECT_CALL` 类似，但不要求方法必须被调用。
 详见[了解何时设置期望](gmock_cook_book.md#use-on-call)。
 
 ## 设置期望 {#expect-call}
 
-参阅模拟参考手册中的 [`EXPECT_CALL`](TODO:reference/mocking.md#EXPECT_CALL) 一节。
+参阅模拟参考中的 [`EXPECT_CALL`](reference/mocking.md#EXPECT_CALL) 一节。
 
 ## 匹配器 {#matcher-list}
 
-参阅[匹配器参考手册](TODO:reference/matchers.md)
+参阅[匹配器参考](TODO:reference/matchers.md)
 
 ## 动作 {#action-list}
 
-参阅[动作参考手册](TODO:reference/actions.md)。
+参阅[动作参考](TODO:reference/actions.md)。
 
 ## 基数 {#cardinality-list}
 
-参阅模拟参考手册中 `EXPECT_CALL` 的 [`Times` 子句](TODO:reference/mocking.md#EXPECT_CALL.Times) 一节。
+参阅模拟参考中 `EXPECT_CALL` 的 [`Times` 子句](reference/mocking.md#EXPECT_CALL.Times) 一节。
 
 ## 期望的顺序
 
 默认情况下，期望可以按任意顺序匹配。
 如需指定部分或全部期望的匹配顺序，可使用 `EXPECT_CALL` 的
-[`After` 子句](TODO:reference/mocking.md#EXPECT_CALL.After)、
-[`InSequence` 子句](TODO:reference/mocking.md#EXPECT_CALL.InSequence)，或者使用
-[`InSequence` 对象](TODO:reference/mocking.md#InSequence)。
+[`After` 子句](reference/mocking.md#EXPECT_CALL.After)、
+[`InSequence` 子句](reference/mocking.md#EXPECT_CALL.InSequence)，或者使用
+[`InSequence` 对象](reference/mocking.md#InSequence)。
 
 ## 验证并重置模拟对象
 
