@@ -19,11 +19,11 @@ outline: [2, 4]
 
 ### 显式的成功与失败
 
-请参阅断言参考手册中的[显式的成功与失败](<!-- TODO:reference/assertions.md#success-failure -->)（_Explicit Success and Failure_）一节。
+请参阅断言参考的[显式成功与失败](reference/assertions.md#success-failure)（_Explicit Success and Failure_）一节。
 
 ### 异常断言 {#exception-assertions}
 
-请参阅断言参考手册中的[异常断言](<!-- TODO:reference/assertions.md#exceptions -->)（_Exception Assertions_）一节。
+请参阅断言参考的[异常断言](reference/assertions.md#exceptions)（_Exception Assertions_）一节。
 
 ### 谓词断言——获得更好的错误信息
 
@@ -39,9 +39,9 @@ GoogleTest 为你提供了三种不同的选项来解决这个问题。
 
 如果你已经有一个返回值为 `bool`（或可以隐式转换为 `bool` 的类型）的函数或函数对象，
 你可以在**谓词断言**（_predicate assertion_）中使用它，方便地打印函数的参数。
-详细信息请参阅断言参考手册中的 [`EXPECT_PRED*`](<!-- TODO:reference/assertions.md#EXPECT_PRED -->)。
+详细信息请参阅断言参考中的 [`EXPECT_PRED*`](reference/assertions.md#EXPECT_PRED)。
 
-#### 使用返回 AssertionResult 的函数
+#### 使用返回 AssertionResult 的函数 {#using-a-function-that-returns-an-assertionresult}
 
 虽然 `EXPECT_PRED*()` 及其相关宏用起来很方便，但语法却不令人满意：你必须为不同的参数数量使用不同的宏，这更像是 Lisp 而不是 C++。
 `::testing::AssertionResult` 类解决了这个问题。
@@ -121,20 +121,21 @@ testing::AssertionResult IsEven(int n) {
 
 #### 使用谓词格式化器
 
-如果你对 [`EXPECT_PRED*`](<!-- TODO:reference/assertions.md#EXPECT_PRED -->) 和 [`EXPECT_TRUE`](<!-- TODO:reference/assertions.md#EXPECT_TRUE -->)
+如果你对 [`EXPECT_PRED*`](reference/assertions.md#EXPECT_PRED) 和
+[`EXPECT_TRUE`](reference/assertions.md#EXPECT_TRUE)
 生成的默认信息不太满意，或者你的谓词中的某些参数不能流式传输到 `ostream`，
 你可以使用**谓词格式化断言**（_predicate-formatter assertion_）来完全自定义信息的格式。
-详细信息请参阅断言参考手册中的 [`EXPECT_PRED_FORMAT*`](<!-- TODO:reference/assertions.md#EXPECT_PRED_FORMAT -->) 一节。
+详细信息请参阅断言参考中的 [`EXPECT_PRED_FORMAT*`](reference/assertions.md#EXPECT_PRED_FORMAT) 一节。
 
 ### 浮点数比较
 
-请参阅断言参考手册中的[浮点数比较](<!-- TODO:reference/assertions.md#floating-point -->)一节。
+请参阅断言参考中的[浮点数比较](reference/assertions.md#floating-point)一节。
 
 #### 浮点数谓词格式化函数
 
 一些浮点数操作很有用，但并不常用。
 为了避免宏数量的爆炸式增长，我们将它们作为谓词格式化函数（_predicate-format function_）提供，
-可以在谓词断言宏 [`EXPECT_PRED_FORMAT2`](<!-- TODO:reference/assertions.md#EXPECT_PRED_FORMAT -->) 中使用，例如：
+可以在谓词断言宏 [`EXPECT_PRED_FORMAT2`](reference/assertions.md#EXPECT_PRED_FORMAT) 中使用，例如：
 
 ```cpp
 using ::testing::FloatLE;
@@ -148,7 +149,7 @@ EXPECT_PRED_FORMAT2(DoubleLE, val1, val2);
 
 ### 使用 gMock 匹配器（_Matcher_）进行断言 {#asserting-using-gmock-matchers}
 
-请参阅断言参考手册中的 [`EXPECT_THAT`](<!-- TODO:reference/assertions.md#EXPECT_THAT -->) 一节。
+请参阅断言参考中的 [`EXPECT_THAT`](reference/assertions.md#EXPECT_THAT) 一节。
 
 ### 更多字符串断言
 
@@ -156,7 +157,8 @@ EXPECT_PRED_FORMAT2(DoubleLE, val1, val2);
 请先阅读[上一节](#asserting-using-gmock-matchers)再阅读本节内容。
 :::
 
-你可以用 gMock 的[字符串匹配器](<!-- TODO:reference/matchers.md#string-matchers -->)与 [`EXPECT_THAT`](<!-- TODO:reference/assertions.md#EXPECT_THAT -->)
+你可以用 gMock 的[字符串匹配器](<!-- TODO:reference/matchers.md#string-matchers -->)与
+[`EXPECT_THAT`](reference/assertions.md#EXPECT_THAT)
 来实现更多字符串验证方法（子字符串、前缀、后缀、正则表达式等）。
 例如，
 
@@ -170,7 +172,7 @@ using ::testing::MatchesRegex;
 
 ### Windows HRESULT 断言
 
-请参阅中断言参考手册中的 [Windows HRESULT 断言](<!-- TODO:reference/assertions.md#HRESULT -->)一节。
+请参阅中断言参考中的 [Windows HRESULT 断言](reference/assertions.md#HRESULT)一节。
 
 ### 类型断言 {#type-assertions}
 
@@ -215,7 +217,7 @@ void Test2() { Foo<bool> foo; foo.Bar(); }
 
 :::
 
-### 可以使用断言的范围
+### 可以使用断言的范围 {#assertion-placement}
 
 你可以在任何 C++ 函数中使用断言，这个函数不必是测试夹具类中的方法。
 我们对此唯一的限制是，会产生致命失败的断言（`FAIL*` 和 `ASSERT_*`）只能在返回值为 `void` 的函数中使用。
@@ -364,7 +366,7 @@ EXPECT_TRUE(IsCorrectPointIntVector(point_ints))
 
 有关 `AbslStringify()` 及其与其他库集成的更多详细信息，请参阅 [AbslStringify][]。
 
-## 正则表达式语法
+## 正则表达式语法 {#regular-expression-syntax}
 
 当使用 Bazel 构建并使用 Abseil 时，GoogleTest 使用 [RE2](https://github.com/google/re2/wiki/Syntax) 语法。
 否则，对于 POSIX 系统（Linux、Cygwin、Mac），GoogleTest 使用
@@ -425,7 +427,7 @@ GoogleTest 定义了一些宏来显示它正在使用的正则表达式语法，
 ### 如何编写死亡测试
 
 GoogleTest 提供了针对死亡测试的断言宏。
-详细信息请参阅断言参考手册中的[死亡断言](<!-- TODO:reference/assertions.md#death -->)一节。
+详细信息请参阅断言参考中的[死亡断言](reference/assertions.md#death)一节。
 
 要编写死亡测试，只需在你的测试函数中使用这些宏。例如：
 
@@ -492,7 +494,7 @@ TEST_F(FooDeathTest, DoesThat) {
 
 ### 工作原理
 
-请参阅断言参考手册中的[死亡断言](<!-- TODO:reference/assertions.md#death -->)一节。
+请参阅断言参考中的[死亡断言](reference/assertions.md#death)一节。
 
 ### 死亡测试与线程 {#death-tests-and-threads}
 

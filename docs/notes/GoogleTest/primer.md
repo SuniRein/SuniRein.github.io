@@ -122,7 +122,7 @@ GoogleTest 提供了两种类型的断言，它们具有相同的测试功能，
 如果你在断言失败之外还收到堆检查器的错误报告，请铭记这一点。
 
 要提供自定义失败消息，只需使用 `<<` 操作符将其流式传输到宏中。
-下面给出了一个示例，使用 [`ASSERT_EQ` 和 `EXPECT_EQ`](<!-- TODO:reference/assertions.md#EXPECT_EQ -->) 宏来验证两个值相等：
+下面给出了一个示例，使用 [`ASSERT_EQ` 和 `EXPECT_EQ`](reference/assertions.md#EXPECT_EQ) 宏来验证两个值相等：
 
 ```cpp
 ASSERT_EQ(x.size(), y.size()) << "Vectors x and y are of unequal length";
@@ -138,7 +138,7 @@ for (int i = 0; i < x.size(); ++i) {
 GoogleTest 提供了一系列断言，让你能以多种方式来验证代码的行为。
 你可以检查布尔条件、基于关系运算符比较值、验证字符串值、验证浮点值等等。
 甚至还有一些断言允许你通过提供自定义谓词来验证更复杂的状态。
-有关 GoogleTest 提供的完整断言列表，请参阅[断言参考<!--TODO:-->](reference/assertions.md)。
+有关 GoogleTest 提供的完整断言列表，请参阅[断言参考](reference/assertions.md)。
 
 ## 简单的测试单元 {#simple-test}
 

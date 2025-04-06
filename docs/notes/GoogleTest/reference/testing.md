@@ -28,7 +28,7 @@ TEST(TestSuiteName, TestName) {
 位于不同测试套件的测试单元可以拥有相同的名称。
 
 测试体内的语句可以是任意被测代码。
-测试结果由测试体内使用的[断言](TODO:assertions.md)决定。
+测试结果由测试体内使用的[断言](assertions.md)决定。
 
 ### TEST_F {#TEST_F}
 
@@ -45,7 +45,7 @@ TEST_F(TestFixtureName, TestName) {
 _`TestFixtureName`_ 必须是测试夹具类的名称（参见[测试夹具](../primer.md#same-data-multiple-tests)）。
 
 测试体内的语句可以是任意被测代码。
-测试结果由测试体内使用的[断言](TODO:assertions.md)决定。
+测试结果由测试体内使用的[断言](assertions.md)决定。
 
 ### TEST_P {#TEST_P}
 
@@ -73,7 +73,7 @@ TEST_P(MyTestSuite, DoesSomething) {
 }
 ```
 
-测试结果由测试体内使用的[断言](TODO:assertions.md)决定。
+测试结果由测试体内使用的[断言](assertions.md)决定。
 
 另见 [`INSTANTIATE_TEST_SUITE_P`](#INSTANTIATE_TEST_SUITE_P)。
 
