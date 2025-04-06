@@ -725,7 +725,7 @@ class MockFoo : public Foo {
 也许你想将其作为 stub 操作的一部分，或者你的测试根本不需要模拟 `Concrete()`
 （但如果每次不需要模拟某个方法时都必须定义一个新的模拟类，那将非常麻烦）。
 
-gMock 允许在jjjj动作中指定调用 `Foo::Concrete()`：
+gMock 允许在动作中指定调用 `Foo::Concrete()`：
 
 ```cpp
 ...

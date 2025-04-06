@@ -602,7 +602,7 @@ static void Test::RecordProperty(const std::string& key, int value)
 为当前测试、测试套件或整个测试程序记录属性。
 对于相同的 `key`，仅保留最后记录的值。
 
-`key` 必须是有效的XML属性名，且不能与 GoogleTest 已用属性冲突
+`key` 必须是有效的 XML 属性名，且不能与 GoogleTest 已用属性冲突
 （`name`、`file`、`line`、`status`、`time`、`classname`、`type_param` 与 `value_param`）。
 
 `RecordProperty` 被设为 `public static` 以便非测试夹具成员的工具函数调用。
@@ -869,7 +869,7 @@ GoogleTest 允许用户通过全名过滤测试，仅运行匹配过滤条件的
 bool TestInfo::is_reportable() const
 ```
 
-当且仅当本测试将出现在 XML报告中时返回 `true`。
+当且仅当本测试将出现在 XML 报告中时返回 `true`。
 
 ##### result {#TestInfo::result}
 

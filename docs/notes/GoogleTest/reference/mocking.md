@@ -225,7 +225,7 @@ EXPECT_CALL(my_mock, Describe())
 参见 [`Times`](#EXPECT_CALL.Times)。
 
 每次匹配调用将按声明顺序执行下一个动作。
-例如，下列代码指定 `my_mock.GetNumber()` 应被调用3次，且分别返回 `1`、`2` 和 `3`：
+例如，下列代码指定 `my_mock.GetNumber()` 应被调用 3 次，且分别返回 `1`、`2` 和 `3`：
 
 ```cpp
 using ::testing::Return;
