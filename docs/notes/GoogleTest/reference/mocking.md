@@ -72,8 +72,8 @@ EXPECT_CALL(mock_object, method_name(matchers...))
 
 参数 _`matcher...`_ 是与方法 _`method_name`_ 各参数对应的[匹配器](../gmock_for_dummies.md#matchers-what-arguments-do-we-expect)构成的逗号分隔列表。
 该期望仅适用于参数与匹配器完全匹配的方法调用。
-若省略 `(matcher...)`，则默认为每个参数使用[通配符匹配器 `_`](TODO:matchers.md#wildcard)。
-要获取所有内置匹配器列表，请参阅[匹配器参考](TODO:matchers.md)。
+若省略 `(matcher...)`，则默认为每个参数使用[通配符匹配器 `_`](matchers.md#wildcard)。
+要获取所有内置匹配器列表，请参阅[匹配器参考](matchers.md)。
 
 期望后可添加链式调用子句以修饰期望，它们必须按如下顺序使用：
 
@@ -112,7 +112,7 @@ EXPECT_CALL(my_mock, SetPosition(_, _))
 ```
 
 GoogleTest 提供了一些内置的二元组匹配器，包括上面的 `Lt()`。
-参见[多参数匹配器](TODO:matchers.md#MultiArgMatchers)。
+参见[多参数匹配器](matchers.md#multi-arg-matchers)。
 
 `With` 子句在单个期望中最多使用一次，且必须为首个子句。
 
@@ -311,8 +311,8 @@ ON_CALL(mock_object, method_name(matchers...))
 
 参数 _`matcher...`_ 是与方法 _`method_name`_ 各参数对应的[匹配器](../gmock_for_dummies.md#matchers-what-arguments-do-we-expect)构成的逗号分隔列表。
 该期望仅适用于参数与匹配器完全匹配的方法调用。
-若省略 `(matcher...)`，则默认为每个参数使用[通配符匹配器 `_`](TODO:matchers.md#wildcard)。
-要获取所有内置匹配器列表，请参阅[匹配器参考](TODO:matchers.md)。
+若省略 `(matcher...)`，则默认为每个参数使用[通配符匹配器 `_`](matchers.md#wildcard)。
+要获取所有内置匹配器列表，请参阅[匹配器参考](matchers.md)。
 
 其后可添加链式调用子句以设置方法行为，它们必须按如下顺序使用：
 
@@ -348,7 +348,7 @@ ON_CALL(my_mock, SetPosition(_, _))
 ```
 
 GoogleTest 提供了一些内置的二元组匹配器，包括上面的 `Lt()`。
-参见[多参数匹配器](TODO:matchers.md#MultiArgMatchers)。
+参见[多参数匹配器](matchers.md#multi-arg-matchers)。
 
 `With` 子句在单个 `ON_CALL` 中最多使用一次。
 

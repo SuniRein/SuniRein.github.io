@@ -82,7 +82,7 @@ ADD_FAILURE_AT(file_path, line_number)
 
 ## 泛用断言 {#generalized}
 
-本节的断言允许使用[匹配器](TODO:matchers.md)来验证值。
+本节的断言允许使用[匹配器](matchers.md)来验证值。
 
 ### EXPECT_THAT {#EXPECT_THAT}
 
@@ -91,7 +91,7 @@ EXPECT_THAT(value, matcher)
 ASSERT_THAT(value, matcher)
 ```
 
-验证值 _`value`_ 满足[匹配器](TODO:matchers.md) _`matcher`_ 的条件。
+验证值 _`value`_ 满足[匹配器](matchers.md) _`matcher`_ 的条件。
 
 例如，下面的代码验证了字符串 `value1` 以 `"Hello"` 开头，
 `value2` 匹配给定正则表达式，且 `value3` 位于 5 和 10 之间：
@@ -120,7 +120,7 @@ Value of: value1
 Expected: starts with "Hello"
 ```
 
-GoogleTest 提供了内置匹配器库（见[匹配器参考](TODO:matchers.md)），
+GoogleTest 提供了内置匹配器库（见[匹配器参考](matchers.md)），
 同时也支持用户自定义匹配器（见[编写新匹配器](../gmock_cook_book.md#new-matchers)）。
 与匹配器配合，使得 `EXPECT_THAT` 功能强大且扩展性强。
 
@@ -591,10 +591,10 @@ ASSERT_DEATH(statement, matcher)
 
 验证 _`statement`_ 导致进程以非零退出码终止，且 `stderr` 输出匹配 _`matcher`_。
 
-参数 _`matcher`_ 可以是 `const std::string&` 的[匹配器](TODO:matchers.md)，
+参数 _`matcher`_ 可以是 `const std::string&` 的[匹配器](matchers.md)，
 或正则表达式（参见[正则表达式语法](../advanced.md#regular-expression-syntax)）。
-裸字符串 `s` 将被视为 [`ContainsRegex(s)`](TODO:matchers.md#string-matchers)，
-而非 [`Eq(s)`](TODO:matchers.md#generic-comparison)。
+裸字符串 `s` 将被视为 [`ContainsRegex(s)`](matchers.md#string-matchers)，
+而非 [`Eq(s)`](matchers.md#generic-comparison)。
 
 例如，下列代码验证 `DoSomething(42)` 导致进程终止并输出包含 `"My error"` 的错误信息：
 
@@ -641,10 +641,10 @@ GoolgeTest 提供了两个常用谓词：
 ::testing::KilledBySignal(signal_number);
 ```
 
-参数 _`matcher`_ 可以是 `const std::string&` 的[匹配器](TODO:matchers.md)，
+参数 _`matcher`_ 可以是 `const std::string&` 的[匹配器](matchers.md)，
 或正则表达式（参见[正则表达式语法](../advanced.md#regular-expression-syntax)）。
-裸字符串 `s` 将被视为 [`ContainsRegex(s)`](TODO:matchers.md#string-matchers)，
-而非 [`Eq(s)`](TODO:matchers.md#generic-comparison)。
+裸字符串 `s` 将被视为 [`ContainsRegex(s)`](matchers.md#string-matchers)，
+而非 [`Eq(s)`](matchers.md#generic-comparison)。
 
 例如，下列代码验证 `NormalExit()` 导致进程输出包含 `"Success"` 的错误信息并以状态码 0 退出：
 

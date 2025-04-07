@@ -829,7 +829,7 @@ inline constexpr auto HasFoo = [](const auto& f) {
   EXPECT_THAT(x, HasFoo("blah"));
 ```
 
-### 转换匹配器类型 {#matcher-cast}
+### 安全转换匹配器类型 {#safe-matcher-cast}
 
 gMock 的匹配器具有严格的类型检查，如果你使用了错误的类型（例如，使用 `Eq(5)` 来匹配一个 `string` 类型的参数），会产生编译错误。
 
@@ -1003,7 +1003,7 @@ using ::testing::Lt;
 这表示 `Blah` 的参数 `x`、`y`、`z` 必须满足 `x < y < z`。
 
 为了让使用便利，gMock 提供了一些用于 2 元组的匹配器，包括上面提到的 `Lt()` 匹配器。
-完整的列表请参阅[多参数匹配器](TODO:reference/matchers.md#MultiArgMatchers)。
+完整的列表请参阅[多参数匹配器](reference/matchers.md#multi-arg-matchers)。
 
 ::: warning
 如果你想将参数传递给自定义谓词（例如 `.With(Args<0, 1>(Truly(&MyPredicate)))`），该谓词必须接受 `std::tuple`；
@@ -1049,11 +1049,11 @@ Matches(AllOf(Ge(0), Le(100), Ne(50)))
 
 ### 在断言中使用匹配器
 
-请参阅断言参考手册中的 [`EXPECT_THAT`](rbbbeference/assertions.md#EXPECT_THAT) 一节。
+请参阅断言参考中的 [`EXPECT_THAT`](reference/assertions.md#EXPECT_THAT) 一节。
 
 ### 将谓词转换为匹配器 {#predicate-to-matcher}
 
-gMock 提供了一组内置的匹配器，用于将参数与期望值进行匹配——更多信息请参阅[匹配器参考手册](TODO:references/matcher.md)。
+gMock 提供了一组内置的匹配器，用于将参数与期望值进行匹配——更多信息请参阅[匹配器参考](reference/matchers.md)。
 如果内置的匹配器无法满足需求，gMock 提供了 `Truly()` 函数，可以将任意一元谓词函数或函数对象转换为匹配器：
 
 ```cpp

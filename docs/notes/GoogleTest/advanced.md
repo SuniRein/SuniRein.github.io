@@ -157,7 +157,7 @@ EXPECT_PRED_FORMAT2(DoubleLE, val1, val2);
 请先阅读[上一节](#asserting-using-gmock-matchers)再阅读本节内容。
 :::
 
-你可以用 gMock 的[字符串匹配器](<!-- TODO:reference/matchers.md#string-matchers -->)与
+你可以用 gMock 的[字符串匹配器](reference/matchers.md#string-matchers)与
 [`EXPECT_THAT`](reference/assertions.md#EXPECT_THAT)
 来实现更多字符串验证方法（子字符串、前缀、后缀、正则表达式等）。
 例如，
