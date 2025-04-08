@@ -330,7 +330,7 @@ EXPECT_CALL(turtle, GoTo(50, _));
 在 `EXPECT_CALL()` 中，任何需要函数参数的地方都可以使用匹配器。
 
 上面示例中的 `100` 和 `50` 也是匹配器，它们等价于 `Eq(100)` 和 `Eq(50)`，表示函数参数必须与匹配器参数相等（使用 `operator==`）。
-gMock 为常见类型提供了许多[内置匹配器](<!-- TODO:reference/matchers.md -->)，同时也支持[自定义匹配器](gmock_cook_book.md#new-matchers)。
+gMock 为常见类型提供了许多[内置匹配器](reference/matchers.md)，同时也支持[自定义匹配器](gmock_cook_book.md#new-matchers)。
 例如：
 
 ```cpp

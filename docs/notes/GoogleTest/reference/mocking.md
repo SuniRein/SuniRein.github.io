@@ -219,7 +219,7 @@ EXPECT_CALL(my_mock, Describe())
 为单个匹配函数指定调用时的实际行为。
 
 参数 _`action`_ 表示函数调用要执行的[动作](../gmock_for_dummies.md#actions-what-should-it-do)。
-要获取所有内置动作，请参阅[动作参考](TODO:actions.md)。
+要获取所有内置动作，请参阅[动作参考](actions.md)。
 
 在未指定 `Times` 时，使用 `WillOnce` 会隐式设置调用次数。
 参见 [`Times`](#EXPECT_CALL.Times)。
@@ -249,7 +249,7 @@ EXPECT_CALL(my_mock, GetNumber())
 在所有 `WillOnce` 动作（若存在）执行后生效。
 
 参数 _`action`_ 表示函数调用要执行的[动作](../gmock_for_dummies.md#actions-what-should-it-do)。
-要获取所有内置动作，请参阅[动作参考](TODO:actions.md)。
+要获取所有内置动作，请参阅[动作参考](actions.md)。
 
 在未指定 `Times` 时，使用 `WillRepeatedly` 会隐式设置调用次数。
 参见 [`Times`](#EXPECT_CALL.Times)。
@@ -361,7 +361,7 @@ GoogleTest 提供了一些内置的二元组匹配器，包括上面的 `Lt()`�
 指定匹配到的模拟函数调用的默认行为。
 
 参数 _`action`_ 表示函数调用要执行的[动作](../gmock_for_dummies.md#actions-what-should-it-do)。
-要获取所有内置动作，请参阅[动作参考](TODO:actions.md)。
+要获取所有内置动作，请参阅[动作参考](actions.md)。
 
 例如，下列代码指定 `my_mock.Greet()` 默认返回 `"hello"`：
 

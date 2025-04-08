@@ -172,7 +172,7 @@ DefaultValue<std::unique_ptr<Buzz>>::Clear();
 
 ## 动作 {#action-list}
 
-参阅[动作参考](TODO:reference/actions.md)。
+参阅[动作参考](reference/actions.md)。
 
 ## 基数 {#cardinality-list}
 
