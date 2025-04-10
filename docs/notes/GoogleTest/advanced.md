@@ -237,7 +237,7 @@ void Test2() { Foo<bool> foo; foo.Bar(); }
 根据 C++ 语言规范，构造函数和析构函数不被视为返回 `void` 的函数，因此你不能在其中使用致命断言。
 如果你试图这样做，你会得到一个编译错误。
 因此，你要么调用 `abort` 并使整个测试崩溃，要么将致命断言放在 `SetUp`/`TearDown` 中。
-详细信息请参阅[构造函数/析构函数 vs. SetUp/TearDown](<!-- TODO:faq.md#CtorVsSetUp -->)。
+详细信息请参阅[构造函数/析构函数 vs. SetUp/TearDown](faq.md#CtorVsSetUp)。
 :::
 
 ::: caution
@@ -1072,7 +1072,7 @@ GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(FooTest);
 
 ::: warning
 测试名称必须非空、唯一，并且只能包含 ASCII 字母数字字符。
-特别要注意，名称[不应包含下划线](<!-- TODO:faq.md#why-should-test-suite-names-and-test-names-not-contain-underscore -->)。
+特别要注意，名称[不应包含下划线](faq.md#names-not-contain-underscore)。
 :::
 
 ```cpp
@@ -1640,7 +1640,7 @@ GoogleTest 将仅运行全名（格式为 `TestSuiteName.TestName`）匹配该�
 在某些场景下（如迭代测试开发），可能需要在首次测试失败后立即停止，以完整性换取执行速度。
 若设置了 `GTEST_FAIL_FAST` 环境变量或 `--gtest_fail_fast` 标志，测试运行器将在发现第一个失败测试后立即停止执行。
 
-#### 临时禁用测试
+#### 临时禁用测试 {#temporarily-disabling-tests}
 
 若存在暂时无法修复的损坏测试，可在其名称前添加 `DISABLED_` 前缀来禁用它。
 这比直接注释掉代码或使用 `#if 0` 要好，因为被禁用的测试仍会被编译，可以避免代码腐化。
