@@ -146,4 +146,4 @@ Total Test time (real) = 0.01 sec
 
 - [初学者指南](primer.md)：开始学习如何编写简单的测试。
 
-- [代码示例](<!-- TODO:samples.md -->)：获取更多使用各种 GoogleTest 功能的示例。
+- [代码示例](samples.md)：获取更多使用各种 GoogleTest 功能的示例。

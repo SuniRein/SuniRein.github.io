@@ -1770,8 +1770,6 @@ GoogleTest 保留更改分片任务分配方式的权利，这里仅展示一种
 
 GoogleTest 可以在终端输出中使用颜色标记，以便快速识别关键信息：
 
-<!-- TODO: 更好的展示形式，例如 ansi 终端渲染 -->
-
 <Card><pre>
 ...
 <font color="green">[----------]</font> 1 test from FooTest
