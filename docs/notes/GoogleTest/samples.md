@@ -1,7 +1,7 @@
 ---
 title: 代码示例
 createTime: 2025/04/21 13:17:10
-permalink: /gtest/9yoo8de1/
+permalink: /gtest/samples/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/samples.html

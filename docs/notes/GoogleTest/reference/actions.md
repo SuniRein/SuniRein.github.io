@@ -1,7 +1,7 @@
 ---
 title: 动作参考
 createTime: 2025-04-08 18:19:08
-permalink: /gtest/wegwy8lu/
+permalink: /gtest/reference/actions/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/reference/actions.html

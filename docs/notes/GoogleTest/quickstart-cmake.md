@@ -1,7 +1,7 @@
 ---
 title: 快速开始：CMake
 createTime: 2025/03/04 11:27:36
-permalink: /gtest/wcln2ij5/
+permalink: /gtest/quickstart-cmake/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/quickstart-cmake.html

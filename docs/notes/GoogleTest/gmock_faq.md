@@ -1,7 +1,7 @@
 ---
 title: 旧式 gMock 常见问题解答
 createTime: 2025-04-21 12:42:59
-permalink: /gtest/249eoifn/
+permalink: /gtest/gmock_faq/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/gmock_faq.html

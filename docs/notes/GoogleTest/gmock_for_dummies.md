@@ -1,7 +1,7 @@
 ---
 title: gMock 入门基础
 createTime: 2025-03-13 19:44:44
-permalink: /gtest/r9j2f3d3/
+permalink: /gtest/gmock_for_dummies/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/gmock_for_dummies.html

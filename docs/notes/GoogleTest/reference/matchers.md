@@ -1,7 +1,7 @@
 ---
 title: 匹配器参考
 createTime: 2025-04-07 21:04:15
-permalink: /gtest/gs2t2tao/
+permalink: /gtest/reference/matchers/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/reference/matchers.html

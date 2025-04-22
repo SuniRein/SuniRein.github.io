@@ -1,7 +1,7 @@
 ---
 title: 使用 pkg-config
 createTime: 2025/04/21 13:59:28
-permalink: /gtest/lchd76el/
+permalink: /gtest/pkgconfig/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/pkgconfig.html

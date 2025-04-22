@@ -1,7 +1,7 @@
 ---
 title: gMock 速查表
 createTime: 2025/03/28 15:23:01
-permalink: /gtest/6n002mhf/
+permalink: /gtest/gmock_cheat_sheet/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/gmock_cheat_sheet.html

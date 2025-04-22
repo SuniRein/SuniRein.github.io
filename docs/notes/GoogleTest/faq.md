@@ -1,7 +1,7 @@
 ---
 title: gTest 常见问题解答
 createTime: 2025-04-10 21:35:01
-permalink: /gtest/j1q29gh6/
+permalink: /gtest/faq/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/faq.html

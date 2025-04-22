@@ -1,7 +1,7 @@
 ---
 title: 初学者指南
 createTime: 2025/03/05 10:53:30
-permalink: /gtest/27ppojrh/
+permalink: /gtest/primer/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/primer.html

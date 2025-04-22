@@ -1,7 +1,7 @@
 ---
 title: 进阶主题
 createTime: 2025/03/10 15:18:17
-permalink: /gtest/5s6lz6c4/
+permalink: /gtest/advanced/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/advanced.html

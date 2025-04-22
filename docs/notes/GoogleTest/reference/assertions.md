@@ -1,7 +1,7 @@
 ---
 title: 断言参考
 createTime: 2025-04-06 23:40:58
-permalink: /gtest/kx3i4hau/
+permalink: /gtest/reference/assertions/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/reference/assertions.html

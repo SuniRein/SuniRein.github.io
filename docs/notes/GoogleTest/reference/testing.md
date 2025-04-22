@@ -1,7 +1,7 @@
 ---
 title: 测试参考
 createTime: 2025-04-04 21:44:07
-permalink: /gtest/ej8koszw/
+permalink: /gtest/reference/testing/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/reference/testing.html

@@ -1,7 +1,7 @@
 ---
 title: gMock 高级技巧
 createTime: 2025-03-23 12:22:25
-permalink: /gtest/qtxyfs9z/
+permalink: /gtest/gmock_cook_book/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/gmock_cook_book.html

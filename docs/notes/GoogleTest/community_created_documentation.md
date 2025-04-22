@@ -1,7 +1,7 @@
 ---
 title: 社区贡献文档
 createTime: 2025/04/21 16:48:21
-permalink: /gtest/grjs5kc7/
+permalink: /gtest/community_created_documentation/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/community_created_documentation.html

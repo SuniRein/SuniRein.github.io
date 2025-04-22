@@ -1,7 +1,7 @@
 ---
 title: 支持的平台
 createTime: 2025/03/04 11:27:14
-permalink: /gtest/v2wwd17j/
+permalink: /gtest/platforms/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/platforms.html

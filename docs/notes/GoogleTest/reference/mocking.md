@@ -1,7 +1,7 @@
 ---
 title: 模拟参考
 createTime: 2025-04-05 18:44:26
-permalink: /gtest/2in4nvko/
+permalink: /gtest/reference/mocking/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/reference/mocking.html

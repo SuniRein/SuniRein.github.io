@@ -1,7 +1,7 @@
 ---
 title: 快速开始：Bazel
 createTime: 2025/03/04 11:27:25
-permalink: /gtest/1grebcis/
+permalink: /gtest/quickstart-bazel/
 copyright:
   creation: translate
   source: https://google.github.io/googletest/quickstart-bazel.html
