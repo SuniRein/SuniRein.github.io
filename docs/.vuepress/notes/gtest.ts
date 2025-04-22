@@ -5,6 +5,10 @@ export default defineNoteConfig({
     link: '/gtest/',
     sidebar: [
         {
+            text: '引导',
+            items: ['welcome'],
+        },
+        {
             text: '快速开始',
             items: ['platforms', 'quickstart-bazel', 'quickstart-cmake'],
         },
