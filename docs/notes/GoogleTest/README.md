@@ -12,7 +12,11 @@ config:
       image: https://avatars.githubusercontent.com/u/1342004
       actions:
         - theme: brand
-          text: 快速开始 →
+          text: 引言 →
+          link: ./welcome.md
+
+        - theme: alt
+          text: 快速开始 
           link: ./platforms.md
 
         - theme: alt
