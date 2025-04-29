@@ -160,8 +160,6 @@ AVL 树的删除也与二叉搜索树类似：
 
 @[code cpp:collapsed-lines](code/avl_tree.h)
 
-也可以在我的 [Github 仓库](https://github.com/SuniRein/common-data-structure/blob/main/src/avl_tree.h)上查看，仓库上的实现可能会更新一点。
-
 ## 与红黑树的比较
 
 AVL 树与红黑树都是计算机科学中常见的平衡树类型，因此常被用来比较。
