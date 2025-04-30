@@ -14,32 +14,31 @@ export default defineUserConfig({
     bundler: viteBundler(),
 
     theme: plumeTheme({
-        plugins: {
-            markdownEnhance: {
-                mermaid: true,
-            },
-            markdownPower: {
-                // See https://theme-plume.vuejs.press/guide/markdown/npm-to
-                npmTo: {
-                    tabs: ['pnpm', 'npm', 'yarn'],
-                },
-                annotation: true,
-            },
-            shiki: {
-                lineNumbers: false,
-            },
-            comment: {
-                provider: 'Giscus',
-                comment: true,
-                repo: 'SuniRein/blog-comment',
-                repoId: 'R_kgDON36RWA',
-                category: 'Announcements',
-                categoryId: 'DIC_kwDON36RWM4Cm3sZ',
-                lightTheme: 'light_protanopia',
-                darkTheme: 'dark_dimmed',
-            },
+        codeHighlighter: {
+            lineNumbers: false,
         },
+
+        comment: {
+            provider: 'Giscus',
+            comment: true,
+            repo: 'SuniRein/blog-comment',
+            repoId: 'R_kgDON36RWA',
+            category: 'Announcements',
+            categoryId: 'DIC_kwDON36RWM4Cm3sZ',
+            lightTheme: 'light_protanopia',
+            darkTheme: 'dark_dimmed',
+        },
+
+        markdown: {
+            annotation: true,
+            npmTo: {
+                tabs: ['pnpm', 'npm', 'yarn'],
+            },
+            mermaid: true,
+        },
+
         hostname: 'https://sunirein.tech',
+
         notes,
     }),
 
