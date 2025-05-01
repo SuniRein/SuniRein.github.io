@@ -26,7 +26,7 @@ GoogleTest 是 Google 的 C++ 测试与模拟框架。
 
 - [初学者指南](primer.md)：讲授如何使用 GoogleTest 编写简单的测试。推荐初学者首先阅读该指南。
 - [进阶主题](advanced.md)：当你读完初学者指南，且希望更充分利用 GoogleTest 时，阅读该指南。
-- [代码示例](sample.md)：描述了一些 GoogleTest 的代码示例。
+- [代码示例](samples.md)：描述了一些 GoogleTest 的代码示例。
 - [gTest 常见问题解答](faq.md)：使用时遇到问题想要获得帮助？请查看这里。
 - [gMock 入门基础](gmock_for_dummies.md)：讲授如何创建并在测试中使用模拟对象。
 - [gMock 高级技巧](gmock_cook_book.md)：包含常见模拟用例的技巧和方法。
