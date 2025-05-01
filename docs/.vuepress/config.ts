@@ -3,6 +3,7 @@ import { plumeTheme } from 'vuepress-theme-plume';
 import { defineUserConfig } from 'vuepress';
 
 import { feedPlugin } from '@vuepress/plugin-feed';
+import { linksCheckPlugin } from '@vuepress/plugin-links-check';
 
 import notes from './notes';
 
@@ -48,5 +49,7 @@ export default defineUserConfig({
             atom: true,
             devServer: true,
         }),
+
+        linksCheckPlugin({}),
     ],
 });
