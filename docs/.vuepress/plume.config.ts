@@ -12,6 +12,7 @@ export default defineThemeConfig({
     navbar: [
         { text: '首页', link: '/' },
         { text: '博客', link: '/blog/' },
+        { text: '笔记', link: '/notes/' },
         { text: '标签', link: '/blog/tags/' },
         { text: '归档', link: '/blog/archives/' },
         { text: 'RSS', link: '/atom.xml' },
