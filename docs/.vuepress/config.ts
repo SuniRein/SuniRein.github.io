@@ -17,6 +17,9 @@ export default defineUserConfig({
     theme: plumeTheme({
         codeHighlighter: {
             lineNumbers: false,
+            langAlias: {
+                just: 'make',
+            },
         },
 
         comment: {
