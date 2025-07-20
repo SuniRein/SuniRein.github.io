@@ -11,3 +11,6 @@ deploy:
 
 lint:
     pnpm run lint
+
+update:
+    pnpm dlx vp-update
