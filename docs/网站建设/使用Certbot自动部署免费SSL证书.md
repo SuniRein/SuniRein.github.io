@@ -209,6 +209,21 @@ Certbot 提供了 `pip` 和 `snap` 两种安装方式。
 
    Certbot 会在证书过期前 30 天自动续订证书。
 
+   ::: warning
+   证书续订后还需要重新加载 nginx 才会生效，可以手动运行：
+
+   ```bash
+   sudo systemctl reload nginx.service
+   ```
+
+   或者将上述语句加到 `crontab` 中，即
+
+   ```bash
+   echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew -q && systemctl reload nginx.service" | sudo tee -a /etc/crontab > /dev/null
+   ```
+
+   :::
+
 ::::
 
 ## 配置 Nginx
