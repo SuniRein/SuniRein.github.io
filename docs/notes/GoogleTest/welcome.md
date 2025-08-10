@@ -31,6 +31,6 @@ GoogleTest 是 Google 的 C++ 测试与模拟框架。
 - [gMock 入门基础](gmock_for_dummies.md)：讲授如何创建并在测试中使用模拟对象。
 - [gMock 高级技巧](gmock_cook_book.md)：包含常见模拟用例的技巧和方法。
 - [gMock 速查表](gmock_cheat_sheet.md)：匹配器、动作和不变量等的便捷索引。
-- [旧式 gMock 常见问题解答](gmock_faq.md)：包含对一些特定 gMock 问题的解答[+旧式gMock]。
+- [旧式 gMock 常见问题解答](gmock_faq.md)：包含对一些特定 gMock 问题的解答[+old-gMock]。
 
-[+旧式gMock]: 译注：该解答针对旧式的 gMock，一些对现在的 gMock 已经不再适用，但仍有参考价值。
+[+old-gMock]: 译注：该解答针对旧式的 gMock，一些对现在的 gMock 已经不再适用，但仍有参考价值。

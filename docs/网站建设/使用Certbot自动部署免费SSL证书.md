@@ -29,7 +29,7 @@ tags:
 ## 什么是 Let's Encrypt？
 
 [Let's Encrypt](https://letsencrypt.org/zh-cn/)
-是一个免费的、自动化的、开放的 证书颁发机构（CA，Certificate Authority），由 Internet Security Research Group（ISRG） 运营。
+是一个免费的、自动化的、开放的 证书颁发机构（CA，Certificate Authority），由 Internet Security Research Group（ISRG）运营。
 它为网站提供 TLS/SSL 证书，使网站能够启用 HTTPS 加密，提高安全性和隐私保护。
 
 Let's Encrypt 证书的有效期较短，仅有 90 天，但可以通过自动化的方式来更新证书。

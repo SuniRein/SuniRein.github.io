@@ -410,7 +410,7 @@ TEST(...) {
 1. 如果 `MockFoo` 的析构函数不是虚函数，`NiceMock<MockFoo>` 和 `StrictMock<MockFoo>` 可能无法正常工作。
    我们希望修复这个问题，但这会影响现有的测试。[+clean-up-existing-tests]
 
-[+clean-up-existing-tests]: 原文为“We would like to fix this, but it requires cleaning up existing tests.” 译者不太清楚这里的具体含义。
+[+clean-up-existing-tests]: 原文为“We would like to fix this, but it requires cleaning up existing tests.”译者不太清楚这里的具体含义。
 
 最后，对于何时使用 `naggy` 或 `strict` 要保持谨慎态度，因为这往往会使测试更加脆弱且难以维护。
 理想情况下，当重构代码而不改变其外部可见行为时，应该不影响任何测试。
@@ -1311,7 +1311,7 @@ using ::testing::ElementsAreArray;
   EXPECT_CALL(mock, Foo(ElementsAreArray(expected_vector3, count)));
 ```
 
-在匹配 `map` 或其它关联容器时，可以使用 `Pair` 匹配器:
+在匹配 `map` 或其它关联容器时，可以使用 `Pair` 匹配器：
 
 ```cpp
 using ::testing::UnorderedElementsAre;
@@ -3587,7 +3587,7 @@ ACTION(name) { statements; }
 ACTION(IncrementArg1) { return ++(*arg1); }
 ```
 
-允许你编写以下代码:
+允许你编写以下代码：
 
 ```cpp
 ... WillOnce(IncrementArg1());

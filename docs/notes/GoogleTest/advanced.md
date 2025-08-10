@@ -801,7 +801,7 @@ GoogleTest 为每个测试单元创建独立的测试夹具对象，使测试彼
 
 1. 在测试夹具类（如 FooTest）中声明静态成员变量用于持有共享资源。
 2. 在类外（通常紧接类定义）初始化静态成员，可以给它们赋初始值。
-3. 在测试夹具类中定义 `static void SetUpTestSuite()`（注意拼写） 和 `static void TearDownTestSuite()`，
+3. 在测试夹具类中定义 `static void SetUpTestSuite()`（注意拼写）和 `static void TearDownTestSuite()`，
    分别用来初始化和清理这些静态共享资源。
 
 :::
@@ -1478,7 +1478,7 @@ printf("We are in test %s of test suite %s.\n",
 
 ## 通过事件处理扩展 GoogleTest
 
-GoogleTest 提供了**事件监听器**（_event listener_） API，允许你监听测试程序进度和测试失败事件。
+GoogleTest 提供了**事件监听器**（_event listener_）API，允许你监听测试程序进度和测试失败事件。
 可监听的事件包括测试程序、测试套件或测试单元的开始与结束等。
 你可以使用此 API 来改善或替换标准控制台输出、替换 XML 输出，或提供完全不同的输出形式（如 GUI 或数据库）。
 你还可以通过监听测试事件来实现资源泄漏检查器等。
@@ -2101,7 +2101,7 @@ GoogleTest 实现了**提前退出文件**（_premature-exit-file_）协议，�
 #### 将断言失败转为断点
 
 在调试器中运行测试程序时，如果调试器在断言失败后可以自动进入交互模式，对调试将很有帮助。
-GoogleTest 的**失败时中断**（_break-on-faliure_）模式提供了这一功能。
+GoogleTest 的**失败时中断**（_break-on-failure_）模式提供了这一功能。
 
 可以通过设置 `GTEST_BREAK_ON_FAILURE` 环境变量或使用 `--gtest_break_on_failure` 命令行标志来启用这一功能。
 
@@ -2114,12 +2114,12 @@ GoogleTest 同时兼容启用异常和禁用异常的编译环境。
 然而，有时可能希望由调试器处理异常，以便在抛出异常时检查调用堆栈。
 通过设置 `GTEST_CATCH_EXCEPTIONS` 环境变量为 `0` 或者使用 `--gtest_catch_exceptions=0` 标志即可禁用异常捕获机制。
 
-### 与检测器（_Sanitizer_） 集成
+### 与检测器（_Sanitizer_）集成
 
 [未定义行为检测器](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html)、
 [地址检测器](https://github.com/google/sanitizers/wiki/AddressSanitizer)
 和[线程检测器](https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual)
-都提供了可覆盖的弱函数（_weak funciton_），
+都提供了可覆盖的弱函数（_weak function_），
 可以通过覆盖这些函数，在检测到错误时触发显式失败。
 实现方法是将以下函数定义添加到主二进制文件的源码中：
 

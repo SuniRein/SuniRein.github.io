@@ -101,7 +101,7 @@ INSTANTIATE_TEST_SUITE_P(InstantiationName, TestSuiteName, param_generator, name
 | `ValuesIn(container)` 或 `ValuesIn(begin, end)`         | 基于 C 风格数组、STL 容器或迭代器范围 `[begin, end)` 生成值。                                                                                                                               |
 | `Bool()`                                                | 生成布尔序列 `{false, true}`。                                                                                                                                                              |
 | `Combine(g1, g2, ..., gN)`                              | 基于 $n$ 个生成器 `g_1`、`g_2`、...、`g_n` 生成 `std::tuple` 类型的 $n$ 元组（使用笛卡尔积）。                                                                                              |
-| `ConvertGenerator<T>(g)` 或 `ConvertGenerator(g, func)` | 生成器 `g` 产生的值通过 `static_cast` 转换为 `T` 类型。（注意: `T` 类型可能与预期不符，详见下文[使用 ConvertGenerator](#using-convertgenerator)。）第二个可选参数 `func` 用于执行转换操作。 |
+| `ConvertGenerator<T>(g)` 或 `ConvertGenerator(g, func)` | 生成器 `g` 产生的值通过 `static_cast` 转换为 `T` 类型。（注意：`T` 类型可能与预期不符，详见下文[使用 ConvertGenerator](#using-convertgenerator)。）第二个可选参数 `func` 用于执行转换操作。 |
 
 可选参数 _`name_generator`_ 是用于生成自定义测试名称后缀的函数。
 该函数必须接受 [`TestParamInfo<class ParamType>`](#TestParamInfo) 类型参数并返回 `std::string`。

@@ -46,7 +46,7 @@ copyright:
 | `Ne(value)`                             | `argument != value`。                                                                                                                            |
 | `IsFalse()`                             | `argument` 在布尔上下文中求值为 `false`。                                                                                                        |
 | `DistanceFrom(target, m)`               | `argument` 与 `target` 的绝对差（`abs(argument - target)`）匹配 `m`                                                                              |
-| `DistanceFrom(target, get_distance, m)` | `argument` 与`target` 的距离（`get_distance(argument, target)`） 匹配 `m`                                                                        |
+| `DistanceFrom(target, get_distance, m)` | `argument` 与`target` 的距离（`get_distance(argument, target)`）匹配 `m`                                                                        |
 | `IsTrue()`                              | `argument` 在布尔上下文中求值为 `true`。                                                                                                         |
 | `IsNull()`                              | `argument` 为空指针（兼容裸指针和智能指针）。                                                                                                    |
 | `NotNull()`                             | `argument` 为非空指针（兼容裸指针和智能指针）。                                                                                                  |
@@ -79,10 +79,10 @@ copyright:
 
 | 匹配器                                            | 描述                                                                                                 |
 | :------------------------------------------------ | :--------------------------------------------------------------------------------------------------- |
-| `DoubleNear(a_double, max_abs_error)`             | `argument` 是接近 `a_double` 的 `double` 值（绝对误差 `<= max_abs_error`）， 两个 `NaN` 视为不相等。 |
-| `FloatNear(a_float, max_abs_error)`               | `argument` 是接近 `a_float` 的 `float` 值（绝对误差 `<= max_abs_error`）， 两个 `NaN` 视为不相等。   |
-| `NonSensitiveDoubleNear(a_double, max_abs_error)` | `argument` 是接近 `a_double` 的 `double` 值（绝对误差 `<= max_abs_error`）， 两个 `NaN` 视为相等。   |
-| `NonSensitiveFloatNear(a_float, max_abs_error)`   | `argument` 是接近 `a_float` 的 `float` 值（绝对误差 `<= max_abs_error`）， 两个 `NaN` 视为相等。     |
+| `DoubleNear(a_double, max_abs_error)`             | `argument` 是接近 `a_double` 的 `double` 值（绝对误差 `<= max_abs_error`），两个 `NaN` 视为不相等。 |
+| `FloatNear(a_float, max_abs_error)`               | `argument` 是接近 `a_float` 的 `float` 值（绝对误差 `<= max_abs_error`），两个 `NaN` 视为不相等。   |
+| `NonSensitiveDoubleNear(a_double, max_abs_error)` | `argument` 是接近 `a_double` 的 `double` 值（绝对误差 `<= max_abs_error`），两个 `NaN` 视为相等。   |
+| `NonSensitiveFloatNear(a_float, max_abs_error)`   | `argument` 是接近 `a_float` 的 `float` 值（绝对误差 `<= max_abs_error`），两个 `NaN` 视为相等。     |
 
 ## 字符串匹配器 {#string-matchers}
 

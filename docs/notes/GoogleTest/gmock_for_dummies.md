@@ -7,7 +7,7 @@ copyright:
   source: https://google.github.io/googletest/gmock_for_dummies.html
 ---
 
-## 什么是 gMock ？
+## 什么是 gMock？
 
 在编写原型（_prototype_）或测试时，完全依赖真实对象的行为往往不可行或不够明智。
 ==模拟对象==（_mock object_）实现了与真实对象相同的接口，可以替代真实对象。
@@ -448,7 +448,7 @@ EXPECT_CALL(turtle, GetY())
 ```
 
 **答案**：
-!!`turtle.GetY()` 期望被调用四次，第一次返回 100，剩下三次返回 0 （`int` 的默认行为）。!!
+!!`turtle.GetY()` 期望被调用四次，第一次返回 100，剩下三次返回 0（`int` 的默认行为）。!!
 
 :::
 
