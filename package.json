@@ -6,17 +6,17 @@
     "scripts": {
         "dev": "vuepress dev docs",
         "build": "vuepress build docs",
-        "lint": "lint-md '**/*.md'"
+        "lint": "autocorrect --lint docs"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
         "@iconify/json": "^2.2.366",
-        "@lint-md/cli": "^2.0.0",
         "@vuepress/bundler-vite": "2.0.0-rc.24",
         "@vuepress/plugin-feed": "2.0.0-rc.112",
         "@vuepress/plugin-links-check": "2.0.0-rc.112",
+        "autocorrect-node": "^2.14.0",
         "sass-embedded": "^1.89.2",
         "vue": "^3.5.18",
         "vuepress": "2.0.0-rc.24",
