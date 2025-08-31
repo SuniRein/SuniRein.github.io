@@ -11,6 +11,7 @@ export default defineUserConfig({
     lang: 'zh-CN',
     title: 'SuniRein 的个人小站',
     description: '一名普通技术宅的个人博客',
+    head: [['link', { rel: 'icon', href: '/images/logo.svg' }]],
 
     bundler: viteBundler(),
 
