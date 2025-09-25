@@ -34,6 +34,12 @@ export default defineUserConfig({
             darkTheme: 'dark_dimmed',
         },
 
+        encrypt: {
+            rules: {
+                '随笔/个人小结/2024年度总结.md': '2024-summary',
+            },
+        },
+
         markdown: {
             annotation: true,
             npmTo: {
