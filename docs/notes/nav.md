@@ -5,7 +5,6 @@ permalink: /notes/
 readingTime: false
 prev: false
 next: false
-draft: true
 search: false
 ---
 
