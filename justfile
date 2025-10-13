@@ -1,12 +1,12 @@
 dev:
     pnpm run dev --open
 
-deploy: deploy-alyyun deploy-git
+deploy: deploy-tencent deploy-git
 
-deploy-alyyun:
-    @echo "Deploying to aliyun..."
+deploy-tencent:
+    @echo "Deploying to tencent..."
     pnpm run build
-    rsync -avz --delete -e ssh ./docs/.vuepress/dist aliyun:Page
+    rsync -avz --delete -e ssh ./docs/.vuepress/dist/ tencent:/var/www
 
 deploy-git:
     @echo "Deploying to github..."
