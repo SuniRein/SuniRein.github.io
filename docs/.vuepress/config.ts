@@ -20,6 +20,7 @@ export default defineUserConfig({
             lineNumbers: false,
             langAlias: {
                 just: 'make',
+                caddy: 'nu',
             },
         },
 
