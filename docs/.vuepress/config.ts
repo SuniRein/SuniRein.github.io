@@ -44,6 +44,7 @@ export default defineUserConfig({
             npmTo: {
                 tabs: ['pnpm', 'npm', 'yarn'],
             },
+            mark: 'lazy',
             mermaid: true,
         },
 
