@@ -1,7 +1,7 @@
 ---
 title: 从 Nginx 到 Caddy：配置简化与自动 HTTPS 的魅力
 createTime: 2025/10/13 17:20:38
-permalink: /article/4iizatfo/
+permalink: /blog/4iizatfo/
 tags:
   - 建站
   - Caddy

@@ -1,7 +1,7 @@
 ---
 title: Rust 中如何将 Path 转换为字符串？
 createTime: 2025-09-10 19:49:01
-permalink: /article/ai80resl/
+permalink: /blog/ai80resl/
 tags:
   - Rust
   - 字符串

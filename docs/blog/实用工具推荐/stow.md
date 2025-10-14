@@ -1,7 +1,7 @@
 ---
 title: GNU/Stow —— 管理编译安装程序与用户配置文件
 createTime: 2025/07/17 22:28:56
-permalink: /article/2xg2t5km/
+permalink: /blog/2xg2t5km/
 tags:
   - 实用工具
   - 终端

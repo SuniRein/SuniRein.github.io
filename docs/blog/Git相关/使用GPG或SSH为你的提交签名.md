@@ -1,7 +1,7 @@
 ---
 title: 使用 GPG/SSH 为你的提交签名
 createTime: 2025/08/17 14:32:43
-permalink: /article/g4xq10jf/
+permalink: /blog/g4xq10jf/
 tags:
   - Git
   - GPG

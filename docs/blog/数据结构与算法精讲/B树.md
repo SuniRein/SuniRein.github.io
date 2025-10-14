@@ -1,7 +1,7 @@
 ---
 title: B 树
 createTime: 2025/02/14 22:39:14
-permalink: /article/313wmwqo/
+permalink: /blog/313wmwqo/
 tags:
   - 数据结构
   - 平衡树

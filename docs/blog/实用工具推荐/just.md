@@ -1,7 +1,7 @@
 ---
 title: Just —— 类似 Make 的任务运行器
 createTime: 2025/07/09 12:03:03
-permalink: /article/46i566mf/
+permalink: /blog/46i566mf/
 tags:
   - 实用工具
   - 终端

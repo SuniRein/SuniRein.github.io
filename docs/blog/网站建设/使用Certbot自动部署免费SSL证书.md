@@ -1,7 +1,7 @@
 ---
 title: 使用 Certbot 自动部署免费 SSL 证书
 createTime: 2025/03/03 13:50:11
-permalink: /article/6tznb746/
+permalink: /blog/6tznb746/
 tags:
   - 建站
   - SSL

@@ -1,7 +1,7 @@
 ---
 title: Splay 树
 createTime: 2025/02/01 22:13:10
-permalink: /article/mdyrqsgl/
+permalink: /blog/mdyrqsgl/
 tags:
   - 数据结构
   - 平衡树

@@ -1,4 +1,5 @@
 import { defineThemeConfig } from 'vuepress-theme-plume';
+import collections from './collection';
 
 export default defineThemeConfig({
     logo: '/images/logo.svg',
@@ -9,6 +10,7 @@ export default defineThemeConfig({
         location: '中国 杭州',
         circle: true,
     },
+    collections,
     footer: {
         message: `
             <span style="display: flex; align-items: center; justify-content: center; gap: 3px;">

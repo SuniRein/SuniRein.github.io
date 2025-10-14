@@ -1,7 +1,7 @@
 ---
 title: AVL 树
 createTime: 2025/01/21 10:21:07
-permalink: /article/dnnlipz6/
+permalink: /blog/dnnlipz6/
 tags:
   - 数据结构
   - 平衡树

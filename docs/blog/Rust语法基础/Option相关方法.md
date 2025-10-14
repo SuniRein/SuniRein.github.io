@@ -1,7 +1,7 @@
 ---
 title: Rust Option 类型方法详解
 createTime: 2025/10/05 21:51:12
-permalink: /article/mc9zsqkp/
+permalink: /blog/mc9zsqkp/
 tags:
   - Rust
   - Rust std

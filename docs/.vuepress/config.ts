@@ -5,8 +5,6 @@ import { defineUserConfig } from 'vuepress';
 import { feedPlugin } from '@vuepress/plugin-feed';
 import { linksCheckPlugin } from '@vuepress/plugin-links-check';
 
-import notes from './notes';
-
 export default defineUserConfig({
     lang: 'zh-CN',
     title: 'SuniRein 的个人小站',
@@ -50,8 +48,6 @@ export default defineUserConfig({
         },
 
         hostname: 'https://sunirein.tech',
-
-        notes,
     }),
 
     plugins: [
