@@ -179,7 +179,7 @@ where
   F: FnOnce(T) -> U
 ```
 
-### 压缩
+### 压缩和解压缩
 
 `zip` 只有在两个 `Option` 均有值的情况下才会返回 `Some((s, o))`，其余情况均返回 `None`。
 它适合需要同时存在两个可选值才能继续处理的场景，例如同时从两个来源获取配置项。
@@ -194,6 +194,14 @@ fn zip<U>(self, other: Option<U>) -> Option<(T, U)>
 const fn zip_with<U, F, R>(self, other: Option<U>, f: F) -> Option<R>
 where
   F: FnOnce(T, U) -> R
+```
+
+`unzip` 则是 `zip` 的逆操作，将 `Some((s, o))` 解包为 `(Some(s), Some(o))`
+
+```rust
+impl<T, U> Option<(T, U)> {
+  fn unzip(self) -> (Option<T>, Option<U>)
+}
 ```
 
 ## 布尔运算
