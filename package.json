@@ -12,15 +12,15 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@iconify/json": "^2.2.407",
+        "@iconify/json": "^2.2.412",
         "@vuepress/bundler-vite": "2.0.0-rc.26",
-        "@vuepress/plugin-feed": "2.0.0-rc.118",
-        "@vuepress/plugin-links-check": "2.0.0-rc.118",
+        "@vuepress/plugin-feed": "2.0.0-rc.120",
+        "@vuepress/plugin-links-check": "2.0.0-rc.120",
         "autocorrect-node": "^2.14.0",
         "sass-embedded": "^1.93.3",
-        "vue": "^3.5.24",
+        "vue": "^3.5.25",
         "vuepress": "2.0.0-rc.26",
-        "vuepress-theme-plume": "1.0.0-rc.177"
+        "vuepress-theme-plume": "1.0.0-rc.180"
     },
     "dependencies": {
         "mermaid": "^11.12.1"
