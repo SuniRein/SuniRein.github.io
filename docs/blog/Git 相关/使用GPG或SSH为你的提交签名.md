@@ -18,7 +18,7 @@ tags:
 大家平时在 Github 上查看提交信息时，应该会注意到，在提交列表里有些提交上面会显示一个 `Verified` 状态。
 这表示其经过签名且被 Github 验证通过。
 
-![Github 签名](images/github-sign.avif)
+![Github 签名](./images/github-sign.avif)
 
 签名是 Git 的一项安全机制，用于验证提交是由用户本人发起的。
 用户可以在本地对 Commit 和标签进行签名，经过验证的签名便会在 Github 在被显示为 `Verified` 状态。

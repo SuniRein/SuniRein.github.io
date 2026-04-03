@@ -79,7 +79,7 @@ $$
 左旋是将父节点经旋转变成左儿子，而其原先的右儿子变成新的父节点的过程。
 
 ::: center
-![左旋](images/AVL树-左旋.svg)
+![左旋](./images/AVL树-左旋.svg)
 :::
 
 右旋则与左旋相反，是将父节点变成右儿子，原先的左儿子变成新的父节点的过程，相当于做一次左旋的逆变换。
@@ -106,7 +106,7 @@ $$
 :::: details 示例
 
 ::: center
-![LR](images/AVL树-LR.svg)
+![LR](./images/AVL树-LR.svg)
 :::
 
 在上图中，node 为 10，child 为 3。
@@ -115,7 +115,7 @@ $$
 首先，我们对 3 进行一次左旋，得到下面的树结构。
 
 ::: center
-![LR-1](images/AVL树-LR-1.svg)
+![LR-1](./images/AVL树-LR-1.svg)
 :::
 
 > [!note]
@@ -124,7 +124,7 @@ $$
 然后，我们再对 10 进行一次右旋，最终得到平衡后的 AVL 树。
 
 ::: center
-![LR-2](images/AVL树-LR-2.svg)
+![LR-2](./images/AVL树-LR-2.svg)
 :::
 
 ::::

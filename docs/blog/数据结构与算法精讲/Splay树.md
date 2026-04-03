@@ -54,9 +54,9 @@ Splay 树由 Daniel Sleator 和 Robert Tarjan 于 1985 年发明。<Plot>没错�
 这种情况称为 zig-zig。
 
 ::: center
-![zig-zig 1](images/Splay树-zig-zig-1.svg 'zig-zig 旋转前')
+![zig-zig 1](./images/Splay树-zig-zig-1.svg 'zig-zig 旋转前')
 
-![zig-zig 2](images/Splay树-zig-zig-2.svg 'zig-zig 旋转后')
+![zig-zig 2](./images/Splay树-zig-zig-2.svg 'zig-zig 旋转后')
 :::
 
 #### zig-zag
@@ -65,9 +65,9 @@ Splay 树由 Daniel Sleator 和 Robert Tarjan 于 1985 年发明。<Plot>没错�
 这种情况称为 zig-zag。
 
 ::: center
-![zig-zag 1](images/Splay树-zig-zag-1.svg 'zig-zag 旋转前')
+![zig-zag 1](./images/Splay树-zig-zag-1.svg 'zig-zag 旋转前')
 
-![zig-zag 2](images/Splay树-zig-zag-2.svg 'zig-zag 旋转后')
+![zig-zag 2](./images/Splay树-zig-zag-2.svg 'zig-zag 旋转后')
 :::
 
 通常，一次伸展操作由若干次双旋与可能的一次单旋构成，其中单旋操作仅发生在最后一次旋转时 P 是根节点，无法满足双旋条件的情况下。
