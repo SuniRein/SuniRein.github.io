@@ -168,6 +168,10 @@ assert_eq!(std::mem::size_of::<Option<NonMaxU32>>(), 4);
 - [`nonmax`](https://docs.rs/nonmax/latest/nonmax/): 提供了 `NonMax*` 等以最大值为 Niche 的整数类型。
 - [`nook`](https://docs.rs/nook/latest/nook/)：该库提供了 `BalancedI*` 类型，具有相等范围的正负值，其 `Niche` 是最小的负数。
 
+## 可视化
+
+[Niche.rs](https://niche.rs/) 提供了一个可视化界面，用于展示 Rust 类型内存布局与 Niche 优化细节。
+
 ## 参考文献
 
 - [Niche optimizations in Rust](https://www.0xatticus.com/posts/understanding_rust_niche/)
